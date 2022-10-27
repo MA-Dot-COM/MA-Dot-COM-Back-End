@@ -1,10 +1,10 @@
-package com.sorhive.comproject;
+package com.sorhive.comprojectserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ComprojectApplicationTests {
+class ComprojectServerApplicationTests {
 
     @Test
     void contextLoads() {
