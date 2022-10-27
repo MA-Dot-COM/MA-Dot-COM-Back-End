@@ -1,8 +1,9 @@
-package com.sorhive.main.controller;
+package com.sorhive.comprojectserver.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <pre>
@@ -19,16 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @version 1(클래스 버전)
  */
 @Controller
+@RequestMapping("/")
 public class MainController {
 
-    @GetMapping(value = {"/", "/main"})
+    @GetMapping(value = {"", "/main"})
     public String main() {
 
         return "main/main";
-
     }
 
-    @PostMapping(value="/")
+    @PostMapping(value="")
     public String redirectMain() {
 
         return "redirect:/";

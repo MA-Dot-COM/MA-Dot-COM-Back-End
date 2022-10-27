@@ -1,8 +1,7 @@
-package com.sorhive.comproject.config;
+package com.sorhive.comprojectserver.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -20,7 +19,6 @@ import org.springframework.context.annotation.Configuration;
  * @version 1(클래스 버전)
  */
 @Configuration
-@ComponentScan(basePackages = "com.sorhive.comproject")
 public class BeanConfiguration {
     @Bean
     public ModelMapper modelMapper() {
