@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.model.guestbook;
+package com.sorhive.comprojectserver.harvesting.command.domain.model.harvestcomment;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : GuestBook
+ * Class : FeedComment
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,24 +21,24 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_guestbooks")
-public class GuestBook {
+@Table(name = "tbl_harvest_comments")
+public class HarvestComment {
 
     @EmbeddedId
-    private GuestBookId id;
+    private HarvestCommentId id;
 
-    @Column(name = "guestbook_content")
+    @Column(name = "harvest_comment_content")
     private String content;
 
-    @Column(name = "guestbook_create_time")
+    @Column(name = "harvest_comment_create_time")
     private Timestamp createTime;
 
-    @Column(name = "guestbook_upload_time")
+    @Column(name = "harvest_comment_upload_time")
     private Timestamp uploadTime;
 
-    @Column(name = "guestbook_delete_time")
+    @Column(name = "harvest_comment_delete_time")
     private Timestamp deleteTime;
 
-    @Column(name = "guestbook_delete_yn")
+    @Column(name = "harvest_comment_delete_yn")
     private Character deleteYn;
 }

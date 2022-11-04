@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.chatting.command.domain.model;
+package com.sorhive.comprojectserver.harvesting.command.domain.model.harvest;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : Chatting
+ * Class : Feed
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,22 +21,25 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_chatting")
-public class Chatting {
+@Table(name = "tbl_harvests")
+public class Harvest {
 
     @EmbeddedId
-    private ChattingId id;
+    private HarvestId id;
 
-    @Column(name = "chatting_group_id")
-    private Long groupId;
-
-    @Column(name = "chatting_no")
-    private Long no;
-
-    @Column(name = "chatting_content")
+    @Column(name = "harvest_content")
     private String content;
 
-    @Column(name = "chatting_time")
-    private Timestamp time;
+    @Column(name = "harvest_create_time")
+    private Timestamp createTime;
+
+    @Column(name = "harvest_upload_time")
+    private Timestamp uploadTime;
+
+    @Column(name = "harvest_delete_time")
+    private Timestamp deleteTime;
+
+    @Column(name = "harvest_delete_yn")
+    private Character deleteYn;
 
 }

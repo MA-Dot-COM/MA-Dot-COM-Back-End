@@ -1,14 +1,13 @@
-package com.sorhive.comprojectserver.chatting.command.domain.model;
+package com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : Chatting
+ * Class : StoryImage
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,22 +20,19 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_chatting")
-public class Chatting {
+@Table(name = "tbl_lifing_image")
+public class LifingImage {
 
     @EmbeddedId
-    private ChattingId id;
+    private LifingImageId id;
 
-    @Column(name = "chatting_group_id")
-    private Long groupId;
+    @Column(name = "lifing_image_path")
+    private String path;
 
-    @Column(name = "chatting_no")
-    private Long no;
+    @Column(name = "lifing_original_name")
+    private String orginalName;
 
-    @Column(name = "chatting_content")
-    private String content;
-
-    @Column(name = "chatting_time")
-    private Timestamp time;
+    @Column(name = "lifing_saved_name")
+    private String savedName;
 
 }

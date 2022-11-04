@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.room.command.domain.model.roomvisit;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -26,6 +23,7 @@ import java.util.Objects;
 public class RoomVisitId implements Serializable {
 
     @Column(name="room_visit_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
     protected RoomVisitId() {
