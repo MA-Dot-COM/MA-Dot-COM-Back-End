@@ -32,6 +32,8 @@ spring:
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
