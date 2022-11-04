@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.furniture.command.domain.model.furnitureimage;
+package com.sorhive.comprojectserver.harvesting.command.domain.model.harvestimage;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FurnitureImageId
+ * Class : FeedImageId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,15 +20,16 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class FurnitureImageId implements Serializable {
+public class HarvestImageId implements Serializable {
 
-    @Column(name = "furniture_image_id")
+    @Column(name="harvest_image_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
-    protected FurnitureImageId() {}
+    protected HarvestImageId() {
+    }
 
-    public FurnitureImageId(Long value) { this.value = value; }
+    public HarvestImageId(Long value) { this.value = value; }
 
     public Long getValue() { return value; }
 
@@ -36,12 +37,12 @@ public class FurnitureImageId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FurnitureImageId that = (FurnitureImageId) o;
+        HarvestImageId that = (HarvestImageId) o;
         return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static FurnitureImageId of(Long value) { return  new FurnitureImageId(value); }
+    public static HarvestImageId of(Long value) { return  new HarvestImageId(value); }
 }

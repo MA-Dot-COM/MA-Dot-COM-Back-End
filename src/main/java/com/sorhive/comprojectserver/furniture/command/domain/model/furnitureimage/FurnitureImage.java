@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.furniture.command.domain.model.furnitureimage;
 
-import com.sorhive.comprojectserver.furniture.command.domain.model.furniturecategory.FurnitureCategoryId;
-
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -26,4 +25,14 @@ public class FurnitureImage {
 
     @EmbeddedId
     private FurnitureImageId id;
+
+    @Column(name = "furniture_image_path")
+    private String path;
+
+    @Column(name = "furniture_original_name")
+    private String orginalName;
+
+    @Column(name = "furniture_saved_name")
+    private String savedName;
+
 }

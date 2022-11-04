@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -26,7 +27,15 @@ public class PlacedFurniture {
     @EmbeddedId
     private PlacedFurnitureId Id;
 
-    @Column(name = "placed_furniture_name")
-    private String name;
+    @Column(name = "placed_furniture_create_time")
+    private Timestamp createTime;
 
+    @Column(name = "placed_furniture_upload_time")
+    private Timestamp uploadTime;
+
+    @Column(name = "placed_furniture_delete_time")
+    private Timestamp deleteTime;
+
+    @Column(name = "placed_furniture_delete_yn")
+    private Character deleteYn;
 }

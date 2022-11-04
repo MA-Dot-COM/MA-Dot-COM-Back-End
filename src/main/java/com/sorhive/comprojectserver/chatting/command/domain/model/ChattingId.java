@@ -1,9 +1,7 @@
 package com.sorhive.comprojectserver.chatting.command.domain.model;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -22,9 +20,10 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class ChattingId {
+public class ChattingId implements Serializable {
 
     @Column(name = "chatting_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
     protected ChattingId() {

@@ -1,13 +1,16 @@
-package com.sorhive.comprojectserver.member.command.domain.model.member;
-import com.sorhive.comprojectserver.member.exception.IdPasswordNotMatchingException;
+package com.sorhive.comprojectserver.member.query;
+
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
+import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Random;
 
 /**
  * <pre>
- * Class : IdPasswordNotMatchingException
+ * Class : MemberData
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,16 +24,17 @@ import java.util.Random;
  */
 @Entity
 @Table(name = "tbl_member")
-public class Member {
+public class MemberData {
 
-    @EmbeddedId
-    private MemberCode memberCode;
+    @Id
+    @Column(name = "member_code")
+    private Long code;
 
-    @Embedded
-    private MemberId memberId;
+    @Column(name = "member_id")
+    private String id;
 
     @Column(name = "member_name")
-    private String memberName;
+    private String name;
 
     @Column(name ="memberEmail")
     private String memberEmail;
@@ -54,31 +58,32 @@ public class Member {
     @Column(name = "member_delete_yn")
     private Character deleteYn;
 
-    protected Member() {
+    protected MemberData() {
     }
 
-    public Member(MemberCode memberCode, MemberId memberId, String memberName, String memberEmail, MemberRole memberRole, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
-        this.memberCode = memberCode;
-        this.memberId = memberId;
-        this.memberName = memberName;
+    public MemberData(Long code, String id, String name, String memberEmail, MemberRole memberRole, Password password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+        this.code = code;
+        this.id = id;
+        this.name = name;
         this.memberEmail = memberEmail;
         this.memberRole = memberRole;
+        this.password = password;
         this.createTime = createTime;
         this.uploadTime = uploadTime;
         this.deleteTime = deleteTime;
         this.deleteYn = deleteYn;
     }
 
-    public MemberCode getMemberCode() {
-        return memberCode;
+    public Long getCode() {
+        return code;
     }
 
-    public MemberId getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
     public String getMemberEmail() {
@@ -87,6 +92,10 @@ public class Member {
 
     public MemberRole getMemberRole() {
         return memberRole;
+    }
+
+    public Password getPassword() {
+        return password;
     }
 
     public Timestamp getCreateTime() {
@@ -103,24 +112,6 @@ public class Member {
 
     public Character getDeleteYn() {
         return deleteYn;
-    }
-
-    public void initializePassword() {
-        String newPassword = generateRandomPassword();
-        this.password = new Password(newPassword);
-    }
-
-    private String generateRandomPassword() {
-        Random random = new Random();
-        int number = random.nextInt();
-        return Integer.toHexString(number);
-    }
-
-    public void changePassword(String oldPw, String newPw) {
-        if (!password.match(oldPw)) {
-            throw new IdPasswordNotMatchingException();
-        }
-        this.password = new Password(newPw);
     }
 
 }

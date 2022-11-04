@@ -1,14 +1,12 @@
-package com.sorhive.comprojectserver.chatting.command.domain.model;
+package com.sorhive.comprojectserver.harvesting.command.domain.model.harvestimage;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.sql.Timestamp;
-
 /**
  * <pre>
- * Class : Chatting
+ * Class : FeedImage
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,22 +19,18 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_chatting")
-public class Chatting {
+@Table(name = "tbl_harvest_images")
+public class HarvestImage {
 
     @EmbeddedId
-    private ChattingId id;
+    private HarvestImageId id;
 
-    @Column(name = "chatting_group_id")
-    private Long groupId;
+    @Column(name = "harvest_image_path")
+    private String path;
 
-    @Column(name = "chatting_no")
-    private Long no;
+    @Column(name = "lifing_original_name")
+    private String orginalName;
 
-    @Column(name = "chatting_content")
-    private String content;
-
-    @Column(name = "chatting_time")
-    private Timestamp time;
-
+    @Column(name = "lifing_saved_name")
+    private String savedName;
 }

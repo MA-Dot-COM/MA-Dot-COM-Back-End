@@ -1,4 +1,5 @@
-package com.sorhive.comprojectserver.furniture.command.domain.model.furnitureimage;
+package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +7,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FurnitureImageId
+ * Class : StoryId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,28 +21,28 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class FurnitureImageId implements Serializable {
+public class LifingId implements Serializable {
 
-    @Column(name = "furniture_image_id")
+    @Column(name="lifing_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
-    protected FurnitureImageId() {}
+    protected LifingId() {
+    }
 
-    public FurnitureImageId(Long value) { this.value = value; }
-
-    public Long getValue() { return value; }
+    public LifingId(Long value){ this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FurnitureImageId that = (FurnitureImageId) o;
-        return Objects.equals(value, that.value);
+        LifingId storyId = (LifingId) o;
+        return Objects.equals(value, storyId.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static FurnitureImageId of(Long value) { return  new FurnitureImageId(value); }
+    public static LifingId of(Long value) { return new LifingId(value); }
+
 }

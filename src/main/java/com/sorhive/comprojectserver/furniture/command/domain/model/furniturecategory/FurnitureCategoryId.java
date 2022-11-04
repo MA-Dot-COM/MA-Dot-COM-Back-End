@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.furniture.command.domain.model.furniturecategory;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -25,6 +22,7 @@ import java.util.Objects;
 @Access(AccessType.FIELD)
 public class FurnitureCategoryId implements Serializable {
     @Column(name = "furniture_category_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
     protected FurnitureCategoryId() {

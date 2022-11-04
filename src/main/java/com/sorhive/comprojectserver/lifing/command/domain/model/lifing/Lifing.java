@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.chatting.command.domain.model;
+package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : Chatting
+ * Class : Story
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,22 +21,21 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_chatting")
-public class Chatting {
+@Table(name = "tbl_lifing")
+public class Lifing {
 
     @EmbeddedId
-    private ChattingId id;
+    private LifingId id;
 
-    @Column(name = "chatting_group_id")
-    private Long groupId;
+    @Column(name = "lifing_create_time")
+    private Timestamp createTime;
 
-    @Column(name = "chatting_no")
-    private Long no;
+    @Column(name = "lifing_upload_time")
+    private Timestamp uploadTime;
 
-    @Column(name = "chatting_content")
-    private String content;
+    @Column(name = "lifing_delete_time")
+    private Timestamp deleteTime;
 
-    @Column(name = "chatting_time")
-    private Timestamp time;
-
+    @Column(name = "lifing_delete_yn")
+    private Character deleteYn;
 }

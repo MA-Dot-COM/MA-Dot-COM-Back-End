@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.member.command.domain.repository;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
 import org.springframework.data.repository.Repository;
 
@@ -26,4 +27,5 @@ public interface MemberRepository extends Repository<Member, MemberId> {
 
     void save(Member member);
 
+    Optional<Member> findByMemberId(MemberCode memberCode);
 }
