@@ -41,4 +41,39 @@ public class GuestBook {
 
     @Column(name = "guestbook_delete_yn")
     private Character deleteYn;
+
+    protected GuestBook () {}
+
+    public GuestBook(GuestBookId id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+        this.id = id;
+        this.content = content;
+        this.createTime = createTime;
+        this.uploadTime = uploadTime;
+        this.deleteTime = deleteTime;
+        this.deleteYn = deleteYn;
+    }
+
+    public GuestBookId getId() {
+        return id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public Timestamp getUploadTime() {
+        return uploadTime;
+    }
+
+    public Timestamp getDeleteTime() {
+        return deleteTime;
+    }
+
+    public Character getDeleteYn() {
+        return deleteYn;
+    }
 }

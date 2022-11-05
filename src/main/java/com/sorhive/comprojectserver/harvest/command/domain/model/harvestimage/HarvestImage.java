@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.harvesting.command.domain.model.harvestimage;
+package com.sorhive.comprojectserver.harvest.command.domain.model.harvestimage;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -33,4 +33,30 @@ public class HarvestImage {
 
     @Column(name = "lifing_saved_name")
     private String savedName;
+
+    public HarvestImage() {
+    }
+
+    public HarvestImage(HarvestImageId id, String path, String orginalName, String savedName) {
+        this.id = id;
+        this.path = path;
+        this.orginalName = orginalName;
+        this.savedName = savedName;
+    }
+
+    public HarvestImageId getId() {
+        return id;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public String getOrginalName() {
+        return orginalName;
+    }
+
+    public String getSavedName() {
+        return savedName;
+    }
 }

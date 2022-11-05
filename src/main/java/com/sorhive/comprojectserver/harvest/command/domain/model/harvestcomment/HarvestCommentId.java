@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.harvesting.command.domain.model.harvest;
+package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FeedId
+ * Class : FeedCommentId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,16 +20,16 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class HarvestId implements Serializable {
+public class HarvestCommentId implements Serializable {
 
-    @Column(name="harvest_id")
+    @Column(name="harvest_comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
-    protected HarvestId() {
+    protected HarvestCommentId() {
     }
 
-    public HarvestId(Long value) { this.value = value; }
+    public HarvestCommentId(Long value) { this.value = value; }
 
     public Long getValue() { return value; }
 
@@ -37,12 +37,12 @@ public class HarvestId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HarvestId feedId = (HarvestId) o;
-        return Objects.equals(value, feedId.value);
+        HarvestCommentId that = (HarvestCommentId) o;
+        return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static HarvestId of(Long value) { return new HarvestId(value); }
+    public static HarvestCommentId of(Long value) { return new HarvestCommentId(value); }
 }

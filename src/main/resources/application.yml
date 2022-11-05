@@ -34,6 +34,8 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: 'create-drop'
+#    hibernate:
+#      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
