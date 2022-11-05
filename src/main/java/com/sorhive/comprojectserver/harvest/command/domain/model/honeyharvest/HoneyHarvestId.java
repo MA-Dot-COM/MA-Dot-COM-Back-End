@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.harvesting.command.domain.model.harvestimage;
+package com.sorhive.comprojectserver.harvest.command.domain.model.honeyharvest;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FeedImageId
+ * Class : LikedFeedId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,16 +20,15 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class HarvestImageId implements Serializable {
+public class HoneyHarvestId implements Serializable {
 
-    @Column(name="harvest_image_id")
+    @Column(name="honey_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
-    protected HarvestImageId() {
-    }
+    protected HoneyHarvestId() {}
 
-    public HarvestImageId(Long value) { this.value = value; }
+    public HoneyHarvestId(Long value) { this.value = value; }
 
     public Long getValue() { return value; }
 
@@ -37,12 +36,12 @@ public class HarvestImageId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        HarvestImageId that = (HarvestImageId) o;
+        HoneyHarvestId that = (HoneyHarvestId) o;
         return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static HarvestImageId of(Long value) { return  new HarvestImageId(value); }
+    public static HoneyHarvestId of(Long value) { return new HoneyHarvestId(value); }
 }

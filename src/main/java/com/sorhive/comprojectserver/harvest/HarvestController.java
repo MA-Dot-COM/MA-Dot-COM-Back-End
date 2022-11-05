@@ -1,0 +1,53 @@
+package com.sorhive.comprojectserver.harvest;
+
+import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
+import com.sorhive.comprojectserver.harvest.query.HarvestQueryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+/**
+ * <pre>
+ * Class : HarvestController
+ * Comment: 클래스에 대한 간단 설명
+ * History
+ * ================================================================
+ * DATE             AUTHOR           NOTE
+ * ----------------------------------------------------------------
+ * 2022-11-04       부시연           최초 생성
+ * </pre>
+ *
+ * @author 부시연(최초 작성자)
+ * @version 1(클래스 버전)
+ */
+@RestController
+@RequestMapping("api/v1")
+public class HarvestController {
+
+    private static final Logger log = LoggerFactory.getLogger(HarvestController.class);
+    private final HarvestQueryService harvestQueryService;
+
+    public HarvestController(HarvestQueryService harvestQueryService) {
+        this.harvestQueryService = harvestQueryService;
+    }
+
+    @GetMapping("harvest/{harvestId}")
+    public ResponseEntity<ResponseDto> selectHarvestDetail(@PathVariable Long harvestId) {
+
+        log.info("HarvestId:: " + harvestId);
+
+        return ResponseEntity.ok().body(
+                new ResponseDto(HttpStatus.OK
+                        , "하베스트 상세 조회 성공"
+                        , harvestQueryService.getHarvestData(harvestId)));
+
+    }
+}

@@ -42,5 +42,38 @@ public class Room {
     @Column(name = "room_create_time")
     private Timestamp createTime;
 
+    protected Room() {}
 
+    public Room(RoomId id, String wallpaper, String floor, String deleteYn, Timestamp deleteTime, Timestamp createTime) {
+        this.id = id;
+        this.wallpaper = wallpaper;
+        this.floor = floor;
+        this.deleteYn = deleteYn;
+        this.deleteTime = deleteTime;
+        this.createTime = createTime;
+    }
+
+    public RoomId getId() {
+        return id;
+    }
+
+    public String getWallpaper() {
+        return wallpaper;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public String getDeleteYn() {
+        return deleteYn;
+    }
+
+    public Timestamp getDeleteTime() {
+        return deleteTime;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
 }

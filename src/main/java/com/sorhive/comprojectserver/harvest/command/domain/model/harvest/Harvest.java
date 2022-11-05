@@ -1,9 +1,6 @@
-package com.sorhive.comprojectserver.harvesting.command.domain.model.harvest;
+package com.sorhive.comprojectserver.harvest.command.domain.model.harvest;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -25,10 +22,10 @@ import java.sql.Timestamp;
 public class Harvest {
 
     @EmbeddedId
-    private HarvestId id;
+    private HarvestId harvestId;
 
     @Column(name = "harvest_content")
-    private String content;
+    private String harvestContent;
 
     @Column(name = "harvest_create_time")
     private Timestamp createTime;
@@ -41,5 +38,34 @@ public class Harvest {
 
     @Column(name = "harvest_delete_yn")
     private Character deleteYn;
+
+
+    protected Harvest() {
+    }
+
+
+    public HarvestId getHarvestId() {
+        return harvestId;
+    }
+
+    public String getHarvestContent() {
+        return harvestContent;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public Timestamp getUploadTime() {
+        return uploadTime;
+    }
+
+    public Timestamp getDeleteTime() {
+        return deleteTime;
+    }
+
+    public Character getDeleteYn() {
+        return deleteYn;
+    }
 
 }

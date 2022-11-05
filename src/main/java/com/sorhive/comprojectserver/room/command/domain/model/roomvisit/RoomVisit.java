@@ -29,4 +29,18 @@ public class RoomVisit {
 
     @Column(name = "room_visit_time")
     private Timestamp time;
+
+    protected RoomVisit() {}
+    public RoomVisit(RoomVisitId id, Timestamp time) {
+        this.id = id;
+        this.time = time;
+    }
+
+    public RoomVisitId getId() {
+        return id;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
 }

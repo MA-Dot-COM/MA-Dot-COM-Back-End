@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.harvesting.command.domain.model.honeyharvest;
+package com.sorhive.comprojectserver.harvest.command.domain.model.honeyharvest;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
