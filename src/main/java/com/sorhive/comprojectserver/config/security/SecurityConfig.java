@@ -4,6 +4,7 @@ import com.sorhive.comprojectserver.config.jwt.JwtAccessDeniedHandler;
 import com.sorhive.comprojectserver.config.jwt.JwtAuthenticationEntryPoint;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -38,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    public SecurityConfig(TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
+    public SecurityConfig(@Lazy TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
             , JwtAccessDeniedHandler jwtAccessDeniedHandler){
         this.tokenProvider = tokenProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
