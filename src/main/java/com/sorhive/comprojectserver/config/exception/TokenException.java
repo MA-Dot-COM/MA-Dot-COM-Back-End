@@ -1,4 +1,4 @@
-package com.ohgiraffers.springbootrestapi.exception;
+package com.sorhive.comprojectserver.config.exception;
 
 public class TokenException extends RuntimeException{
 
