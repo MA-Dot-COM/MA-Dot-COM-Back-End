@@ -20,7 +20,7 @@ import java.util.Random;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_member")
+@Table(name = "tbl_members")
 public class Member {
 
     @EmbeddedId

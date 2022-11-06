@@ -3,7 +3,7 @@ package com.sorhive.comprojectserver.config.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ohgiraffers.springbootrestapi.exception.dto.ApiExceptionDto;
+import com.sorhive.comprojectserver.config.dto.ApiExceptionDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

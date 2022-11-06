@@ -23,7 +23,7 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_member")
+@Table(name = "tbl_members")
 public class MemberData {
 
     @Id
@@ -36,7 +36,7 @@ public class MemberData {
     @Column(name = "member_name")
     private String name;
 
-    @Column(name ="memberEmail")
+    @Column(name ="member_email")
     private String memberEmail;
 
     @Column(name = "member_role")
