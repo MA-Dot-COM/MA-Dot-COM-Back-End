@@ -3,8 +3,6 @@ package com.sorhive.comprojectserver.harvest.query;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 /**
  * <pre>
  * Class : HarvestDataDAO

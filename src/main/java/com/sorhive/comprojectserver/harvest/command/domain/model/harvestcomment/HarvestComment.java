@@ -1,6 +1,5 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
 
-import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestWriter;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
 
 import javax.persistence.*;
@@ -45,13 +44,13 @@ public class HarvestComment {
     @ManyToOne
     @JoinColumn(name = "harvest_id")
     private Harvest harvest;
-
-    @Embedded
-    private HarvestWriter harvestWriter;
+//
+//    @Embedded
+//    private HarvestWriter harvestWriter;
 
     protected HarvestComment() {}
 
-    public HarvestComment(HarvestCommentId id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn, Harvest harvest, HarvestWriter harvestWriter) {
+    public HarvestComment(HarvestCommentId id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn, Harvest harvest) {
         this.id = id;
         this.content = content;
         this.createTime = createTime;
@@ -59,7 +58,6 @@ public class HarvestComment {
         this.deleteTime = deleteTime;
         this.deleteYn = deleteYn;
         this.harvest = harvest;
-        this.harvestWriter = harvestWriter;
     }
 
     public HarvestCommentId getId() {
@@ -88,5 +86,4 @@ public class HarvestComment {
 
     public Harvest getHarvest() { return harvest; }
 
-    public HarvestWriter getWriter() { return harvestWriter; }
 }

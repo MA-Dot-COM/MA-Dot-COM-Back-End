@@ -1,8 +1,14 @@
 package com.sorhive.comprojectserver.member.command.domain.model.member;
 import com.sorhive.comprojectserver.member.exception.IdPasswordNotMatchingException;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 /**
@@ -21,10 +27,14 @@ import java.util.Random;
  */
 @Entity
 @Table(name = "tbl_members")
+@DynamicInsert
+@DynamicUpdate
 public class Member {
 
-    @EmbeddedId
-    private MemberCode memberCode;
+    @Id
+    @Column(name = "member_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long memberCode;
 
     @Embedded
     private MemberId memberId;
@@ -37,10 +47,13 @@ public class Member {
 
     @Column(name = "member_role")
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'ROLE_MEMBER'")
     private MemberRole memberRole;
 
-    @Embedded
-    private Password password;
+
+    @Column(name = "password")
+    @NotBlank(message = "비밀번호를 입력헤주세요")
+    private String password;
 
     @Column(name = "member_create_time")
     private Timestamp createTime;
@@ -52,24 +65,40 @@ public class Member {
     private Timestamp deleteTime;
 
     @Column(name = "member_delete_yn")
+    @ColumnDefault("'N'")
     private Character deleteYn;
 
     protected Member() {
     }
 
-    public Member(MemberCode memberCode, MemberId memberId, String memberName, String memberEmail, MemberRole memberRole, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+    public Member(MemberId memberId, String memberName, String password) {
+        setMemberId(memberId);
+        setMemberName(memberName);
+        setPassword(password);
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Member(Long memberCode, MemberId memberId, String memberName, String memberEmail, MemberRole memberRole, String password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
         this.memberCode = memberCode;
         this.memberId = memberId;
         this.memberName = memberName;
         this.memberEmail = memberEmail;
         this.memberRole = memberRole;
+        this.password = password;
         this.createTime = createTime;
         this.uploadTime = uploadTime;
         this.deleteTime = deleteTime;
         this.deleteYn = deleteYn;
     }
 
-    public MemberCode getMemberCode() {
+    public void setMemberId(MemberId memberId) { this.memberId = memberId; }
+
+    public void setMemberName(String memberName) { this.memberName = memberName; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public Long getMemberCode() {
         return memberCode;
     }
 
@@ -105,12 +134,12 @@ public class Member {
         return deleteYn;
     }
 
-    public Password getPassword() { return password; }
+    public String getPassword() { return password; }
 
-    public void initializePassword() {
-        String newPassword = generateRandomPassword();
-        this.password = new Password(newPassword);
-    }
+//    public void initializePassword() {
+//        String newPassword = generateRandomPassword();
+//        this.password = new Password(newPassword);
+//    }
 
     private String generateRandomPassword() {
         Random random = new Random();
@@ -118,11 +147,11 @@ public class Member {
         return Integer.toHexString(number);
     }
 
-    public void changePassword(String oldPw, String newPw) {
-        if (!password.match(oldPw)) {
-            throw new IdPasswordNotMatchingException();
-        }
-        this.password = new Password(newPw);
-    }
+//    public void changePassword(String oldPw, String newPw) {
+//        if (!password.match(oldPw)) {
+//            throw new IdPasswordNotMatchingException();
+//        }
+//        this.password = new Password(newPw);
+//    }
 
 }
