@@ -27,5 +27,5 @@ public interface MemberRepository extends Repository<Member, MemberId> {
 
     void save(Member member);
 
-    Optional<Member> findByMemberId(MemberCode memberCode);
+    Optional<Member> findByMemberId(MemberId memberId);
 }

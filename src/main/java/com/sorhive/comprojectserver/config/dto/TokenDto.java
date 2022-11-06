@@ -1,8 +1,19 @@
-package com.sorhive.comprojectserver.member.query.dto;
+package com.sorhive.comprojectserver.config.dto;
 
-
-
-
+/**
+ * <pre>
+ * Class : TokenDto
+ * Comment: 토큰 전송 객체
+ * History
+ * ================================================================
+ * DATE             AUTHOR           NOTE
+ * ----------------------------------------------------------------
+ * 2022-11-06       부시연           최초 생성
+ * </pre>
+ *
+ * @author 부시연(최초 작성자)
+ * @version 1(클래스 버전)
+ */
 public class TokenDto {
     private String grantType;
     private String memberName;

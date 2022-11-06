@@ -32,7 +32,7 @@ public class Member {
     @Column(name = "member_name")
     private String memberName;
 
-    @Column(name ="memberEmail")
+    @Column(name ="member_email")
     private String memberEmail;
 
     @Column(name = "member_role")
@@ -104,6 +104,8 @@ public class Member {
     public Character getDeleteYn() {
         return deleteYn;
     }
+
+    public Password getPassword() { return password; }
 
     public void initializePassword() {
         String newPassword = generateRandomPassword();

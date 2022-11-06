@@ -1,4 +1,4 @@
-package com.ohgiraffers.springbootrestapi.exception.dto;
+package com.sorhive.comprojectserver.config.dto;
 
 import org.springframework.http.HttpStatus;
 
