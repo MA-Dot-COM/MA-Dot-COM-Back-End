@@ -1,9 +1,8 @@
 package com.sorhive.comprojectserver.member.query;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,6 +27,7 @@ public class MemberData {
 
     @Id
     @Column(name = "member_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
 
     @Column(name = "member_id")
@@ -56,6 +56,7 @@ public class MemberData {
     private Timestamp deleteTime;
 
     @Column(name = "member_delete_yn")
+    @ColumnDefault("N")
     private Character deleteYn;
 
     protected MemberData() {

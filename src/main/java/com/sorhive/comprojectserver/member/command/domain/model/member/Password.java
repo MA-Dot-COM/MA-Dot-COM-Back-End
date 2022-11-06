@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 /**
  * <pre>
@@ -21,6 +23,8 @@ import javax.persistence.Embeddable;
 public class Password {
 
     @Column(name = "password")
+    @NotBlank(message = "비밀번호를 입력헤주세요")
+//    @Pattern(regexp = "^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%]).{8,20}$")
     private String value;
 
     protected Password() {

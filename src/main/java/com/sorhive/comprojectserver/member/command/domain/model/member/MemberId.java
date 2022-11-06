@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class MemberId implements Serializable {
 
     @Column(name="member_id")
+    @NotBlank(message = "ID를 입력해주세요.")
     private String id;
 
     protected MemberId() {

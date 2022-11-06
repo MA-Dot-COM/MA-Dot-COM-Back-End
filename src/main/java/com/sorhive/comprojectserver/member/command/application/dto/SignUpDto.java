@@ -4,11 +4,11 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import javax.validation.constraints.Pattern;
 
 /**
  * <pre>
- * Class : LoginDto
+ * Class : SignUpDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,21 +20,29 @@ import java.util.Objects;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-public class LoginDto {
+public class SignUpDto {
 
-    private MemberId memberId;
+    private String memberId;
+
+//    @NotBlank(message = "닉네임을 입력헤주세요")
+    private String memberName;
 
     private String password;
 
-    protected LoginDto() { }
+    protected SignUpDto() {}
 
-    public LoginDto(MemberId memberId, String password) {
+    public SignUpDto(String memberId, String memberName, String password) {
         this.memberId = memberId;
+        this.memberName = memberName;
         this.password = password;
     }
 
-    public MemberId getMemberId() {
+    public String getMemberId() {
         return memberId;
+    }
+
+    public String getMemberName() {
+        return memberName;
     }
 
     public String getPassword() {

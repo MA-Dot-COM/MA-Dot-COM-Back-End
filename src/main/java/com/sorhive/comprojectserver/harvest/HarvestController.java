@@ -1,13 +1,11 @@
 package com.sorhive.comprojectserver.harvest;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
-import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
 import com.sorhive.comprojectserver.harvest.query.HarvestQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -21,8 +21,10 @@ import java.sql.Timestamp;
 @Table(name = "tbl_harvests")
 public class Harvest {
 
-    @EmbeddedId
-    private HarvestId harvestId;
+    @Id
+    @Column(name="harvest_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long harvestId;
 
     @Column(name = "harvest_content")
     private String harvestContent;
@@ -44,7 +46,7 @@ public class Harvest {
     }
 
 
-    public HarvestId getHarvestId() {
+    public Long getHarvestId() {
         return harvestId;
     }
 

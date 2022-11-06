@@ -23,7 +23,6 @@ import java.util.Objects;
 public class HarvestId implements Serializable {
 
     @Column(name="harvest_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
     protected HarvestId() {
