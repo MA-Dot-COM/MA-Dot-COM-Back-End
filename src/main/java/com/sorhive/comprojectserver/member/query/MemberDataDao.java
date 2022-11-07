@@ -25,6 +25,7 @@ import java.util.Optional;
 public interface MemberDataDao extends Repository<MemberData, String> {
 
     MemberData findById(String memberId);
+    
     List<MemberData> findByNameLike(String name, Pageable pageable);
 
     List<MemberData> findAll(Specification<MemberData> spec, Pageable pageable);

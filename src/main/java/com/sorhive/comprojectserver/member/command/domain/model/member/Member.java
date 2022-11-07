@@ -1,14 +1,18 @@
 package com.sorhive.comprojectserver.member.command.domain.model.member;
 import com.sorhive.comprojectserver.member.exception.IdPasswordNotMatchingException;
+import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -29,7 +33,7 @@ import java.util.Random;
 @Table(name = "tbl_members")
 @DynamicInsert
 @DynamicUpdate
-public class Member {
+public class Member implements UserDetails {
 
     @Id
     @Column(name = "member_code")
@@ -77,8 +81,8 @@ public class Member {
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
-
-    public Member(Long memberCode, MemberId memberId, String memberName, String memberEmail, MemberRole memberRole, String password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+    @Builder
+    public Member(Long memberCode, MemberId memberId, String memberName, String memberEmail, MemberRole memberRole, String password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn, Collection<? extends GrantedAuthority> authorities) {
         this.memberCode = memberCode;
         this.memberId = memberId;
         this.memberName = memberName;
@@ -89,6 +93,7 @@ public class Member {
         this.uploadTime = uploadTime;
         this.deleteTime = deleteTime;
         this.deleteYn = deleteYn;
+        this.authorities = authorities;
     }
 
     public void setMemberId(MemberId memberId) { this.memberId = memberId; }
@@ -133,24 +138,50 @@ public class Member {
         return deleteYn;
     }
 
+    // 이하 코드는 security 를 위한 용도
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
     public String getPassword() { return password; }
 
-//    public void initializePassword() {
-//        String newPassword = generateRandomPassword();
-//        this.password = new Password(newPassword);
-//    }
+    @Override
+    public String getUsername() {
+        return this.memberId.getId();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     private String generateRandomPassword() {
         Random random = new Random();
         int number = random.nextInt();
         return Integer.toHexString(number);
     }
-
-//    public void changePassword(String oldPw, String newPw) {
-//        if (!password.match(oldPw)) {
-//            throw new IdPasswordNotMatchingException();
-//        }
-//        this.password = new Password(newPw);
-//    }
 
 }

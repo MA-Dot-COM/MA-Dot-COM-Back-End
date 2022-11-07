@@ -70,9 +70,14 @@ public class AuthService {
         log.info("[AuthService] {}", loginDto);
         System.out.println(loginDto.getPassword().toString());
 
+        Member member;
+
         // 1. 아이디 조회
-        Member member = memberRepository.findByMemberId(loginDto.getMemberId())
-                .orElseThrow(() -> new LoginFailedException("잘못된 아이디 또는 비밀번호입니다"));
+        try{
+             member = memberRepository.findByMemberId(loginDto.getMemberId());
+        } catch (Exception e) {
+            throw new LoginFailedException("잘못된 아이디 또는 비밀번호입니다");
+        };
 
         // 2. 비밀번호 매칭
         if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword().toString())) {

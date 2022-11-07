@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Autowired
-    public SecurityConfig(@Lazy TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
+    public SecurityConfig(TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
             , JwtAccessDeniedHandler jwtAccessDeniedHandler){
         this.tokenProvider = tokenProvider;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
