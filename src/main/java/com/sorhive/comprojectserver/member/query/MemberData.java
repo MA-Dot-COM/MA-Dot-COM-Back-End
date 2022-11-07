@@ -3,9 +3,12 @@ package com.sorhive.comprojectserver.member.query;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * <pre>
@@ -23,7 +26,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_members")
-public class MemberData {
+public class MemberData implements UserDetails {
 
     @Id
     @Column(name = "member_code")
@@ -95,10 +98,6 @@ public class MemberData {
         return memberRole;
     }
 
-    public Password getPassword() {
-        return password;
-    }
-
     public Timestamp getCreateTime() {
         return createTime;
     }
@@ -113,6 +112,44 @@ public class MemberData {
 
     public Character getDeleteYn() {
         return deleteYn;
+    }
+
+    // 이하 코드는 security 를 위한 용도
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password.toString();
+    }
+    @Override
+    public String getUsername() {
+        return this.getId();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 }
