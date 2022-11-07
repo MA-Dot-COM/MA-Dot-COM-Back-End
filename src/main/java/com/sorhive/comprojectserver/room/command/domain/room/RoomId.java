@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.model.room;
+package com.sorhive.comprojectserver.room.command.domain.room;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : GuestBookId
+ * Class : RoomId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,15 +20,16 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class GuestBookRoom implements Serializable {
+public class RoomId implements Serializable {
 
-    @Column(name="guestbook_id")
+    @Column(name="room_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
-    protected GuestBookRoom() {
+    protected RoomId() {
     }
 
-    public GuestBookRoom(Long value) { this.value = value; }
+    public RoomId(Long value) { this.value = value; }
 
     public Long getValue() { return value; }
 
@@ -36,12 +37,12 @@ public class GuestBookRoom implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GuestBookRoom that = (GuestBookRoom) o;
-        return Objects.equals(value, that.value);
+        RoomId roomId = (RoomId) o;
+        return Objects.equals(value, roomId.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static GuestBookRoom of(Long value) { return new GuestBookRoom(value); }
+    public static RoomId of(Long value) { return new RoomId(value); }
 }

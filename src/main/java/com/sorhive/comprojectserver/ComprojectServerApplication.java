@@ -13,8 +13,8 @@ public class ComprojectServerApplication {
 
 
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
-            + "classpath:application.yml, "
-            + "classpath:application-s3.yml";
+            + "classpath:application.yml";
+//            + "classpath:application-s3.yml";
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(ComprojectServerApplication.class)

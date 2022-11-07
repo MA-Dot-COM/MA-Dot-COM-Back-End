@@ -1,4 +1,6 @@
-package com.sorhive.comprojectserver.room.command.domain.model.guestbook;
+package com.sorhive.comprojectserver.room.command.domain.guestbook;
+
+import com.sorhive.comprojectserver.room.command.domain.room.Room;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -28,6 +30,13 @@ public class GuestBook {
 
     @Column(name = "guestbook_content")
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
+
+    @Embedded
+    private GuestBookWriter guestBookWriter;
 
     @Column(name = "guestbook_create_time")
     private Timestamp createTime;

@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.model.room;
+package com.sorhive.comprojectserver.room.command.domain.roomvisit;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 
@@ -10,32 +10,32 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : Writer
+ * Class : RoomVisitor
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-05       부시연           최초 생성
+ * 2022-11-07       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
 @Embeddable
-public class RoomCreator {
+public class RoomVisitor {
 
     @AttributeOverrides(
-            @AttributeOverride(name = "value", column = @Column(name = "room_creator_code"))
+            @AttributeOverride(name = "value", column = @Column(name = "room_visitor_code"))
     )
     private MemberCode memberCode;
 
-    @Column(name = "room_creator_name")
+    @Column(name = "room_visitor_name")
     private String name;
 
-    protected RoomCreator() {}
+    protected RoomVisitor() {}
 
-    public RoomCreator(MemberCode memberCode, String name) {
+    public RoomVisitor(MemberCode memberCode, String name) {
         this.memberCode = memberCode;
         this.name = name;
     }
@@ -52,8 +52,8 @@ public class RoomCreator {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoomCreator roomCreator = (RoomCreator) o;
-        return Objects.equals(memberCode, roomCreator.memberCode) && Objects.equals(name, roomCreator.name);
+        RoomVisitor that = (RoomVisitor) o;
+        return Objects.equals(memberCode, that.memberCode) && Objects.equals(name, that.name);
     }
 
     @Override

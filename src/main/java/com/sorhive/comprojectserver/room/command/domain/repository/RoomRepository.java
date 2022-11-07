@@ -1,7 +1,7 @@
 package com.sorhive.comprojectserver.room.command.domain.repository;
 
-import com.sorhive.comprojectserver.room.command.domain.model.room.Room;
-import com.sorhive.comprojectserver.room.command.domain.model.room.RoomId;
+import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import com.sorhive.comprojectserver.room.command.domain.room.RoomId;
 import org.springframework.data.repository.Repository;
 
 import java.util.Optional;
