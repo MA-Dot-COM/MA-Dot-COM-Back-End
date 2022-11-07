@@ -3,13 +3,13 @@ package com.sorhive.comprojectserver.room.command.infra;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.query.MemberData;
 import com.sorhive.comprojectserver.member.query.MemberQueryService;
-import com.sorhive.comprojectserver.room.command.domain.room.RoomCreatorService;
-import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
+import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBookWriter;
+import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBookWriterService;
 import org.springframework.stereotype.Service;
 
 /**
  * <pre>
- * Class : RoomCreatorServiceImpl
+ * Class : GuestBookWriterServiceImpl
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -22,17 +22,17 @@ import org.springframework.stereotype.Service;
  * @version 1(클래스 버전)
  */
 @Service
-public class RoomCreatorServiceImpl implements RoomCreatorService {
+public class GuestBookWriterServiceImpl implements GuestBookWriterService {
 
     private MemberQueryService memberQueryService;
 
-    public RoomCreatorServiceImpl(MemberQueryService memberQueryService) { this.memberQueryService = memberQueryService; }
+    public GuestBookWriterServiceImpl(MemberQueryService memberQueryService) { this.memberQueryService = memberQueryService; }
 
     @Override
-    public RoomCreator createRoomCreator(MemberCode roomCreatorMemberCode) {
+    public GuestBookWriter createGuestBookWriter(MemberCode guestbookWriterMemberCode) {
 
-        MemberData memberData = memberQueryService.getMemberData(roomCreatorMemberCode.getValue());
+        MemberData memberData = memberQueryService.getMemberData(guestbookWriterMemberCode.getValue());
 
-        return new RoomCreator(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new GuestBookWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
     }
 }

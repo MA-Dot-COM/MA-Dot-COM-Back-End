@@ -1,7 +1,7 @@
-package com.sorhive.comprojectserver.room.command.application.service;
+package com.sorhive.comprojectserver.room.command.domain.room;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.room.command.domain.model.room.RoomCreator;
+import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
 
 /**
  * <pre>

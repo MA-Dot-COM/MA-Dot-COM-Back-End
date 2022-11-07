@@ -1,7 +1,13 @@
-package com.sorhive.comprojectserver.room.command.domain.model.room;
+package com.sorhive.comprojectserver.room.command.domain.room;
+
+import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.PlacedFurniture;
+import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -26,20 +32,26 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "wallpaper_path")
-//    private String wallpaper;
-//
-//    @Column(name = "floor_path")
-//    private String floor;
+    @Column(name = "wall_number")
+    private Long wallNumber;
 
-    @Column(columnDefinition = "json", name = "room_info")
-    private String roomInfo;
+    @Column(name = "floor_number")
+    private Long floorNumber;
 
-//    @Column(name = "room_delete_yn")
-//    private String deleteYn;
-//
-//    @Column(name = "room_delete_time")
-//    private Timestamp deleteTime;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<PlacedFurniture> placedFurnitures = new ArrayList<PlacedFurniture>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
+
+    @Column(name = "room_delete_yn")
+    private String deleteYn;
+
+    @Column(name = "room_delete_time")
+    private Timestamp deleteTime;
 
     @Embedded
     private RoomCreator roomCreator;
@@ -52,16 +64,14 @@ public class Room {
 
     protected Room() {}
 
-    public Room(Long id, String roomInfo, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
+    public Room(Long id, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
         this.id = id;
-        this.roomInfo = roomInfo;
         this.roomCreator = roomCreator;
         this.createTime = createTime;
         this.uploadTime = uploadTime;
     }
 
-    public Room(String roomInfo, RoomCreator roomCreator) {
-        setRoomInfo(roomInfo);
+    public Room(RoomCreator roomCreator) {
         setRoomCreator(roomCreator);
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
@@ -72,10 +82,6 @@ public class Room {
     public RoomCreator getRoomCreator() { return roomCreator; }
 
     public void setRoomCreator(RoomCreator roomCreator) { this.roomCreator = roomCreator; }
-
-    public String getRoomInfo() { return roomInfo; }
-
-    public void setRoomInfo(String roomInfo) { this.roomInfo = roomInfo; }
 
     public Timestamp getUploadTime() { return uploadTime; }
 

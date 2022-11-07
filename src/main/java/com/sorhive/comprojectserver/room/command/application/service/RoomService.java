@@ -2,9 +2,10 @@ package com.sorhive.comprojectserver.room.command.application.service;
 
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
-import com.sorhive.comprojectserver.room.command.domain.model.room.Room;
-import com.sorhive.comprojectserver.room.command.domain.model.room.RoomCreator;
+import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
+import com.sorhive.comprojectserver.room.command.domain.room.RoomCreatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,6 @@ public class RoomService {
         RoomCreator roomCreator = roomCreatorService.createRoomCreator(roomCreateDto.getRoomCreatorMemberCode());
 
         Room room = new Room(
-                roomCreateDto.getRoomInfo(),
                 roomCreator
         );
 
