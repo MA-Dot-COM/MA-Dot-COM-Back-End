@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.member.command.domain.model.freindrecommandation;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * <pre>
@@ -23,7 +20,9 @@ import javax.persistence.Table;
 @Table(name = "tbl_freind_recommandations")
 public class FreindRecommandation {
 
-    @EmbeddedId
-    private FreindRecommandationId id;
+    @Id
+    @Column(name = "freind_recommandation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 }

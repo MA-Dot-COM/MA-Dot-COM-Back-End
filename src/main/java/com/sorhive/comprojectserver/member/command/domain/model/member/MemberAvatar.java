@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.model.guestbook;
+package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,13 +6,13 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : GuestBookId
+ * Class : AvatarId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-02       부시연           최초 생성
+ * 2022-11-04       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -20,29 +20,26 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class GuestBookId implements Serializable {
+public class MemberAvatar implements Serializable{
 
-    @Column(name="guestbook_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="avatar_id")
     private Long value;
 
-    protected GuestBookId() {
+    protected MemberAvatar() {
     }
 
-    public GuestBookId(Long value) { this.value = value; }
-
-    public Long getValue() { return value; }
+    public MemberAvatar(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GuestBookId that = (GuestBookId) o;
-        return Objects.equals(value, that.value);
+        MemberAvatar memberAvatar = (MemberAvatar) o;
+        return Objects.equals(value, memberAvatar.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static GuestBookId of(Long value) { return new GuestBookId(value); }
+    public static MemberAvatar of(Long value) { return new MemberAvatar(value); }
 }

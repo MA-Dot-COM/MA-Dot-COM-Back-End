@@ -16,6 +16,7 @@ package com.sorhive.comprojectserver.config.dto;
  */
 public class TokenDto {
     private String grantType;
+
     private String memberName;
     private String accessToken;
     private Long accessTokenExpiresIn;

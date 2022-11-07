@@ -58,12 +58,14 @@ public class TokenProvider {
         log.info("[TokenProvider] {}", member.getMemberRole());
 
         // 권한들 가져오기
+        String role = member.getMemberRole().toString();
         List<String> roles =  Collections.singletonList(member.getMemberRole().toString());
 
         Claims claims = Jwts
                 .claims()
-                .setSubject(String.valueOf(member.getMemberCode()));
-        claims.put(AUTHORITIES_KEY, roles);
+//                .setSubject(String.valueOf(member.getMemberCode()))
+                .setSubject(String.valueOf(member.getMemberId().getId()));
+        claims.put(AUTHORITIES_KEY, role);
 
         long now = (new Date()).getTime();
 

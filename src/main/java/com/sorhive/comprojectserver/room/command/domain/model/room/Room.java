@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.room.command.domain.model.room;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -24,56 +21,66 @@ import java.sql.Timestamp;
 @Table(name = "tbl_rooms")
 public class Room {
 
-    @EmbeddedId
-    private RoomId id;
+    @Id
+    @Column(name="room_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "wallpaper_path")
-    private String wallpaper;
+//    @Column(name = "wallpaper_path")
+//    private String wallpaper;
+//
+//    @Column(name = "floor_path")
+//    private String floor;
 
-    @Column(name = "floor_path")
-    private String floor;
+    @Column(columnDefinition = "json", name = "room_info")
+    private String roomInfo;
 
-    @Column(name = "room_delete_yn")
-    private String deleteYn;
+//    @Column(name = "room_delete_yn")
+//    private String deleteYn;
+//
+//    @Column(name = "room_delete_time")
+//    private Timestamp deleteTime;
 
-    @Column(name = "room_delete_time")
-    private Timestamp deleteTime;
+    @Embedded
+    private RoomCreator roomCreator;
 
     @Column(name = "room_create_time")
     private Timestamp createTime;
 
+    @Column(name = "room_upload_time")
+    private Timestamp uploadTime;
+
     protected Room() {}
 
-    public Room(RoomId id, String wallpaper, String floor, String deleteYn, Timestamp deleteTime, Timestamp createTime) {
+    public Room(Long id, String roomInfo, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
         this.id = id;
-        this.wallpaper = wallpaper;
-        this.floor = floor;
-        this.deleteYn = deleteYn;
-        this.deleteTime = deleteTime;
+        this.roomInfo = roomInfo;
+        this.roomCreator = roomCreator;
         this.createTime = createTime;
+        this.uploadTime = uploadTime;
     }
 
-    public RoomId getId() {
-        return id;
+    public Room(String roomInfo, RoomCreator roomCreator) {
+        setRoomInfo(roomInfo);
+        setRoomCreator(roomCreator);
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
-    public String getWallpaper() {
-        return wallpaper;
-    }
+    public Long getId() { return id; }
 
-    public String getFloor() {
-        return floor;
-    }
+    public RoomCreator getRoomCreator() { return roomCreator; }
 
-    public String getDeleteYn() {
-        return deleteYn;
-    }
+    public void setRoomCreator(RoomCreator roomCreator) { this.roomCreator = roomCreator; }
 
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
+    public String getRoomInfo() { return roomInfo; }
+
+    public void setRoomInfo(String roomInfo) { this.roomInfo = roomInfo; }
+
+    public Timestamp getUploadTime() { return uploadTime; }
 
     public Timestamp getCreateTime() {
         return createTime;
     }
+
 }
