@@ -33,4 +33,6 @@ public interface MemberDataDao extends Repository<MemberData, String> {
 
     List<MemberData> findFirst3ByNameLikeOrderByName(String name);
     Optional<MemberData> findFirstByNameLikeOrderByName(String name);
+
+    MemberData findByMemberCode(Long memberCode);
 }

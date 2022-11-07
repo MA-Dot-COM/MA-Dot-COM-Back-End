@@ -21,8 +21,8 @@ import java.sql.Timestamp;
 @Table(name = "tbl_follows")
 public class Follow {
 
-    @EmbeddedId
-    private FollowId id;
+    @Id
+    private Long id;
 
     @Column(name = "follow_create_time")
     private Timestamp createTime;

@@ -3,6 +3,7 @@ package com.sorhive.comprojectserver.config.security;
 import com.sorhive.comprojectserver.config.jwt.JwtAccessDeniedHandler;
 import com.sorhive.comprojectserver.config.jwt.JwtAuthenticationEntryPoint;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+    @Autowired
     public SecurityConfig(@Lazy TokenProvider tokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
             , JwtAccessDeniedHandler jwtAccessDeniedHandler){
         this.tokenProvider = tokenProvider;
@@ -51,14 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        
-        web
-                // 외부에서 이미지 파일에 접근 가능 하도록 설정
-                .ignoring();
-
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//
+//        web
+//                // 외부에서 이미지 파일에 접근 가능 하도록 설정
+//                .ignoring();
+//
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -80,8 +82,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .antMatchers("/**").permitAll()
-                    .antMatchers("/api/**").hasAnyRole("ROLE_USER", "ROLE_ADMIN")  // 나머지 API 는 전부 인증 필요
+                    .antMatchers("/api/v1/auth/**").permitAll()
+                    .antMatchers("/**").hasAnyRole("MEMBER", "ADMIN")  // 나머지 API 는 전부 인증 필요
                 .and()
                 .cors()
                 .and()

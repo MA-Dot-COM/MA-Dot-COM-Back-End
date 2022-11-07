@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.room.command.domain.model.guestbook;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -24,8 +21,10 @@ import java.sql.Timestamp;
 @Table(name = "tbl_guestbooks")
 public class GuestBook {
 
-    @EmbeddedId
-    private GuestBookId id;
+    @Id
+    @Column(name="guestbook_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "guestbook_content")
     private String content;
@@ -44,7 +43,7 @@ public class GuestBook {
 
     protected GuestBook () {}
 
-    public GuestBook(GuestBookId id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+    public GuestBook(Long id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
         this.id = id;
         this.content = content;
         this.createTime = createTime;
@@ -53,7 +52,7 @@ public class GuestBook {
         this.deleteYn = deleteYn;
     }
 
-    public GuestBookId getId() {
+    public Long getId() {
         return id;
     }
 

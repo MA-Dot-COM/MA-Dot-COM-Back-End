@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.model.roomvisit;
+package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,13 +6,13 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : RoomVisitId
+ * Class : FreindRecommandationId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-02       부시연           최초 생성
+ * 2022-11-04       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -20,29 +20,25 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class RoomVisitId implements Serializable {
+public class MemberFreindRecommandation implements Serializable {
 
-    @Column(name="room_visit_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "freind_recommandation_id")
     private Long value;
 
-    protected RoomVisitId() {
-    }
+    protected MemberFreindRecommandation() { }
 
-    public RoomVisitId(Long value) { this.value = value; }
-
-    public Long getValue() { return value; }
+    public MemberFreindRecommandation(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoomVisitId that = (RoomVisitId) o;
+        MemberFreindRecommandation that = (MemberFreindRecommandation) o;
         return Objects.equals(value, that.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static RoomVisitId of(Long value) { return new RoomVisitId(value); }
+    public static MemberFreindRecommandation of(Long value) { return new MemberFreindRecommandation(value); }
 }

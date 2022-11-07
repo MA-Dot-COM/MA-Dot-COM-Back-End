@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.command.domain.model.avatar;
+package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : AvatarId
+ * Class : FollowId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,27 +20,26 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class AvatarId implements Serializable{
+public class MemberFollow implements Serializable {
 
-    @Column(name="avatar_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fallow_id")
     private Long value;
 
-    protected AvatarId() {
+    protected MemberFollow() {
     }
 
-    public AvatarId(Long value) { this.value = value; }
+    public MemberFollow(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AvatarId avatarId = (AvatarId) o;
-        return Objects.equals(value, avatarId.value);
+        MemberFollow memberFollow = (MemberFollow) o;
+        return Objects.equals(value, memberFollow.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static AvatarId of(Long value) { return new AvatarId(value); }
+    public static MemberFollow of(Long value) { return new MemberFollow(value); }
 }

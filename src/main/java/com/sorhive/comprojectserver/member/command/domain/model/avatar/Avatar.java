@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.member.command.domain.model.avatar;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * <pre>
@@ -23,8 +20,10 @@ import javax.persistence.Table;
 @Table(name ="tbl_avatars")
 public class Avatar {
 
-    @EmbeddedId
-    private AvatarId id;
+    @Id
+    @Column(name="avatar_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "avatar_face_type")
     private String faceType;

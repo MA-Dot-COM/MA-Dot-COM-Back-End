@@ -50,7 +50,6 @@ public class Member {
     @ColumnDefault("'ROLE_MEMBER'")
     private MemberRole memberRole;
 
-
     @Column(name = "password")
     @NotBlank(message = "비밀번호를 입력헤주세요")
     private String password;

@@ -28,7 +28,7 @@ public class MemberData {
     @Id
     @Column(name = "member_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long code;
+    private Long memberCode;
 
     @Column(name = "member_id")
     private String id;
@@ -62,8 +62,8 @@ public class MemberData {
     protected MemberData() {
     }
 
-    public MemberData(Long code, String id, String name, String memberEmail, MemberRole memberRole, Password password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
-        this.code = code;
+    public MemberData(Long memberCode, String id, String name, String memberEmail, MemberRole memberRole, Password password, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+        this.memberCode = memberCode;
         this.id = id;
         this.name = name;
         this.memberEmail = memberEmail;
@@ -75,8 +75,8 @@ public class MemberData {
         this.deleteYn = deleteYn;
     }
 
-    public Long getCode() {
-        return code;
+    public Long getMemberCode() {
+        return memberCode;
     }
 
     public String getId() {

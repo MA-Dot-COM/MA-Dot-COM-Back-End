@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.query;
 
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.query.MemberDataDao;
 import com.sorhive.comprojectserver.member.query.MemberData;
 import com.sorhive.comprojectserver.member.command.application.NoMemberException;
@@ -28,6 +29,8 @@ public class MemberQueryService {
         this.memberDataDao = memberDataDao;
     }
 
+
+
     public MemberData getMemberData(String memberId) {
 
         MemberData memberData = memberDataDao.findById(memberId);
@@ -36,5 +39,15 @@ public class MemberQueryService {
         }
 
         return memberData;
+    }
+
+    public MemberData getMemberData(Long memberCode) {
+        MemberData memberData = memberDataDao.findByMemberCode(memberCode);
+        if(memberData == null) {
+            throw new NoMemberException();
+        }
+
+        return memberData;
+
     }
 }

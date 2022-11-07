@@ -1,9 +1,6 @@
 package com.sorhive.comprojectserver.room.command.domain.model.roomvisit;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -24,19 +21,21 @@ import java.sql.Timestamp;
 @Table(name = "tbl_room_visits")
 public class RoomVisit {
 
-    @EmbeddedId
-    private RoomVisitId id;
+    @Id
+    @Column(name="room_visit_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "room_visit_time")
     private Timestamp time;
 
     protected RoomVisit() {}
-    public RoomVisit(RoomVisitId id, Timestamp time) {
+    public RoomVisit(Long id, Timestamp time) {
         this.id = id;
         this.time = time;
     }
 
-    public RoomVisitId getId() {
+    public Long getId() {
         return id;
     }
 
