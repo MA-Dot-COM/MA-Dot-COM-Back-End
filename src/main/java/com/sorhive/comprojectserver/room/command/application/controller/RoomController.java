@@ -39,6 +39,7 @@ public class RoomController {
 
     @PostMapping("room")
     public ResponseEntity<ResponseDto> createRoom(@Valid @RequestBody RoomCreateDto roomCreateDto) {
+        System.out.println(roomCreateDto);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomService.createRoom(roomCreateDto)));
     }
