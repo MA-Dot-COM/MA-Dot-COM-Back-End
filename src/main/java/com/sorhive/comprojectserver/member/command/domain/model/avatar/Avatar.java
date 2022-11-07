@@ -1,5 +1,8 @@
 package com.sorhive.comprojectserver.member.command.domain.model.avatar;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 
 /**
@@ -18,6 +21,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name ="tbl_avatars")
+@DynamicInsert
+@DynamicUpdate
 public class Avatar {
 
     @Id
@@ -37,5 +42,49 @@ public class Avatar {
     @Column(name = "avatar_hair_type")
     private String hairType;
 
+    protected Avatar() {}
+
+    public Avatar(Long id, String faceType, String eyeBrowsType, String eyeType, String hairType) {
+        this.id = id;
+        this.faceType = faceType;
+        this.eyeBrowsType = eyeBrowsType;
+        this.eyeType = eyeType;
+        this.hairType = hairType;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getFaceType() {
+        return faceType;
+    }
+
+    public String getEyeBrowsType() {
+        return eyeBrowsType;
+    }
+
+    public String getEyeType() {
+        return eyeType;
+    }
+
+    public String getHairType() {
+        return hairType;
+    }
+    public void setFaceType(String faceType) {
+        this.faceType = faceType;
+    }
+
+    public void setEyeBrowsType(String eyeBrowsType) {
+        this.eyeBrowsType = eyeBrowsType;
+    }
+
+    public void setEyeType(String eyeType) {
+        this.eyeType = eyeType;
+    }
+
+    public void setHairType(String hairType) {
+        this.hairType = hairType;
+    }
 }
 
