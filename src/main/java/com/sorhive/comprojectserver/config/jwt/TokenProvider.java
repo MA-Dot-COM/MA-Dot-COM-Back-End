@@ -63,7 +63,8 @@ public class TokenProvider {
 
         Claims claims = Jwts
                 .claims()
-                .setSubject(String.valueOf(member.getMemberCode()));
+                .setSubject(String.valueOf(member.getMemberCode()))
+                .setId(String.valueOf(member.getMemberId().getId()));
         claims.put(AUTHORITIES_KEY, role);
 
         long now = (new Date()).getTime();
