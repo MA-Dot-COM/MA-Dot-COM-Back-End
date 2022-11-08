@@ -1,5 +1,7 @@
 package com.sorhive.comprojectserver.member.command.domain.model.member;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
@@ -23,7 +25,7 @@ import java.util.Objects;
 @Embeddable
 public class MemberId implements Serializable {
 
-    @Column(name="member_id")
+    @Column(name="member_id", unique = true)
     @NotBlank(message = "ID를 입력해주세요.")
     private String id;
 

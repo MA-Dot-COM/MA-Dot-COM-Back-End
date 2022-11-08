@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 public class PlacedFurniture {
 
     @Id
-    @Column(name="placed_furniture_id")
+    @Column(name="placed_furniture_id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
