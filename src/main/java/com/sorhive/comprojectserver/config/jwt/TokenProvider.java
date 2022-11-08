@@ -65,6 +65,7 @@ public class TokenProvider {
                 .claims()
                 .setSubject(String.valueOf(member.getMemberId().getId()));
         claims.put(AUTHORITIES_KEY, role);
+        claims.put("memberCode", String.valueOf(member.getMemberCode()));
 
         long now = (new Date()).getTime();
 
