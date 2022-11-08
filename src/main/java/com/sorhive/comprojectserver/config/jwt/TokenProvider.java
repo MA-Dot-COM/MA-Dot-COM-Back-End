@@ -63,9 +63,9 @@ public class TokenProvider {
 
         Claims claims = Jwts
                 .claims()
-                .setSubject(String.valueOf(member.getMemberId().getId()));
+                .setSubject(String.valueOf(member.getMemberId().getId()))
+                .setId(String.valueOf(member.getMemberCode()));
         claims.put(AUTHORITIES_KEY, role);
-        claims.put("memberCode", String.valueOf(member.getMemberCode()));
 
         long now = (new Date()).getTime();
 
@@ -73,7 +73,6 @@ public class TokenProvider {
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 .setClaims(claims)
-                //.claim(AUTHORITIES_KEY, roles)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
@@ -89,6 +88,16 @@ public class TokenProvider {
                 .parseClaimsJws(accessToken)
                 .getBody()
                 .getSubject();
+    }
+
+    public String getUserCode(String accessToken){
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(accessToken)
+                .getBody()
+                .getId();
     }
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
