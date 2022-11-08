@@ -25,7 +25,11 @@ spring:
       enabled: false
     livereload:
       enabled: true
-
+  data:
+    mongodb:
+      uri: mongodb+srv://comproject:comproject@comproject.af2gbjf.mongodb.net/?retryWrites=true&w=majority
+      authentication-database: admin
+      database: comproject
   # jpa config
   jpa:
     generate-ddl: false
