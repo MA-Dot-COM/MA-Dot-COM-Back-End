@@ -33,8 +33,8 @@ import java.util.Optional;
  */
 @Component
 @RequiredArgsConstructor
-public class S3File {
-    private static final Logger log = LoggerFactory.getLogger(S3File.class);
+public class S3ConvertFile {
+    private static final Logger log = LoggerFactory.getLogger(S3ConvertFile.class);
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -49,6 +49,9 @@ public class S3File {
     }
 
     private String upload(File uploadFile, String changeName, String dirName) throws IOException {
+        Thumbnails.of(uploadFile)
+                .size(224, 224)
+                .toFile(uploadFile);
 
         String fileName = dirName + "/" + changeName;
         String uploadImageUrl = putS3(uploadFile, fileName);

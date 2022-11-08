@@ -38,42 +38,6 @@ public class PlacedFurniture {
     @Column(name = "furniture_number")
     private Long furnitureNumber;
 
-    @Column(name = "position_x")
-    private Double positionX;
-
-    @Column(name = "position_y")
-    private Double positionY;
-
-    @Column(name = "position_z")
-    private Double positionZ;
-
-    @Column(name = "scale_x")
-    private Double scaleX;
-
-    @Column(name = "scale_y")
-    private Double scaleY;
-
-    @Column(name = "scale_z")
-    private Double scaleZ;
-
-    @Column(name = "angle_x")
-    private Double angleX;
-
-    @Column(name = "angle_y")
-    private Double angleY;
-
-    @Column(name = "angle_z")
-    private Double angleZ;
-
-    @Column(name = "box_position_x")
-    private Double boxPositionX;
-
-    @Column(name = "box_position_y")
-    private Double boxPositionY;
-
-    @Column(name = "box_position_z")
-    private Double boxPositionZ;
-
     @Column(name = "placed_furniture_create_time")
     private Timestamp createTime;
 
@@ -85,4 +49,81 @@ public class PlacedFurniture {
 
     @Column(name = "placed_furniture_delete_yn")
     private Character deleteYn;
+
+    @Embedded
+    private Angle angle;
+
+    @Embedded
+    private BoxPosition boxPosition;
+
+    @Embedded
+    private Position position;
+
+    @Embedded
+    private Scale scale;
+
+    public PlacedFurniture() { }
+
+    public PlacedFurniture(Long id, Room room, Long categoryNumber, Long furnitureNumber, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn, Angle angle, BoxPosition boxPosition, Position position, Scale scale) {
+        Id = id;
+        this.room = room;
+        this.categoryNumber = categoryNumber;
+        this.furnitureNumber = furnitureNumber;
+        this.createTime = createTime;
+        this.uploadTime = uploadTime;
+        this.deleteTime = deleteTime;
+        this.deleteYn = deleteYn;
+        this.angle = angle;
+        this.boxPosition = boxPosition;
+        this.position = position;
+        this.scale = scale;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public Long getCategoryNumber() {
+        return categoryNumber;
+    }
+
+    public Long getFurnitureNumber() {
+        return furnitureNumber;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public Timestamp getUploadTime() {
+        return uploadTime;
+    }
+
+    public Timestamp getDeleteTime() {
+        return deleteTime;
+    }
+
+    public Character getDeleteYn() {
+        return deleteYn;
+    }
+
+    public Angle getAngle() {
+        return angle;
+    }
+
+    public BoxPosition getBoxPosition() {
+        return boxPosition;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Scale getScale() {
+        return scale;
+    }
 }
