@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.placedfurniture;
+package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
