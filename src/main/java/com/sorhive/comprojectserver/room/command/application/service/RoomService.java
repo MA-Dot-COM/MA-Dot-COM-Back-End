@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.room.command.application.service;
 
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
@@ -45,7 +46,7 @@ public class RoomService {
         log.info("[RoomService] createRoom Start ===================================");
         log.info("[RoomService] roomCreateDto {}", roomCreateDto);
 
-        RoomCreator roomCreator = roomCreatorService.createRoomCreator(roomCreateDto.getRoomCreatorMemberCode());
+        RoomCreator roomCreator = roomCreatorService.createRoomCreator(new MemberCode(roomCreateDto.getMemberCode()));
 
         Room room = new Room(
                 roomCreator
