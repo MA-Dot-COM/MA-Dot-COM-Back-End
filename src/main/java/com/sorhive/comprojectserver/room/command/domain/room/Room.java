@@ -64,8 +64,15 @@ public class Room {
 
     protected Room() {}
 
-    public Room(Long id, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
+    public Room(Long id, Long wallNumber, Long floorNumber, List<PlacedFurniture> placedFurnitures, List<GuestBook> guestBooks, List<RoomVisit> roomVisits, String deleteYn, Timestamp deleteTime, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
         this.id = id;
+        this.wallNumber = wallNumber;
+        this.floorNumber = floorNumber;
+        this.placedFurnitures = placedFurnitures;
+        this.guestBooks = guestBooks;
+        this.roomVisits = roomVisits;
+        this.deleteYn = deleteYn;
+        this.deleteTime = deleteTime;
         this.roomCreator = roomCreator;
         this.createTime = createTime;
         this.uploadTime = uploadTime;
@@ -89,4 +96,31 @@ public class Room {
         return createTime;
     }
 
+    public Long getWallNumber() {
+        return wallNumber;
+    }
+
+    public Long getFloorNumber() {
+        return floorNumber;
+    }
+
+    public List<PlacedFurniture> getPlacedFurnitures() {
+        return placedFurnitures;
+    }
+
+    public List<GuestBook> getGuestBooks() {
+        return guestBooks;
+    }
+
+    public List<RoomVisit> getRoomVisits() {
+        return roomVisits;
+    }
+
+    public String getDeleteYn() {
+        return deleteYn;
+    }
+
+    public Timestamp getDeleteTime() {
+        return deleteTime;
+    }
 }

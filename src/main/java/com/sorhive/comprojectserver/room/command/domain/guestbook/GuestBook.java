@@ -88,9 +88,15 @@ public class GuestBook {
 
     protected GuestBook () {}
 
-    public GuestBook(Long id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+    public GuestBook(Long id, String content, Room room, GuestBookWriter guestBookWriter, Angle angle, BoxPosition boxPosition, Position position, Scale scale, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
         this.id = id;
         this.content = content;
+        this.room = room;
+        this.guestBookWriter = guestBookWriter;
+        this.angle = angle;
+        this.boxPosition = boxPosition;
+        this.position = position;
+        this.scale = scale;
         this.createTime = createTime;
         this.uploadTime = uploadTime;
         this.deleteTime = deleteTime;
@@ -120,4 +126,16 @@ public class GuestBook {
     public Character getDeleteYn() {
         return deleteYn;
     }
+
+    public Room getRoom() { return room; }
+
+    public GuestBookWriter getGuestBookWriter() { return guestBookWriter; }
+
+    public Angle getAngle() { return angle; }
+
+    public BoxPosition getBoxPosition() { return boxPosition; }
+
+    public Position getPosition() { return position; }
+
+    public Scale getScale() { return scale; }
 }

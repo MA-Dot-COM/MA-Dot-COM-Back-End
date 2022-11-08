@@ -1,6 +1,11 @@
 package com.sorhive.comprojectserver.room.command.application.dto;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.PlacedFurniture;
+import com.sorhive.comprojectserver.room.command.domain.room.Room;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -18,18 +23,42 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
  */
 public class RoomCreateDto {
 
-    private String roomInfo;
+    private String floorNumber;
+    private String wallNumber;
+    private Long memberCode;
 
-    private MemberCode roomCreatorMemberCode;
+    private GuestBookCreateDto guestBook;
+
+    private List<PlacedFurnitureDto> furnitures;
 
     public RoomCreateDto() {
     }
 
-    public RoomCreateDto(String roomInfo) {
-        this.roomInfo = roomInfo;
+    public RoomCreateDto(String floorNumber, String wallNumber, Long memberCode, GuestBookCreateDto guestBook, List<PlacedFurnitureDto> furnitures) {
+        this.floorNumber = floorNumber;
+        this.wallNumber = wallNumber;
+        this.memberCode = memberCode;
+        this.guestBook = guestBook;
+        this.furnitures = furnitures;
     }
 
-    public String getRoomInfo() { return roomInfo; }
+    public String getFloorNumber() {
+        return floorNumber;
+    }
 
-    public MemberCode getRoomCreatorMemberCode() { return roomCreatorMemberCode; }
+    public String getWallNumber() {
+        return wallNumber;
+    }
+
+    public Long getMemberCode() {
+        return memberCode;
+    }
+
+    public GuestBookCreateDto getGuestBook() {
+        return guestBook;
+    }
+
+    public List<PlacedFurnitureDto> getFurnitures() {
+        return furnitures;
+    }
 }
