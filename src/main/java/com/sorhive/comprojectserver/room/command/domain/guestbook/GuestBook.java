@@ -1,11 +1,5 @@
 package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
-import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Angle;
-import com.sorhive.comprojectserver.room.command.domain.placedfurniture.BoxPosition;
-import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Position;
-import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Scale;
-import com.sorhive.comprojectserver.room.command.domain.room.Room;
-
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -34,10 +28,6 @@ public class GuestBook {
 
     @Column(name = "guestbook_content")
     private String content;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private Room room;
 
     @Embedded
     private GuestBookWriter guestBookWriter;
@@ -88,10 +78,9 @@ public class GuestBook {
 
     protected GuestBook () {}
 
-    public GuestBook(Long id, String content, Room room, GuestBookWriter guestBookWriter, Angle angle, BoxPosition boxPosition, Position position, Scale scale, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
+    public GuestBook(Long id, String content, GuestBookWriter guestBookWriter, Angle angle, BoxPosition boxPosition, Position position, Scale scale, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
         this.id = id;
         this.content = content;
-        this.room = room;
         this.guestBookWriter = guestBookWriter;
         this.angle = angle;
         this.boxPosition = boxPosition;
@@ -126,8 +115,6 @@ public class GuestBook {
     public Character getDeleteYn() {
         return deleteYn;
     }
-
-    public Room getRoom() { return room; }
 
     public GuestBookWriter getGuestBookWriter() { return guestBookWriter; }
 

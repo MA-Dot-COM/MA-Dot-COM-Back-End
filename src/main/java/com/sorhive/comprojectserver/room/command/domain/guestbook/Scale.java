@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.domain.placedfurniture;
+package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * <pre>
- * Class : Angle
+ * Class : Scale
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -23,34 +23,34 @@ import java.io.Serializable;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class Angle implements Serializable {
+public class Scale implements Serializable {
 
-    @Column(name = "angle_x")
-    private Double angleX;
+    @Column(name = "scale_x")
+    private Double scaleX;
 
-    @Column(name = "angle_y")
-    private Double angleY;
+    @Column(name = "scale_y")
+    private Double scaleY;
 
-    @Column(name = "angle_z")
-    private Double angleZ;
+    @Column(name = "scale_z")
+    private Double scaleZ;
 
-    public Angle() {}
+    public Scale() {}
 
-    public Angle(Double angleX, Double angleY, Double angleZ) {
-        this.angleX = angleX;
-        this.angleY = angleY;
-        this.angleZ = angleZ;
+    public Scale(Double scaleX, Double scaleY, Double scaleZ) {
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
+        this.scaleZ = scaleZ;
     }
 
-    public Double getAngleX() {
-        return angleX;
+    public Double getScaleX() {
+        return scaleX;
     }
 
-    public Double getAngleY() {
-        return angleY;
+    public Double getScaleY() {
+        return scaleY;
     }
 
-    public Double getAngleZ() {
-        return angleZ;
+    public Double getScaleZ() {
+        return scaleZ;
     }
 }

@@ -1,10 +1,7 @@
 package com.sorhive.comprojectserver.room.command.domain.repository;
 
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
-import com.sorhive.comprojectserver.room.command.domain.room.RoomId;
-import org.springframework.data.repository.Repository;
-
-import java.util.Optional;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * <pre>
@@ -15,20 +12,12 @@ import java.util.Optional;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-03       부시연           최초 생성
+ * 2022-11-09       부시연           몽고DB Repository 상속으로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
- * @see (Room, RoomId)
  */
-public interface RoomRepository extends Repository<Room, RoomId> {
-
-    void save(Room room);
-
-    Optional<Room> findById(RoomId id);
-
-//    void delete(Room room);
-
-    void flush();
+public interface RoomRepository extends MongoRepository<Room, Long> {
 
 }

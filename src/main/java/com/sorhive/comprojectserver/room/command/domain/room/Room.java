@@ -1,13 +1,19 @@
 package com.sorhive.comprojectserver.room.command.domain.room;
 
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
-import com.sorhive.comprojectserver.room.command.domain.placedfurniture.PlacedFurniture;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import javax.persistence.CascadeType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -17,29 +23,24 @@ import java.util.List;
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-02       부시연           최초 생성
+ * 2022-11-08       부시연           최초 생성
+ * 2022-11-09       부시연           몽고 DB 도메인으로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-@Entity
-@Table(name = "tbl_rooms")
+
+
+@Getter
+@Document(collection = "room")
 public class Room {
-
     @Id
-    @Column(name="room_id", unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "wall_number")
-    private Long wallNumber;
-
-    @Column(name = "floor_number")
+    private String id;
+    private RoomCreator roomCreator;
     private Long floorNumber;
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<PlacedFurniture> placedFurnitures = new ArrayList<PlacedFurniture>();
+    private Long wallNumber;
+    private List<Map<String,Object>> furnitures;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
@@ -47,80 +48,26 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
 
-    @Column(name = "room_delete_yn")
-    private String deleteYn;
-
-    @Column(name = "room_delete_time")
-    private Timestamp deleteTime;
-
-    @Embedded
-    private RoomCreator roomCreator;
-
-    @Column(name = "room_create_time")
-    private Timestamp createTime;
-
-    @Column(name = "room_upload_time")
-    private Timestamp uploadTime;
-
-    protected Room() {}
-
-    public Room(Long id, Long wallNumber, Long floorNumber, List<PlacedFurniture> placedFurnitures, List<GuestBook> guestBooks, List<RoomVisit> roomVisits, String deleteYn, Timestamp deleteTime, RoomCreator roomCreator, Timestamp createTime, Timestamp uploadTime) {
-        this.id = id;
-        this.wallNumber = wallNumber;
-        this.floorNumber = floorNumber;
-        this.placedFurnitures = placedFurnitures;
-        this.guestBooks = guestBooks;
-        this.roomVisits = roomVisits;
-        this.deleteYn = deleteYn;
-        this.deleteTime = deleteTime;
-        this.roomCreator = roomCreator;
-        this.createTime = createTime;
-        this.uploadTime = uploadTime;
-    }
-
-    public Room(RoomCreator roomCreator) {
+    public Room(RoomCreator roomCreator, String floorNumber, String wallNumber, List<Map<String, Object>> furnitures) {
         setRoomCreator(roomCreator);
-        this.createTime = new Timestamp(System.currentTimeMillis());
-        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        setFloorNumber(Long.valueOf(floorNumber));
+        setWallNumber(Long.valueOf(wallNumber));
+        setFurnitures(furnitures);
     }
 
-    public Long getId() { return id; }
-
-    public RoomCreator getRoomCreator() { return roomCreator; }
-
-    public void setRoomCreator(RoomCreator roomCreator) { this.roomCreator = roomCreator; }
-
-    public Timestamp getUploadTime() { return uploadTime; }
-
-    public Timestamp getCreateTime() {
-        return createTime;
+    public void setFurnitures(List<Map<String, Object>> furnitures) {
+        this.furnitures = furnitures;
     }
 
-    public Long getWallNumber() {
-        return wallNumber;
+    public void setRoomCreator(RoomCreator roomCreator) {
+        this.roomCreator = roomCreator;
     }
 
-    public Long getFloorNumber() {
-        return floorNumber;
+    public void setFloorNumber(Long floorNumber) {
+        this.floorNumber = floorNumber;
     }
 
-    public List<PlacedFurniture> getPlacedFurnitures() {
-        return placedFurnitures;
-    }
-
-    public List<GuestBook> getGuestBooks() {
-        return guestBooks;
-    }
-
-    public List<RoomVisit> getRoomVisits() {
-        return roomVisits;
-    }
-
-    public String getDeleteYn() {
-        return deleteYn;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
+    public void setWallNumber(Long wallNumber) {
+        this.wallNumber = wallNumber;
     }
 }
