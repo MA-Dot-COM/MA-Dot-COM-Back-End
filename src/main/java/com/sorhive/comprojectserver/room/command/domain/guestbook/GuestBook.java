@@ -1,5 +1,9 @@
 package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Angle;
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.BoxPosition;
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Position;
+import com.sorhive.comprojectserver.room.command.domain.placedfurniture.Scale;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
 
 import javax.persistence.*;
@@ -37,6 +41,38 @@ public class GuestBook {
 
     @Embedded
     private GuestBookWriter guestBookWriter;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "angleX", column = @Column(name = "guestbook_angle_x")),
+            @AttributeOverride(name = "angleY", column = @Column(name = "guestbook_angle_y")),
+            @AttributeOverride(name = "angleZ", column = @Column(name = "guestbook_angle_z"))
+    })
+    private Angle angle;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "boxPositionX", column = @Column(name = "guestbook_box_position_x")),
+            @AttributeOverride(name = "boxPositionY", column = @Column(name = "guestbook_box_position_y")),
+            @AttributeOverride(name = "boxPositionZ", column = @Column(name = "guestbook_box_position_z"))
+    })
+    private BoxPosition boxPosition;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "positionX", column = @Column(name = "guestbook_position_x")),
+            @AttributeOverride(name = "positionY", column = @Column(name = "guestbook_position_y")),
+            @AttributeOverride(name = "positionZ", column = @Column(name = "guestbook_position_z"))
+    })
+    private Position position;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "scaleX", column = @Column(name = "guestbook_scale_x")),
+            @AttributeOverride(name = "scaleY", column = @Column(name = "guestbook_scale_y")),
+            @AttributeOverride(name = "scaleZ", column = @Column(name = "guestbook_scale_z"))
+    })
+    private Scale scale;
 
     @Column(name = "guestbook_create_time")
     private Timestamp createTime;
