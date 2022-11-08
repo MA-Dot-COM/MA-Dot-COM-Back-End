@@ -25,6 +25,9 @@ public class GuestBookCreateDto {
     private PositionDto position;
     private ScaleDto scale;
 
+    public GuestBookCreateDto() {
+    }
+
     public GuestBookCreateDto(String content, String furnitureCategoryNumber, Long furnitureNumber, AngleDto angle, BoxPositionDto boxPosition, PositionDto position, ScaleDto scale) {
         this.content = content;
         this.furnitureCategoryNumber = furnitureCategoryNumber;

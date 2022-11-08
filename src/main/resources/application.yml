@@ -35,7 +35,6 @@ spring:
     hibernate:
 #      ddl-auto: 'create-drop'
 #    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
