@@ -28,7 +28,7 @@ import java.sql.Timestamp;
 public class GuestBook {
 
     @Id
-    @Column(name="guestbook_id")
+    @Column(name="guestbook_id", unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
