@@ -1,9 +1,11 @@
 package com.sorhive.comprojectserver.member.command.domain.model.avatar;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -27,7 +29,6 @@ public class Avatar {
 
     @Id
     @Column(name="avatar_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "avatar_face_type")
@@ -42,19 +43,36 @@ public class Avatar {
     @Column(name = "avatar_hair_type")
     private String hairType;
 
+    @Column(name = "avatar_create_time")
+    private Timestamp createTime;
+
+    @Column(name = "avatar_upload_time")
+    private Timestamp uploadTime;
+
+    @Column(name = "avatar_delete_time")
+    private Timestamp deleteTime;
+
+    @Column(name = "avatar_delete_yn")
+    @ColumnDefault("'N'")
+    private Character deleteYn;
+
     protected Avatar() {}
 
     public Avatar(Long id, String faceType, String eyeBrowsType, String eyeType, String hairType) {
-        this.id = id;
-        this.faceType = faceType;
-        this.eyeBrowsType = eyeBrowsType;
-        this.eyeType = eyeType;
-        this.hairType = hairType;
+        setId(id);
+        setEyeBrowsType(eyeBrowsType);
+        setEyeType(eyeType);
+        setFaceType(faceType);
+        setHairType(hairType);
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {
         return id;
     }
+
+    public void setId(Long id) { this.id = id; }
 
     public String getFaceType() {
         return faceType;

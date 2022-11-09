@@ -5,11 +5,11 @@ import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
 import com.sorhive.comprojectserver.member.command.application.dto.ResponseAvatarImageAiDto;
+import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
 import org.apache.commons.io.FilenameUtils;
-import org.bson.json.JsonObject;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -59,22 +57,13 @@ public class AvatarService {
     }
 
     @Transactional
-    public String insertAvatarImage(String accessToken, AvatarImageDto avatarImageDto) {
+    public ResponseAvatarImageAiDto insertAvatarImage(String accessToken, AvatarImageDto avatarImageDto) {
 
         log.info("[AvatarService] insertImage Start ===============");
         log.info("[AvatarService] avatarImageDto : " + avatarImageDto);
         String changeName = UUID.randomUUID().toString().replace("-", "");
 
-        System.out.println("sdalfj;lskajdfl;sdjkf");
-        System.out.println(accessToken);
-        System.out.println("sdalfj;lskajdfl;sdjkf");
-        System.out.println(tokenProvider.getUserCode(accessToken));
-        System.out.println("DLFJsd;lkfjsdlfj");
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-        System.out.println(memberCode);
-
-        System.out.println("sdalfj;lskajdfl;sdjkf");
 
         String ext = FilenameUtils.getExtension(avatarImageDto.getAvatarImage().getResource().getFilename());
 
@@ -111,8 +100,7 @@ public class AvatarService {
 
                 RestTemplate restTemplate = new RestTemplate();
 
-                ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class);
-
+                ResponseEntity<ResponseAvatarImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseAvatarImageAiDto.class);
 
                 log.info("[AvatarService] insertImage End ===============");
 
@@ -122,17 +110,27 @@ public class AvatarService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "";
+        return new ResponseAvatarImageAiDto();
     }
 
     @Transactional
-    public String createAvatar(AvatarCreateDto avatarCreateDto) {
+    public Long createAvatar(String accessToken, AvatarCreateDto avatarCreateDto) {
 
         log.info("[AvatarService] insertImage Start ===============");
         log.info("[AvatarService] avatarImageDto : " + avatarCreateDto);
 
-        int result = 0;
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        return (result > 0) ? "아바타 생성 성공" : "아바타 생성 실패";
+        Avatar avatar = new Avatar(
+                memberCode,
+                avatarCreateDto.getFaceType(),
+                avatarCreateDto.getEyeType(),
+                avatarCreateDto.getEyeBrowsType(),
+                avatarCreateDto.getHairType()
+        );
+
+        avatarRepository.save(avatar);
+
+        return memberCode;
     }
 }
