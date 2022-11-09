@@ -1,5 +1,7 @@
 package com.sorhive.comprojectserver.room.command.domain.roomvisit;
 
+import com.sorhive.comprojectserver.room.command.domain.room.Room;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -28,6 +30,10 @@ public class RoomVisit {
 
     @Column(name = "room_visit_time")
     private Timestamp time;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    private Room room;
 
     @Embedded
     private RoomVisitor roomVisitor;
