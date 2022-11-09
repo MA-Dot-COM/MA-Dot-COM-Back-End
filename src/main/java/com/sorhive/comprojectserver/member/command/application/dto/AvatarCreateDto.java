@@ -1,5 +1,10 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Column;
+
 /**
  * <pre>
  * Class : AvatarCreateDto
@@ -15,5 +20,10 @@ package com.sorhive.comprojectserver.member.command.application.dto;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
+@Getter
 public class AvatarCreateDto {
+    private String faceType;
+    private String eyeBrowsType;
+    private String eyeType;
+    private String hairType;
 }
