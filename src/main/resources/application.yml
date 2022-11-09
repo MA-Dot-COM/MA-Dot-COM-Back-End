@@ -27,7 +27,7 @@ spring:
       enabled: true
   data:
     mongodb:
-      uri: mongodb+srv://comproject:comproject@comproject.af2gbjf.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://comproject:comproject@comproject.pldtw41.mongodb.net/?retryWrites=true&w=majority
       authentication-database: admin
       database: comproject
   # jpa config
