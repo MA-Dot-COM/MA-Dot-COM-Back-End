@@ -41,7 +41,8 @@ public class AvatarContoller {
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String accessToken, AvatarCreateDto avatarCreateDto) {
+    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String accessToken, @RequestBody AvatarCreateDto avatarCreateDto) {
+
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 생성 성공", avatarService.createAvatar(accessToken, avatarCreateDto)));
     }
 }

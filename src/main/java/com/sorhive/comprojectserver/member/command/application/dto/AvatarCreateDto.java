@@ -1,9 +1,8 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.Column;
+import lombok.NoArgsConstructor;
 
 /**
  * <pre>
@@ -21,6 +20,8 @@ import javax.persistence.Column;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AvatarCreateDto {
     private Integer faceType;
     private Integer eyeBrowsType;
