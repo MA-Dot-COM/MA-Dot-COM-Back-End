@@ -18,33 +18,14 @@ import java.util.Map;
  * @version 1(클래스 버전)
  */
 public class RoomCreateDto {
-    private String floorNumber;
-    private String wallNumber;
-    private Long memberCode;
     private List<Map<String,Object>> furnitures;
 
     public RoomCreateDto() {
     }
 
-    public RoomCreateDto(String floorNumber, String wallNumber, Long memberCode, List<Map<String, Object>> furnitures) {
-        this.floorNumber = floorNumber;
-        this.wallNumber = wallNumber;
-        this.memberCode = memberCode;
+    public RoomCreateDto(List<Map<String, Object>> furnitures) {
         this.furnitures = furnitures;
     }
-
-    public String getFloorNumber() {
-        return floorNumber;
-    }
-
-    public String getWallNumber() {
-        return wallNumber;
-    }
-
-    public Long getMemberCode() {
-        return memberCode;
-    }
-
     public List<Map<String, Object>> getFurnitures() {
         return furnitures;
     }
