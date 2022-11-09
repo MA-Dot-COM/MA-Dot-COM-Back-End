@@ -22,8 +22,8 @@ import javax.persistence.Column;
  */
 @Getter
 public class AvatarCreateDto {
-    private String faceType;
-    private String eyeBrowsType;
-    private String eyeType;
-    private String hairType;
+    private Integer faceType;
+    private Integer eyeBrowsType;
+    private Integer eyeType;
+    private Integer hairType;
 }
