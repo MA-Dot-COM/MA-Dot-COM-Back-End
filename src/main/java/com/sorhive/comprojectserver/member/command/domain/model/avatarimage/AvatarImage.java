@@ -28,7 +28,6 @@ public class AvatarImage {
 
     @Id
     @Column(name = "avatar_image_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "avatar_image_path")
@@ -46,19 +45,13 @@ public class AvatarImage {
     public AvatarImage() {
     }
 
-    public AvatarImage(String path, String orginalName, String savedName) {
+    public AvatarImage(Long memberCode, String path, String orginalName, String savedName) {
+        setId(memberCode);
         setPath(path);
         setOrginalName(orginalName);
         setSavedName(savedName);
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
-    public AvatarImage(Long id, String path, String orginalName, String savedName) {
-        this.id = id;
-        this.path = path;
-        this.orginalName = orginalName;
-        this.savedName = savedName;
-    }
-
     public Long getId() {
         return id;
     }
@@ -74,6 +67,8 @@ public class AvatarImage {
     public String getSavedName() {
         return savedName;
     }
+
+    public void setId(Long id) { this.id = id; }
 
     public void setPath(String path) {
         this.path = path;
