@@ -6,9 +6,7 @@ import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDt
 import com.sorhive.comprojectserver.member.command.application.service.AvatarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -38,8 +36,8 @@ public class AvatarContoller {
     }
 
     @PostMapping(value = "image", consumes = "multipart/form-data")
-    public ResponseEntity<ResponseDto> avatarImage(AvatarImageDto avatarImageDto) {
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 이미지 생성 성공", avatarService.insertAvatarImage(avatarImageDto)));
+    public ResponseEntity<ResponseDto> avatarImage(@RequestHeader String accessToken, AvatarImageDto avatarImageDto) {
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 이미지 생성 성공", avatarService.insertAvatarImage(accessToken, avatarImageDto)));
     }
 
     @PostMapping("/")

@@ -23,7 +23,6 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 public class AvatarImageDto {
-
     private MultipartFile avatarImage;
 
     public AvatarImageDto(MultipartFile avatarImage) {

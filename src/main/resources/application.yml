@@ -66,4 +66,4 @@ cloud:
       instanceProfile: true
 
 url:
-  ai: "http://"
+  avatar: "http://3.36.94.98/test"
