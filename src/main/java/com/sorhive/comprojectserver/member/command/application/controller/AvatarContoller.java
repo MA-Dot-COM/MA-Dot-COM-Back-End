@@ -36,13 +36,20 @@ public class AvatarContoller {
     }
 
     @PostMapping(value = "image", consumes = "multipart/form-data")
-    public ResponseEntity<ResponseDto> avatarImage(@RequestHeader String accessToken, AvatarImageDto avatarImageDto) {
+    public ResponseEntity<ResponseDto> avatarImage(@RequestHeader String Authorization, AvatarImageDto avatarImageDto) {
+
+        String accessToken = Authorization.substring(7);
+
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 이미지 생성 성공", avatarService.insertAvatarImage(accessToken, avatarImageDto)));
+
     }
 
     @PostMapping("/")
-    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String accessToken, @RequestBody AvatarCreateDto avatarCreateDto) {
+    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String Authorization, @RequestBody AvatarCreateDto avatarCreateDto) {
+
+        String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 생성 성공", avatarService.createAvatar(accessToken, avatarCreateDto)));
+
     }
 }
