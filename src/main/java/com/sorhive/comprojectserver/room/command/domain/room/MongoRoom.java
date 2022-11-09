@@ -3,11 +3,14 @@ package com.sorhive.comprojectserver.room.command.domain.room;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -24,17 +27,17 @@ import java.util.List;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
+
+
 @Getter
-@Setter
-@Entity
-@Table(name = "tbl_rooms")
-public class Room {
-
+@Document(collection = "room")
+public class MongoRoom {
     @Id
-    @Column(name="room_id")
-    private Long id;
-
+    private String id;
     private RoomCreator roomCreator;
+    private Long floorNumber;
+    private Long wallNumber;
+    private List<Map<String,Object>> furnitures;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
@@ -42,11 +45,26 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
 
-    protected Room() { }
-
-    public Room(Long id, RoomCreator roomCreator) {
-        setId(id);
+    public MongoRoom(RoomCreator roomCreator, String floorNumber, String wallNumber, List<Map<String, Object>> furnitures) {
         setRoomCreator(roomCreator);
+        setFloorNumber(Long.valueOf(floorNumber));
+        setWallNumber(Long.valueOf(wallNumber));
+        setFurnitures(furnitures);
     }
 
+    public void setFurnitures(List<Map<String, Object>> furnitures) {
+        this.furnitures = furnitures;
+    }
+
+    public void setRoomCreator(RoomCreator roomCreator) {
+        this.roomCreator = roomCreator;
+    }
+
+    public void setFloorNumber(Long floorNumber) {
+        this.floorNumber = floorNumber;
+    }
+
+    public void setWallNumber(Long wallNumber) {
+        this.wallNumber = wallNumber;
+    }
 }
