@@ -37,12 +37,6 @@ public class MongoRoom {
     private RoomCreator roomCreator;
     private List<Map<String,Object>> furnitures;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
-
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
-    private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
-
     public MongoRoom(RoomCreator roomCreator, List<Map<String, Object>> furnitures) {
         setRoomCreator(roomCreator);
         setFurnitures(furnitures);

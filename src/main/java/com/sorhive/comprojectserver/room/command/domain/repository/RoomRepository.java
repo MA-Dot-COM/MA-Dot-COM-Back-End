@@ -22,6 +22,5 @@ import java.util.Optional;
  */
 public interface RoomRepository extends Repository<Room, Long> {
     void save(Room room);
-    Optional<Room> findById(Long id);
-    List<Room> findAll();
+
 }

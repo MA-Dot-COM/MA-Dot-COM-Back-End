@@ -37,6 +37,9 @@ public class RoomData {
     @Column(name = "room_creator_name")
     private String name;
 
+    @Column(name="room_no")
+    private String roomNo;
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
 
