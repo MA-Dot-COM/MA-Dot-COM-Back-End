@@ -47,24 +47,20 @@ public class RoomService {
 
         RoomCreator roomCreator = roomCreatorService.createRoomCreator(new MemberCode(Long.valueOf(tokenProvider.getUserCode(accessToken))));
 
-        Optional<Room> room = roomRepository.findById(roomCreator.getMemberCode().getValue());
-
-        if(room.isEmpty()) {
-
-            Room newRoom = new Room(
-                    roomCreator.getMemberCode().getValue(),
-                    roomCreator
-            );
-
-            roomRepository.save(newRoom);
-        }
-
         MongoRoom mongoRoom = new MongoRoom(
                 roomCreator,
                 roomCreateDto.getFurnitures()
         );
 
         mongoRoomRepository.save(mongoRoom);
+
+        Room newRoom = new Room(
+                roomCreator.getMemberCode().getValue(),
+                mongoRoom.getId(),
+                roomCreator
+        );
+
+        roomRepository.save(newRoom);
 
         log.info("[RoomService] createRoom End ==============================");
 

@@ -36,6 +36,9 @@ public class Room {
 
     private RoomCreator roomCreator;
 
+    @Column(name="room_no")
+    private String roomNo;
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
 
@@ -44,8 +47,9 @@ public class Room {
 
     protected Room() { }
 
-    public Room(Long id, RoomCreator roomCreator) {
+    public Room(Long id, String roomNo, RoomCreator roomCreator) {
         setId(id);
+        setRoomNo(roomNo);
         setRoomCreator(roomCreator);
     }
 

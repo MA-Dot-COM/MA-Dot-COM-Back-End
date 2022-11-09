@@ -17,6 +17,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-public interface MongoRoomRepository extends MongoRepository<MongoRoom, Long> {
+public interface MongoRoomRepository extends MongoRepository<MongoRoom, String> {
 
 }
