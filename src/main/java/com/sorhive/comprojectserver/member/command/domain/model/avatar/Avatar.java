@@ -32,16 +32,16 @@ public class Avatar {
     private Long id;
 
     @Column(name = "avatar_face_type")
-    private String faceType;
+    private Integer faceType;
 
     @Column(name = "avatar_eyebrows_type")
-    private String eyeBrowsType;
+    private Integer eyeBrowsType;
 
     @Column(name = "avatar_eye_type")
-    private String eyeType;
+    private Integer eyeType;
 
     @Column(name = "avatar_hair_type")
-    private String hairType;
+    private Integer hairType;
 
     @Column(name = "avatar_create_time")
     private Timestamp createTime;
@@ -58,7 +58,7 @@ public class Avatar {
 
     protected Avatar() {}
 
-    public Avatar(Long id, String faceType, String eyeBrowsType, String eyeType, String hairType) {
+    public Avatar(Long id, Integer faceType, Integer eyeBrowsType, Integer eyeType, Integer hairType) {
         setId(id);
         setEyeBrowsType(eyeBrowsType);
         setEyeType(eyeType);
@@ -74,34 +74,34 @@ public class Avatar {
 
     public void setId(Long id) { this.id = id; }
 
-    public String getFaceType() {
+    public Integer getFaceType() {
         return faceType;
     }
 
-    public String getEyeBrowsType() {
+    public Integer getEyeBrowsType() {
         return eyeBrowsType;
     }
 
-    public String getEyeType() {
+    public Integer getEyeType() {
         return eyeType;
     }
 
-    public String getHairType() {
+    public Integer getHairType() {
         return hairType;
     }
-    public void setFaceType(String faceType) {
+    public void setFaceType(Integer faceType) {
         this.faceType = faceType;
     }
 
-    public void setEyeBrowsType(String eyeBrowsType) {
+    public void setEyeBrowsType(Integer eyeBrowsType) {
         this.eyeBrowsType = eyeBrowsType;
     }
 
-    public void setEyeType(String eyeType) {
+    public void setEyeType(Integer eyeType) {
         this.eyeType = eyeType;
     }
 
-    public void setHairType(String hairType) {
+    public void setHairType(Integer hairType) {
         this.hairType = hairType;
     }
 }

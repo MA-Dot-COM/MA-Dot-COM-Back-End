@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseAvatarImageAiDto {
-    private String face;
-    private String eyebrows;
-    private String eye;
+    private Integer face;
+    private Integer eyebrows;
+    private Integer eye;
 }
