@@ -61,8 +61,6 @@ public class RoomService {
 
         MongoRoom mongoRoom = new MongoRoom(
                 roomCreator,
-                roomCreateDto.getFloorNumber(),
-                roomCreateDto.getWallNumber(),
                 roomCreateDto.getFurnitures()
         );
 

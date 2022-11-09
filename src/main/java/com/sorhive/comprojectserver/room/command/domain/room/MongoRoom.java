@@ -35,8 +35,6 @@ public class MongoRoom {
     @Id
     private String id;
     private RoomCreator roomCreator;
-    private Long floorNumber;
-    private Long wallNumber;
     private List<Map<String,Object>> furnitures;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
@@ -45,10 +43,8 @@ public class MongoRoom {
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
 
-    public MongoRoom(RoomCreator roomCreator, String floorNumber, String wallNumber, List<Map<String, Object>> furnitures) {
+    public MongoRoom(RoomCreator roomCreator, List<Map<String, Object>> furnitures) {
         setRoomCreator(roomCreator);
-        setFloorNumber(Long.valueOf(floorNumber));
-        setWallNumber(Long.valueOf(wallNumber));
         setFurnitures(furnitures);
     }
 
@@ -58,13 +54,5 @@ public class MongoRoom {
 
     public void setRoomCreator(RoomCreator roomCreator) {
         this.roomCreator = roomCreator;
-    }
-
-    public void setFloorNumber(Long floorNumber) {
-        this.floorNumber = floorNumber;
-    }
-
-    public void setWallNumber(Long wallNumber) {
-        this.wallNumber = wallNumber;
     }
 }
