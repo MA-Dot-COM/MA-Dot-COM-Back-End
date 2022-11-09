@@ -4,10 +4,10 @@ import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.application.service.RoomService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <pre>
@@ -34,12 +34,14 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-
-    @PostMapping("room")
-    public ResponseEntity<ResponseDto> createRoom(@RequestHeader String Authorization, @Valid @RequestBody RoomCreateDto roomCreateDto) {
+    @PostMapping(value = "room", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<ResponseDto> createRoom(@RequestHeader String Authorization,
+                                                  @RequestPart(name="furnitures") RoomCreateDto roomCreateDto,
+                                                  @RequestPart(name="onlineRoomImage") MultipartFile onlineRoomImage,
+                                                  @RequestPart(name = "offlineRoomImage") MultipartFile offlineRoomImage) {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomService.createRoom(accessToken, roomCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomService.createRoom(accessToken, roomCreateDto, onlineRoomImage, offlineRoomImage)));
     }
 }

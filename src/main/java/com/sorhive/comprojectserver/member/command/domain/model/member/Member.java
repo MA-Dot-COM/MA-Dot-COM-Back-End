@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Random;
 
@@ -24,6 +22,7 @@ import java.util.Random;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-10-31       부시연           최초 생성
+ * 2022-11-10       부시연           접속용 방이미지, 방이미지 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -55,7 +54,6 @@ public class Member implements UserDetails {
     private MemberRole memberRole;
 
     @Column(name = "password")
-    @NotBlank(message = "비밀번호를 입력헤주세요")
     private String password;
 
     @Column(name = "member_create_time")
@@ -71,8 +69,13 @@ public class Member implements UserDetails {
     @ColumnDefault("'N'")
     private Character deleteYn;
 
-    protected Member() {
-    }
+    @Column(name = "member_offline_image")
+    private String offlineRoomImagePath;
+
+    @Column(name = "member_online_image")
+    private String onlineRoomImagePath;
+
+    protected Member() { }
 
     public Member(MemberId memberId, String memberName, String password) {
         setMemberId(memberId);
@@ -95,6 +98,13 @@ public class Member implements UserDetails {
         this.deleteYn = deleteYn;
         this.authorities = authorities;
     }
+    public void setOfflineRoomImagePath(String offlineRoomImagePath) { this.offlineRoomImagePath = offlineRoomImagePath; }
+
+    public void setOnlineRoomImagePath(String onlineRoomImagePath) { this.onlineRoomImagePath = onlineRoomImagePath; }
+
+    public String getOfflineRoomImagePath() { return offlineRoomImagePath; }
+
+    public String getOnlineRoomImagePath() { return onlineRoomImagePath; }
 
     public void setMemberId(MemberId memberId) { this.memberId = memberId; }
 
@@ -106,9 +116,7 @@ public class Member implements UserDetails {
         return memberCode;
     }
 
-    public MemberId getMemberId() {
-        return memberId;
-    }
+    public MemberId getMemberId() { return memberId; }
 
     public String getMemberName() {
         return memberName;
@@ -118,9 +126,7 @@ public class Member implements UserDetails {
         return memberEmail;
     }
 
-    public MemberRole getMemberRole() {
-        return memberRole;
-    }
+    public MemberRole getMemberRole() { return memberRole; }
 
     public Timestamp getCreateTime() {
         return createTime;

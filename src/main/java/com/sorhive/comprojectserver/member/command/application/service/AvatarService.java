@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.member.command.application.service;
 
-import com.sorhive.comprojectserver.config.file.S3File;
+import com.sorhive.comprojectserver.config.file.S3ConvertFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
@@ -9,7 +9,8 @@ import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
-import org.apache.commons.io.FilenameUtils;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,23 +39,17 @@ import java.util.*;
  * @version 1(클래스 버전)
  */
 @Service
+@RequiredArgsConstructor
 public class AvatarService {
 
     private static final Logger log = LoggerFactory.getLogger(AvatarService.class);
-    private final S3File s3File;
+    private final S3ConvertFile s3ConvertFile;
     private final AvatarRepository avatarRepository;
     private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
 
     @Value("${url.avatar}")
     private String url;
-
-    public AvatarService(S3File s3File, AvatarRepository avatarRepository, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider) {
-        this.s3File = s3File;
-        this.avatarRepository = avatarRepository;
-        this.avatarImageRepository = avatarImageRepository;
-        this.tokenProvider = tokenProvider;
-    }
 
     @Transactional
     public ResponseAvatarImageAiDto insertAvatarImage(String accessToken, AvatarImageDto avatarImageDto) {
@@ -65,13 +60,12 @@ public class AvatarService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        String ext = FilenameUtils.getExtension(avatarImageDto.getAvatarImage().getResource().getFilename());
 
         try {
             if (avatarImageDto.getAvatarImage() != null) {
                 AvatarImage avatarImage = new AvatarImage(
                         memberCode,
-                        s3File.upload(avatarImageDto.getAvatarImage(), changeName + "." + ext, "images"),
+                        s3ConvertFile.upload(avatarImageDto.getAvatarImage(),"images"),
                         avatarImageDto.getAvatarImage().getResource().getFilename(),
                         changeName
                 );
