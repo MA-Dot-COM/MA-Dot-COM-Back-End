@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,16 +17,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * <pre>
- * Class : S3File
+ * Class : S3ConvertFile
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-10-24       부시연           최초 생성
+ * 2022-11-10       부시연           UUID를 이용하여 변경 후 저장
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -40,7 +43,10 @@ public class S3ConvertFile {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile, String changeName , String dirName) throws IOException {
+    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+
+        String ext = FilenameUtils.getExtension(multipartFile.getResource().getFilename());
+        String changeName = UUID.randomUUID().toString().replace("-", "") + "." + ext;
 
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
@@ -49,9 +55,6 @@ public class S3ConvertFile {
     }
 
     private String upload(File uploadFile, String changeName, String dirName) throws IOException {
-        Thumbnails.of(uploadFile)
-                .size(224, 224)
-                .toFile(uploadFile);
 
         String fileName = dirName + "/" + changeName;
         String uploadImageUrl = putS3(uploadFile, fileName);

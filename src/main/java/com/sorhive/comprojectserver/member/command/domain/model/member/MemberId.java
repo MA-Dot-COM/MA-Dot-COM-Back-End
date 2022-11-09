@@ -26,7 +26,6 @@ import java.util.Objects;
 public class MemberId implements Serializable {
 
     @Column(name="member_id", unique = true)
-    @NotBlank(message = "ID를 입력해주세요.")
     private String id;
 
     protected MemberId() {
