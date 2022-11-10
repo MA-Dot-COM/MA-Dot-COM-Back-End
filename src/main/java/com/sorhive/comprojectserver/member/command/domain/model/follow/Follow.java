@@ -29,10 +29,10 @@ public class Follow {
     private Long id;
 
     @Embedded
-    private FollowerMember followerMember;
+    private FollowerId followerId;
 
     @Embedded
-    private FollowingMember followingMember;
+    private FollowingId followingId;
 
     @Column(name = "follow_create_time")
     private Timestamp createTime;
@@ -44,16 +44,31 @@ public class Follow {
     @ColumnDefault("'N'")
     private Character deleteYn;
 
-    public Follow(FollowerMember followerMember, FollowingMember followingMember) {
+    public Follow(FollowerId followerId, FollowingId followingId) {
 
-        setFollowerMember(followerMember);
-        setFollowingMember(followingMember);
+        setFollowerMember(followerId);
+        setFollowingMember(followingId);
         this.createTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public Follow() { }
+
     public Long getId() { return id; }
 
-    public void setFollowerMember(FollowerMember followerMember) { this.followerMember = followerMember; }
+    public FollowerId getFollowerId() {
+        return followerId;
+    }
 
-    public void setFollowingMember(FollowingMember followingMember) { this.followingMember = followingMember; }
+    public FollowingId getFollowingId() {
+        return followingId;
+    }
+
+    public void setFollowerMember(FollowerId followerId) { this.followerId = followerId; }
+
+    public void setFollowingMember(FollowingId followingId) { this.followingId = followingId; }
+
+    public void setDeleteYn(Character deleteYn) {
+        this.deleteYn = deleteYn;
+        this.deleteTime = new Timestamp(System.currentTimeMillis());
+    }
 }

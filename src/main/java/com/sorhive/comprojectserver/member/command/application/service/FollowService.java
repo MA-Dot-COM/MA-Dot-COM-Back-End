@@ -1,16 +1,17 @@
 package com.sorhive.comprojectserver.member.command.application.service;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.NoMemberException;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
-import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerMember;
-import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowingMember;
+import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerId;
+import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowingId;
 import com.sorhive.comprojectserver.member.command.domain.repository.FollowRepository;
 import com.sorhive.comprojectserver.member.query.MemberDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * <pre>
@@ -24,8 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * </pre>
  *
  * @author 부시연(최초 작성자)
- * @version 1(클래스 버전)
- * @see (참고할 class 또는 외부 url)
+ * @version 1(클래스 버전)\
  */
 @Service
 public class FollowService {
@@ -33,7 +33,6 @@ public class FollowService {
     private static final Logger log = LoggerFactory.getLogger(FollowService.class);
     private final FollowRepository followRepository;
     private final MemberDataDao memberDataDao;
-
     private final TokenProvider tokenProvider;
 
     public FollowService(FollowRepository followRepository, MemberDataDao memberDataDao, TokenProvider tokenProvider) {
@@ -43,26 +42,33 @@ public class FollowService {
     }
 
     @Transactional
-    public Object createFollow(String accessToken, String followId) {
-        log.info("[AvatarService] insertImage Start ===============");
-        log.info("[AvatarService] avatarImageDto : " + followId);
+    public Object createFollow(Long followerId, Long followId) {
+        log.info("[FollowService] createFollow Start ===============");
+        log.info("[FollowService] followId : " + followId);
 
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        Follow follow = new Follow(
+                new FollowerId(followerId),
+                new FollowingId(followId)
+        );
 
-        if(memberDataDao.findByMemberCode(Long.valueOf(followId)) != null) {
+        followRepository.save(follow);
 
-            Follow follow = new Follow(
-                    new FollowerMember(memberCode),
-                    new FollowingMember(Long.valueOf(followId))
-            );
-
-            followRepository.save(follow);
-
-            return follow.getId();
-
-        } else {
-            throw new NoMemberException("해당 회원이 존재하지 않습니다.");
-        }
+        return follow.getId();
 
     }
+
+    @Transactional
+    public Object deleteFollow(Long followId) {
+        log.info("[FollowService] deleteFollow Start ===============");
+        log.info("[FollowService] followId : " + followId);
+
+        Optional<Follow> followingData = followRepository.findById(followId);
+        Follow follow = followingData.get();
+        follow.setDeleteYn('Y');
+        followRepository.save(follow);
+
+        return follow.getId();
+
+    }
+
 }

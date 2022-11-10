@@ -88,6 +88,8 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.4</version>
         </dependency>
+
+
         <!-- 로깅 처리를 위한 라이브러리로 log4j는 단종되어 j2로 추가하자. -->
         <!-- https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4.1 -->
         <dependency>
@@ -95,6 +97,8 @@
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
             <version>1.16</version>
         </dependency>
+
+
         <!-- entity와 dto를 서로 바꾸기 위한 modelmapper 등록 -->
         <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
         <dependency>
@@ -102,6 +106,8 @@
             <artifactId>modelmapper</artifactId>
             <version>3.0.0</version>
         </dependency>
+
+
         <!-- 파일 업로드를 위한 라이브러리 -->
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
@@ -109,19 +115,16 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
+
+        <!-- AWS 클라우드를 위한 라이브러리-->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-aws -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws</artifactId>
             <version>2.2.6.RELEASE</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb -->
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-dynamodb</artifactId>
-            <version>1.12.336</version>
-        </dependency>
 
+        <!-- 엑셀 파일 입출력을 위한 라이브러리 -->
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -129,11 +132,27 @@
             <version>4.1.2</version>
         </dependency>
 
+        <!-- 몽고 DB 사용을 위한 라이브러리 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
+        <!-- QeuryDSL JPA 라이브러리-->
+        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <!-- 쿼리 타입을 생성 할 때 필요한 라이브러리-->
+        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>5.0.0</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
         <dependency>
@@ -142,11 +161,11 @@
             <version>0.4.17</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>

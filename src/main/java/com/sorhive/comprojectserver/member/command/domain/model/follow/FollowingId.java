@@ -1,6 +1,9 @@
 package com.sorhive.comprojectserver.member.command.domain.model.follow;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -20,26 +23,26 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class FollowerMember implements Serializable {
+public class FollowingId implements Serializable {
 
-    @Column(name = "follower_id")
+    @Column(name = "following_id")
     private Long value;
 
-    protected FollowerMember() {
+    protected FollowingId() {
     }
 
-    public FollowerMember(Long value) { this.value = value; }
+    public FollowingId(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FollowerMember followerMember = (FollowerMember) o;
+        FollowingId followerMember = (FollowingId) o;
         return Objects.equals(value, followerMember.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static FollowerMember of(Long value) { return new FollowerMember(value); }
+    public static FollowingId of(Long value) { return new FollowingId(value); }
 }

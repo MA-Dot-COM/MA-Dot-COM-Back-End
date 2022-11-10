@@ -23,26 +23,26 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class FollowingMember implements Serializable {
+public class FollowerId implements Serializable {
 
-    @Column(name = "following_id")
+    @Column(name = "follower_id")
     private Long value;
 
-    protected FollowingMember() {
+    protected FollowerId() {
     }
 
-    public FollowingMember(Long value) { this.value = value; }
+    public FollowerId(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FollowingMember followerMember = (FollowingMember) o;
-        return Objects.equals(value, followerMember.value);
+        FollowerId followerId = (FollowerId) o;
+        return Objects.equals(value, followerId.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static FollowingMember of(Long value) { return new FollowingMember(value); }
+    public static FollowerId of(Long value) { return new FollowerId(value); }
 }
