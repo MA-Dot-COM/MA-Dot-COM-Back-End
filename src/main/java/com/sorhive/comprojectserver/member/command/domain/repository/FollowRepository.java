@@ -3,6 +3,8 @@ package com.sorhive.comprojectserver.member.command.domain.repository;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
 import org.springframework.data.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * <pre>
  * Class : FollowRepository
@@ -21,4 +23,6 @@ import org.springframework.data.repository.Repository;
 public interface FollowRepository extends Repository<Follow, Long> {
 
     void save(Follow follow);
+
+    Optional<Follow> findById(Long id);
 }
