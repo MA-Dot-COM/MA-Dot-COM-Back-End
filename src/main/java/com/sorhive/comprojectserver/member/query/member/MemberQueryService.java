@@ -1,8 +1,5 @@
-package com.sorhive.comprojectserver.member.query;
+package com.sorhive.comprojectserver.member.query.member;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.member.query.MemberDataDao;
-import com.sorhive.comprojectserver.member.query.MemberData;
 import com.sorhive.comprojectserver.member.command.application.NoMemberException;
 import org.springframework.stereotype.Service;
 

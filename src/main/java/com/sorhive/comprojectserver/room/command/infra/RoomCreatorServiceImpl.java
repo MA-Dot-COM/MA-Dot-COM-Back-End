@@ -1,8 +1,8 @@
 package com.sorhive.comprojectserver.room.command.infra;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.member.query.MemberData;
-import com.sorhive.comprojectserver.member.query.MemberQueryService;
+import com.sorhive.comprojectserver.member.query.member.MemberData;
+import com.sorhive.comprojectserver.member.query.member.MemberQueryService;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomCreatorService;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
 import org.springframework.stereotype.Service;

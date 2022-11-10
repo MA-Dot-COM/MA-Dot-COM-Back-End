@@ -1,7 +1,11 @@
 package com.sorhive.comprojectserver.member.command.domain.repository;
 
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
+import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerId;
+import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowingId;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -24,5 +28,13 @@ public interface FollowRepository extends Repository<Follow, Long> {
 
     void save(Follow follow);
 
-    Optional<Follow> findById(Long id);
+    Optional<Follow> findByFollowIdAndDeleteYnEquals(Long id, Character n);
+
+
+    @Query(value = "select follow " +
+            "from Follow follow " +
+            "where follow.deleteYn = 'N' " +
+            "and follow.followingId = :followingId " +
+            "and follow.followerId = :followerId")
+    Optional<Follow> findByFollowerId(@Param("followerId")FollowerId followerId, @Param("followingId")FollowingId followingId);
 }

@@ -1,6 +1,5 @@
-package com.sorhive.comprojectserver.member.query;
+package com.sorhive.comprojectserver.member.query.follow;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +27,6 @@ import javax.persistence.Table;
 @Table(name = "tbl_follows")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class FollowData {
 
     @Id
@@ -40,5 +38,8 @@ public class FollowData {
 
     @Column(name = "following_id")
     private Long followingId;
+
+    @Column(name = "follow_delete_yn")
+    private Character followDeleteYn;
 
 }
