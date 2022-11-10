@@ -1,6 +1,5 @@
-package com.sorhive.comprojectserver.member.query;
+package com.sorhive.comprojectserver.member.query.member;
 
-import com.sorhive.comprojectserver.member.query.MemberData;
 import org.springframework.data.jpa.domain.Specification;
 
 public class MemberDataSpecs {

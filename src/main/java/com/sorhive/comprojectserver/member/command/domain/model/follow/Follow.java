@@ -26,7 +26,7 @@ public class Follow {
     @Id
     @Column(name = "follow_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long followId;
 
     @Embedded
     private FollowerId followerId;
@@ -46,14 +46,15 @@ public class Follow {
 
     public Follow(FollowerId followerId, FollowingId followingId) {
 
-        setFollowerMember(followerId);
-        setFollowingMember(followingId);
+        this.followerId = followerId;
+        this.followingId = followingId;
+        this.deleteYn = 'N';
         this.createTime = new Timestamp(System.currentTimeMillis());
     }
 
     public Follow() { }
 
-    public Long getId() { return id; }
+    public Long getFollowId() { return followId; }
 
     public FollowerId getFollowerId() {
         return followerId;
@@ -62,6 +63,8 @@ public class Follow {
     public FollowingId getFollowingId() {
         return followingId;
     }
+
+    public Character getDeleteYn() { return deleteYn; }
 
     public void setFollowerMember(FollowerId followerId) { this.followerId = followerId; }
 

@@ -138,22 +138,6 @@
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
 
-        <!-- QeuryDSL JPA 라이브러리-->
-        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-jpa -->
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-jpa</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-
-        <!-- 쿼리 타입을 생성 할 때 필요한 라이브러리-->
-        <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
         <dependency>
             <groupId>net.coobird</groupId>
