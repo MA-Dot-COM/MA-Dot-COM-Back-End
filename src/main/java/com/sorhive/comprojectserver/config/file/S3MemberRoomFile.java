@@ -2,20 +2,17 @@ package com.sorhive.comprojectserver.config.file;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Optional;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.UUID;
 
 /**
  * <pre>
@@ -26,6 +23,7 @@ import java.util.Optional;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-10       부시연           최초 생성
+ * 2022-11-11       부시연           바이트 배열 대응 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -40,28 +38,29 @@ public class S3MemberRoomFile {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(MultipartFile multipartFile , String dirName, String member) throws IOException {
+    public String upload(byte[] roomFile , String dirName, String member) throws IOException {
 
-        String ext = FilenameUtils.getExtension(multipartFile.getResource().getFilename());
+        ByteArrayInputStream input_stream= new ByteArrayInputStream(roomFile);
+        BufferedImage final_buffered_image = ImageIO.read(input_stream);
+        ImageIO.write(final_buffered_image , "png", new File("./temp.png") );
+        File newFile = new File("./temp.png");
 
-        member = member + "." + ext;
-
-        File uploadFile = convert(multipartFile)
-                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
-
-        return upload(uploadFile, dirName, member);
+        return upload(newFile, dirName, member);
     }
 
-    private String upload(File uploadFile, String dirName, String member) throws IOException {
+    private String upload(File uploadFile, String dirName, String member) {
 
-        String fileName = dirName + "/" + uploadFile.getName().substring(0, uploadFile.getName().lastIndexOf('.')) + "-" + member;
+        String UUIDName = UUID.randomUUID().toString().replace("-", "");
+        String fileName = dirName + "/" + UUIDName + "-room" + member;
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
 
     private String putS3(File uploadFile, String fileName) {
-        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
+        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
         return amazonS3Client.getUrl(bucket, fileName).toString();
     }
 
@@ -73,20 +72,4 @@ public class S3MemberRoomFile {
         }
     }
 
-    private Optional<File> convert(MultipartFile file) throws IOException {
-        File convertFile = new File(file.getOriginalFilename());
-        if(convertFile.createNewFile()) {
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                fos.write(file.getBytes());
-            }
-            return Optional.of(convertFile);
-        }
-
-        return Optional.empty();
-    }
-
-    public void delete(String fileName) {
-        DeleteObjectRequest request = new DeleteObjectRequest(bucket, "images/" + fileName);
-        amazonS3Client.deleteObject(request);
-    }
 }

@@ -2,7 +2,7 @@ package com.sorhive.comprojectserver.room.command.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
@@ -23,11 +23,14 @@ import java.util.Map;
  * @version 1(클래스 버전)
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class RoomCreateDto {
 
-    private MultipartFile onlineRoomImage;
-    private MultipartFile offlineRoomImage;
     private List<Map<String,Object>> furnitures;
-    
+
+    private byte[] onlineRoomImage;
+
+    private byte[] offlineRoomImage;
+
 }

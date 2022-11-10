@@ -6,8 +6,6 @@ import com.sorhive.comprojectserver.member.command.application.service.AuthServi
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
-import com.sorhive.comprojectserver.member.query.MemberData;
-import com.sorhive.comprojectserver.member.query.MemberDataDao;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.domain.repository.MongoRoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
@@ -19,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,6 +31,7 @@ import java.util.Optional;
  * ----------------------------------------------------------------
  * 2022-11-07       부시연           최초 생성
  * 2022-11-09       부시연           방 생성 추가
+ * 2022-11-10       부시연           접속용 방이미지 생성 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -50,6 +48,7 @@ public class RoomService {
     private TokenProvider tokenProvider;
     private S3MemberRoomFile s3MemberRoomFile;
 
+
     public RoomService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, TokenProvider tokenProvider, S3MemberRoomFile s3MemberRoomFile) {
         this.mongoRoomRepository = mongoRoomRepository;
         this.roomRepository = roomRepository;
@@ -60,20 +59,25 @@ public class RoomService {
     }
 
     @Transactional
-    public String createRoom(String accessToken, RoomCreateDto roomCreateDto, MultipartFile onlineRoomImage, MultipartFile offlineRoomImage) {
+    public String createRoom(String accessToken, RoomCreateDto roomCreateDto) {
         log.info("[RoomService] createRoom Start ===================================");
         log.info("[RoomService] roomCreateDto {}", roomCreateDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        byte[] onlineRoomImage = roomCreateDto.getOnlineRoomImage();
+
+        byte[] offlineRoomImage = roomCreateDto.getOfflineRoomImage();
+
         try {
-            if((onlineRoomImage != null) && (offlineRoomImage != null)) {
+            if(onlineRoomImage != null && offlineRoomImage != null) {
 
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
                 memberData.get();
                 Member member = memberData.get();
-                member.setOfflineRoomImagePath(s3MemberRoomFile.upload(offlineRoomImage, "images", "offline_" + memberCode));
-                member.setOnlineRoomImagePath(s3MemberRoomFile.upload(onlineRoomImage, "images", "online_" + memberCode));
+
+                member.setOfflineRoomImagePath(s3MemberRoomFile.upload(onlineRoomImage, "images", "offline_" + memberCode + ".png"));
+                member.setOnlineRoomImagePath(s3MemberRoomFile.upload(offlineRoomImage, "images", "online_" + memberCode + ".png"));
                 memberRepository.save(member);
             }
 
