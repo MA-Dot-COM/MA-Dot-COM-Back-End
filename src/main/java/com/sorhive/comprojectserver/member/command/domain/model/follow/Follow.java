@@ -1,5 +1,7 @@
 package com.sorhive.comprojectserver.member.command.domain.model.follow;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -22,7 +24,15 @@ import java.sql.Timestamp;
 public class Follow {
 
     @Id
+    @Column(name = "follow_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Embedded
+    private FollowerMember followerMember;
+
+    @Embedded
+    private FollowingMember followingMember;
 
     @Column(name = "follow_create_time")
     private Timestamp createTime;
@@ -31,5 +41,19 @@ public class Follow {
     private Timestamp deleteTime;
 
     @Column(name = "follow_delete_yn")
+    @ColumnDefault("'N'")
     private Character deleteYn;
+
+    public Follow(FollowerMember followerMember, FollowingMember followingMember) {
+
+        setFollowerMember(followerMember);
+        setFollowingMember(followingMember);
+        this.createTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Long getId() { return id; }
+
+    public void setFollowerMember(FollowerMember followerMember) { this.followerMember = followerMember; }
+
+    public void setFollowingMember(FollowingMember followingMember) { this.followingMember = followingMember; }
 }

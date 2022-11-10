@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.command.domain.model.member;
+package com.sorhive.comprojectserver.member.command.domain.model.avatar;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,26 +20,26 @@ import java.util.Objects;
  */
 @Embeddable
 @Access(AccessType.FIELD)
-public class MemberAvatar implements Serializable{
+public class AvatarMember implements Serializable{
 
     @Column(name="avatar_id")
     private Long value;
 
-    protected MemberAvatar() {
+    protected AvatarMember() {
     }
 
-    public MemberAvatar(Long value) { this.value = value; }
+    public AvatarMember(Long value) { this.value = value; }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MemberAvatar memberAvatar = (MemberAvatar) o;
-        return Objects.equals(value, memberAvatar.value);
+        AvatarMember avatarMember = (AvatarMember) o;
+        return Objects.equals(value, avatarMember.value);
     }
 
     @Override
     public int hashCode() { return value != null ? value.hashCode() : 0; }
 
-    public static MemberAvatar of(Long value) { return new MemberAvatar(value); }
+    public static AvatarMember of(Long value) { return new AvatarMember(value); }
 }
