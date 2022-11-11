@@ -7,7 +7,6 @@ import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ import java.util.Optional;
  * @version 1(클래스 버전)
  */
 @Service
-@RequiredArgsConstructor
 public class AvatarService {
 
     private static final Logger log = LoggerFactory.getLogger(AvatarService.class);
@@ -42,6 +40,13 @@ public class AvatarService {
     private final MemberRepository memberRepository;
     private S3MemberFile s3MemberFile;
 
+    public AvatarService(AvatarRepository avatarRepository, TokenProvider tokenProvider, MemberRepository memberRepository, S3MemberFile s3MemberFile) {
+        this.avatarRepository = avatarRepository;
+        this.tokenProvider = tokenProvider;
+        this.memberRepository = memberRepository;
+        this.s3MemberFile = s3MemberFile;
+    }
+
     @Transactional
     public Long createAvatar(String accessToken, AvatarCreateDto avatarCreateDto) {
 
@@ -50,13 +55,13 @@ public class AvatarService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        String memberAvatarImageName = "avatar_" + memberCode + ".png";
 
         byte[] avatarImage = avatarCreateDto.getMemberAvatarImage();
 
         try {
             if(avatarImage != null) {
 
-                String memberAvatarImageName = "avatar_" + memberCode + ".png";
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
                 Member member = memberData.get();
                 member.setAvatarImagePath(s3MemberFile.upload(avatarImage, "images", memberAvatarImageName));
