@@ -65,19 +65,14 @@ public class RoomService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        byte[] onlineRoomImage = roomCreateDto.getOnlineRoomImage();
-
-        byte[] offlineRoomImage = roomCreateDto.getOfflineRoomImage();
+        byte[] roomImage = roomCreateDto.getRoomImage();
 
         try {
-            if(onlineRoomImage != null && offlineRoomImage != null) {
+            if(roomImage != null) {
 
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
-                memberData.get();
                 Member member = memberData.get();
-
-                member.setOfflineRoomImagePath(s3MemberRoomFile.upload(onlineRoomImage, "images", "offline_" + memberCode + ".png"));
-                member.setOnlineRoomImagePath(s3MemberRoomFile.upload(offlineRoomImage, "images", "online_" + memberCode + ".png"));
+                member.setRoomImagePath(s3MemberRoomFile.upload(roomImage, "images", "room_" + memberCode + ".png"));
                 memberRepository.save(member);
             }
 

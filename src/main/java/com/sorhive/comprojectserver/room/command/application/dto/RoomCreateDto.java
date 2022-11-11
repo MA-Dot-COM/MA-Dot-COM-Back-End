@@ -29,8 +29,6 @@ public class RoomCreateDto {
 
     private List<Map<String,Object>> furnitures;
 
-    private byte[] onlineRoomImage;
-
-    private byte[] offlineRoomImage;
+    private byte[] roomImage;
 
 }

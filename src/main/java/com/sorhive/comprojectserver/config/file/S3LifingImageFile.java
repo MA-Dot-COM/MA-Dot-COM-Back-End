@@ -39,9 +39,9 @@ public class S3LifingImageFile {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(byte[] avatarImage, String changeName, String dirName) throws IOException {
+    public String upload(byte[] lifingImage, String changeName, String dirName) throws IOException {
 
-        ByteArrayInputStream input_stream= new ByteArrayInputStream(avatarImage);
+        ByteArrayInputStream input_stream= new ByteArrayInputStream(lifingImage);
 
         BufferedImage final_buffered_image = ImageIO.read(input_stream);
 

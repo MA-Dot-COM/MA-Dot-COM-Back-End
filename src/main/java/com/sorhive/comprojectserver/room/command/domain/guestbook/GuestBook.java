@@ -38,19 +38,6 @@ public class GuestBook {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
-
-    @Embedded
-    private Angle angle;
-
-    @Embedded
-    private BoxPosition boxPosition;
-
-    @Embedded
-    private Position position;
-
-    @Embedded
-    private Scale scale;
-
     @Column(name = "guestbook_create_time")
     private Timestamp createTime;
 
@@ -64,21 +51,6 @@ public class GuestBook {
     private Character deleteYn;
 
     protected GuestBook () {}
-
-    public GuestBook(Long id, String content, GuestBookWriter guestBookWriter, Angle angle, BoxPosition boxPosition, Position position, Scale scale, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn) {
-        this.id = id;
-        this.content = content;
-        this.guestBookWriter = guestBookWriter;
-        this.angle = angle;
-        this.boxPosition = boxPosition;
-        this.position = position;
-        this.scale = scale;
-        this.createTime = createTime;
-        this.uploadTime = uploadTime;
-        this.deleteTime = deleteTime;
-        this.deleteYn = deleteYn;
-    }
-
     public Long getId() {
         return id;
     }
@@ -104,12 +76,4 @@ public class GuestBook {
     }
 
     public GuestBookWriter getGuestBookWriter() { return guestBookWriter; }
-
-    public Angle getAngle() { return angle; }
-
-    public BoxPosition getBoxPosition() { return boxPosition; }
-
-    public Position getPosition() { return position; }
-
-    public Scale getScale() { return scale; }
 }
