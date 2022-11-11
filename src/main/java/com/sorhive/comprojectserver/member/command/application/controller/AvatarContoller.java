@@ -45,7 +45,7 @@ public class AvatarContoller {
 
     }
 
-    @PostMapping("/")
+    @PostMapping(value = "/")
     public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String Authorization, @RequestBody AvatarCreateDto avatarCreateDto) {
 
         String accessToken = Authorization.substring(7);
