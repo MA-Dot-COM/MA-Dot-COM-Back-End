@@ -67,3 +67,10 @@ cloud:
 
 url:
   avatar: "http://3.34.44.128/test"
+  lifing: "http://43.201.67.97/test"
+
+mybatis:
+  mapper-locations: mybatis/**/*.xml
+  type-aliases-package: com.sorhive.comproject
+  configuration:
+    map-underscore-to-camel-case: true

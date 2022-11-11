@@ -1,7 +1,10 @@
 package com.sorhive.comprojectserver.member.query.member;
 
+import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.NoMemberException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -22,11 +25,15 @@ public class MemberQueryService {
 
     private MemberDataDao memberDataDao;
 
-    public MemberQueryService(MemberDataDao memberDataDao) {
+    private MemberMapper memberMapper;
+
+    private final TokenProvider tokenProvider;
+
+    public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, TokenProvider tokenProvider) {
         this.memberDataDao = memberDataDao;
+        this.memberMapper = memberMapper;
+        this.tokenProvider = tokenProvider;
     }
-
-
 
     public MemberData getMemberData(String memberId) {
 
@@ -46,5 +53,29 @@ public class MemberQueryService {
 
         return memberData;
 
+    }
+
+    public Object findMemberByMemberId(String memberId) {
+
+        List<MemberData> memberData = memberDataDao.findByIdLike("%" + memberId + "%");
+        if(memberData == null) {
+            throw new NoMemberException();
+        }
+
+        return  memberData;
+
+    }
+
+    public Object findAllByMemberCode(String accessToken, Long offset) {
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        List<MemberSummary> memberSummary = memberMapper.findAllByMemberCode(memberCode, offset * 30);
+
+        if (memberSummary == null) {
+            throw new NoMemberException();
+        }
+
+        return memberSummary;
     }
 }

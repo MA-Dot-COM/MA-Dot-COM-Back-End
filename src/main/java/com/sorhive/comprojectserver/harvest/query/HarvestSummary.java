@@ -1,4 +1,4 @@
-//package com.sorhive.comprojectserver.harvest.query;
+package com.sorhive.comprojectserver.harvest.query;//package com.sorhive.comprojectserver.harvest.query;
 //
 //import org.hibernate.annotations.Immutable;
 //import org.hibernate.annotations.Subselect;
