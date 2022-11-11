@@ -1,13 +1,15 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : StoryImage
+ * Class : LifingImage
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,10 +23,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbl_lifing_image")
+@DynamicInsert
+@DynamicUpdate
+@Getter
 public class LifingImage {
 
-    @EmbeddedId
-    private LifingImageId id;
+    @Id
+    @Column(name = "lifing_image_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "lifing_image_path")
     private String path;
@@ -34,5 +41,18 @@ public class LifingImage {
 
     @Column(name = "lifing_saved_name")
     private String savedName;
+
+    @Column(name = "lifing_saved_name")
+    private Timestamp uploadTime;
+
+    protected LifingImage() { }
+    public LifingImage(String path, String orginalName, String savedName) {
+
+        this.path = path;
+        this.orginalName = orginalName;
+        this.savedName = savedName;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+
+    }
 
 }
