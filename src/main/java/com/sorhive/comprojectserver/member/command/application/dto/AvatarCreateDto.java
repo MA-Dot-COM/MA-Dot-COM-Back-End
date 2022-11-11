@@ -27,4 +27,5 @@ public class AvatarCreateDto {
     private Integer eyeBrowsType;
     private Integer eyeType;
     private Integer hairType;
+    private byte[] memberAvatarImage;
 }

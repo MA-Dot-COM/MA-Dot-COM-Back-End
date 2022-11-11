@@ -59,11 +59,11 @@ public class Avatar {
     protected Avatar() {}
 
     public Avatar(Long id, Integer faceType, Integer eyeBrowsType, Integer eyeType, Integer hairType) {
-        setId(id);
-        setEyeBrowsType(eyeBrowsType);
-        setEyeType(eyeType);
-        setFaceType(faceType);
-        setHairType(hairType);
+        this.id = id;
+        this.faceType = faceType;
+        this.eyeBrowsType = eyeBrowsType;
+        this.eyeType = eyeType;
+        this.hairType = hairType;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
@@ -88,21 +88,6 @@ public class Avatar {
 
     public Integer getHairType() {
         return hairType;
-    }
-    public void setFaceType(Integer faceType) {
-        this.faceType = faceType;
-    }
-
-    public void setEyeBrowsType(Integer eyeBrowsType) {
-        this.eyeBrowsType = eyeBrowsType;
-    }
-
-    public void setEyeType(Integer eyeType) {
-        this.eyeType = eyeType;
-    }
-
-    public void setHairType(Integer hairType) {
-        this.hairType = hairType;
     }
 }
 

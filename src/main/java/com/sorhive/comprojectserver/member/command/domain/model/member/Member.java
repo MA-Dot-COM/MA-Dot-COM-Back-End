@@ -1,5 +1,4 @@
 package com.sorhive.comprojectserver.member.command.domain.model.member;
-import com.sorhive.comprojectserver.member.exception.IdPasswordNotMatchingException;
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -8,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Random;
@@ -136,7 +134,14 @@ public class Member implements UserDetails {
     public String getAvatarImagePath() { return avatarImagePath; }
 
     public void setRoomImagePath(String roomImagePath) {
+
         this.roomImagePath = roomImagePath;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void setAvatarImagePath(String avatarImagePath) {
+        this.avatarImagePath = avatarImagePath;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
     // 이하 코드는 security 를 위한 용도

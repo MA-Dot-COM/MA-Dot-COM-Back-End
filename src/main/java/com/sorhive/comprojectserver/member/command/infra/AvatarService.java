@@ -1,26 +1,20 @@
-package com.sorhive.comprojectserver.member.command.application.service;
+package com.sorhive.comprojectserver.member.command.infra;
 
-import com.sorhive.comprojectserver.config.file.S3AvatarImageFile;
+import com.sorhive.comprojectserver.config.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
-import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
-import com.sorhive.comprojectserver.member.command.application.dto.ResponseAvatarImageAiDto;
 import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
-import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
-import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
+import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
+import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.util.Optional;
 
 /**
  * <pre>
@@ -45,6 +39,9 @@ public class AvatarService {
     private final AvatarRepository avatarRepository;
     private final TokenProvider tokenProvider;
 
+    private final MemberRepository memberRepository;
+    private S3MemberFile s3MemberFile;
+
     @Transactional
     public Long createAvatar(String accessToken, AvatarCreateDto avatarCreateDto) {
 
@@ -52,6 +49,24 @@ public class AvatarService {
         log.info("[AvatarService] avatarCreateDto : " + avatarCreateDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        String memberAvatarImageName = "avatar_" + memberCode + ".png";
+
+        try {
+            if(avatarCreateDto.getMemberAvatarImage() != null) {
+                Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
+                Member member = memberData.get();
+                member.setAvatarImagePath(
+                        s3MemberFile.upload(
+                                avatarCreateDto.getMemberAvatarImage(),
+                                "images",
+                                memberAvatarImageName)
+                );
+                memberRepository.save(member);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Avatar avatar = new Avatar(
                 memberCode,
