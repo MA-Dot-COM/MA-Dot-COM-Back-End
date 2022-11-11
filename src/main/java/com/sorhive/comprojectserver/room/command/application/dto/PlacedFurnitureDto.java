@@ -19,44 +19,13 @@ public class PlacedFurnitureDto {
     private String furnitureCategoryNumber;
     private Long furnitureNumber;
 
-    private AngleDto angle;
-    private BoxPositionDto boxPosition;
-    private PositionDto position;
-    private ScaleDto scale;
-
     public PlacedFurnitureDto() {
     }
-
-    public PlacedFurnitureDto(String furnitureCategoryNumber, Long furnitureNumber, AngleDto angle, BoxPositionDto boxPosition, PositionDto position, ScaleDto scale) {
-        this.furnitureCategoryNumber = furnitureCategoryNumber;
-        this.furnitureNumber = furnitureNumber;
-        this.angle = angle;
-        this.boxPosition = boxPosition;
-        this.position = position;
-        this.scale = scale;
-    }
-
     public String getFurnitureCategoryNumber() {
         return furnitureCategoryNumber;
     }
 
     public Long getFurnitureNumber() {
         return furnitureNumber;
-    }
-
-    public AngleDto getAngle() {
-        return angle;
-    }
-
-    public BoxPositionDto getBoxPosition() {
-        return boxPosition;
-    }
-
-    public PositionDto getPosition() {
-        return position;
-    }
-
-    public ScaleDto getScale() {
-        return scale;
     }
 }

@@ -69,18 +69,18 @@ public class Member implements UserDetails {
     @ColumnDefault("'N'")
     private Character deleteYn;
 
-    @Column(name = "member_offline_image")
-    private String offlineRoomImagePath;
+    @Column(name = "member_room_image")
+    private String roomImagePath;
 
-    @Column(name = "member_online_image")
-    private String onlineRoomImagePath;
+    @Column(name = "member_avatar_image")
+    private String avatarImagePath;
 
     protected Member() { }
 
     public Member(MemberId memberId, String memberName, String password) {
-        setMemberId(memberId);
-        setMemberName(memberName);
-        setPassword(password);
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
@@ -98,19 +98,6 @@ public class Member implements UserDetails {
         this.deleteYn = deleteYn;
         this.authorities = authorities;
     }
-    public void setOfflineRoomImagePath(String offlineRoomImagePath) { this.offlineRoomImagePath = offlineRoomImagePath; }
-
-    public void setOnlineRoomImagePath(String onlineRoomImagePath) { this.onlineRoomImagePath = onlineRoomImagePath; }
-
-    public String getOfflineRoomImagePath() { return offlineRoomImagePath; }
-
-    public String getOnlineRoomImagePath() { return onlineRoomImagePath; }
-
-    public void setMemberId(MemberId memberId) { this.memberId = memberId; }
-
-    public void setMemberName(String memberName) { this.memberName = memberName; }
-
-    public void setPassword(String password) { this.password = password; }
 
     public Long getMemberCode() {
         return memberCode;
@@ -142,6 +129,14 @@ public class Member implements UserDetails {
 
     public Character getDeleteYn() {
         return deleteYn;
+    }
+
+    public String getRoomImagePath() { return roomImagePath; }
+
+    public String getAvatarImagePath() { return avatarImagePath; }
+
+    public void setRoomImagePath(String roomImagePath) {
+        this.roomImagePath = roomImagePath;
     }
 
     // 이하 코드는 security 를 위한 용도
@@ -189,5 +184,4 @@ public class Member implements UserDetails {
         int number = random.nextInt();
         return Integer.toHexString(number);
     }
-
 }

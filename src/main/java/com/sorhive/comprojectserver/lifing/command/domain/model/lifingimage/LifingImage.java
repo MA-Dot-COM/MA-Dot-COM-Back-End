@@ -42,7 +42,7 @@ public class LifingImage {
     @Column(name = "lifing_saved_name")
     private String savedName;
 
-    @Column(name = "lifing_saved_name")
+    @Column(name = "lifing_upload_time")
     private Timestamp uploadTime;
 
     protected LifingImage() { }
