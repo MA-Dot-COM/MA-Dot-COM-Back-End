@@ -1,10 +1,6 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
-import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
-
-import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 
 /**
  * <pre>

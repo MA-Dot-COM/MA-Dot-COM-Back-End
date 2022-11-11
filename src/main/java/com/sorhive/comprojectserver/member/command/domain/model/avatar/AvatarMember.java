@@ -1,6 +1,9 @@
 package com.sorhive.comprojectserver.member.command.domain.model.avatar;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 

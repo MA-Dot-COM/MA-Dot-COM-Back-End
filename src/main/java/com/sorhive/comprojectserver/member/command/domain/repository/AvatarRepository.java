@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.member.command.domain.repository;
 
 import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
-import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import org.springframework.data.repository.Repository;
 
 /**

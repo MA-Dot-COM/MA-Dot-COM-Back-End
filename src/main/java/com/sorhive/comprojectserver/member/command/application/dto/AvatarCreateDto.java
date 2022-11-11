@@ -23,9 +23,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AvatarCreateDto {
+
     private Integer faceType;
+
     private Integer eyeBrowsType;
+
     private Integer eyeType;
+
     private Integer hairType;
+
     private byte[] memberAvatarImage;
+
 }
