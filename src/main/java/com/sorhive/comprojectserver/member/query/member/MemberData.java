@@ -1,9 +1,8 @@
 package com.sorhive.comprojectserver.member.query.member;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
-import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 
 /**

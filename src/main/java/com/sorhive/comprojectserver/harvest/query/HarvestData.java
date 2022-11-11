@@ -2,7 +2,10 @@ package com.sorhive.comprojectserver.harvest.query;
 
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * <pre>
