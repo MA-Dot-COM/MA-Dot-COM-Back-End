@@ -1,14 +1,11 @@
-package com.sorhive.comprojectserver.member.infra;
+package com.sorhive.comprojectserver.member.command.infra;
 
 import com.sorhive.comprojectserver.config.file.S3AvatarImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
 import com.sorhive.comprojectserver.member.command.application.dto.ResponseAvatarImageAiDto;
-import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
-import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;

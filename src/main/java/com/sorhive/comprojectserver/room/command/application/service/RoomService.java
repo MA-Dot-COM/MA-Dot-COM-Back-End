@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.room.command.application.service;
 
-import com.sorhive.comprojectserver.config.file.S3MemberRoomFile;
+import com.sorhive.comprojectserver.config.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
@@ -46,16 +46,16 @@ public class RoomService {
     private final RoomCreatorService roomCreatorService;
     private final MemberRepository memberRepository;
     private TokenProvider tokenProvider;
-    private S3MemberRoomFile s3MemberRoomFile;
+    private S3MemberFile s3MemberFile;
 
 
-    public RoomService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, TokenProvider tokenProvider, S3MemberRoomFile s3MemberRoomFile) {
+    public RoomService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, TokenProvider tokenProvider, S3MemberFile s3MemberFile) {
         this.mongoRoomRepository = mongoRoomRepository;
         this.roomRepository = roomRepository;
         this.roomCreatorService = roomCreatorService;
         this.memberRepository = memberRepository;
         this.tokenProvider = tokenProvider;
-        this.s3MemberRoomFile = s3MemberRoomFile;
+        this.s3MemberFile = s3MemberFile;
     }
 
     @Transactional
@@ -72,7 +72,7 @@ public class RoomService {
 
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
                 Member member = memberData.get();
-                member.setRoomImagePath(s3MemberRoomFile.upload(roomImage, "images", "room_" + memberCode + ".png"));
+                member.setRoomImagePath(s3MemberFile.upload(roomImage, "images", "room_" + memberCode + ".png"));
                 memberRepository.save(member);
             }
 

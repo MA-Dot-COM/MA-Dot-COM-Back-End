@@ -31,8 +31,8 @@ import java.util.UUID;
  */
 @Component
 @RequiredArgsConstructor
-public class S3MemberRoomFile {
-    private static final Logger log = LoggerFactory.getLogger(S3MemberRoomFile.class);
+public class S3MemberFile {
+    private static final Logger log = LoggerFactory.getLogger(S3MemberFile.class);
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -50,14 +50,15 @@ public class S3MemberRoomFile {
 
     private String upload(File uploadFile, String dirName, String member) {
 
-        String UUIDName = UUID.randomUUID().toString().replace("-", "");
-        String fileName = dirName + "/" + UUIDName + "-room" + member;
+        String fileName = dirName + "/" + member;
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
+
         return uploadImageUrl;
     }
 
     private String putS3(File uploadFile, String fileName) {
+
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
@@ -65,11 +66,13 @@ public class S3MemberRoomFile {
     }
 
     private void removeNewFile(File targetFile) {
+
         if (targetFile.delete()) {
             log.info("파일이 삭제되었습니다.");
         } else {
             log.info("파일이 삭제되지 못했습니다.");
         }
+
     }
 
 }

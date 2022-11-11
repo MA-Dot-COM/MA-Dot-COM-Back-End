@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.exception;
+package com.sorhive.comprojectserver.member.command.exception;
 
 public class LoginFailedException extends RuntimeException{
     public LoginFailedException() {
