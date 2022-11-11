@@ -66,6 +66,7 @@ public class Avatar {
         this.hairType = hairType;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
     }
 
     public Long getId() {

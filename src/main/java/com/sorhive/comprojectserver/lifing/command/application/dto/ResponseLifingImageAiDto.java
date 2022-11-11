@@ -22,5 +22,6 @@ import lombok.Setter;
 @Setter
 public class ResponseLifingImageAiDto {
 
-    private String space;
+    private Long lifing;
+
 }

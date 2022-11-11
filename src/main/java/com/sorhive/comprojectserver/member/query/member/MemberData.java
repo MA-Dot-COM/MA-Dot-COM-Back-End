@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "tbl_members")
+@Getter
 public class MemberData {
 
     @Id
@@ -43,23 +45,11 @@ public class MemberData {
     @ColumnDefault("N")
     private Character deleteYn;
 
+    @Column(name = "member_room_image")
+    private String memberRoomImage;
+
     protected MemberData() {
     }
 
-    public Long getMemberCode() {
-        return memberCode;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Character getDeleteYn() {
-        return deleteYn;
-    }
 
 }
