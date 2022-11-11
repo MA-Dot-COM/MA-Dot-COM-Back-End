@@ -1,5 +1,7 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
@@ -17,16 +19,15 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-07       부시연           최초 생성
+ * 2022-11-11       부시연           멀티파트파일 -> 바이트배열로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
+@AllArgsConstructor
+@Getter
 public class AvatarImageDto {
-    private MultipartFile avatarImage;
-
-    public AvatarImageDto(MultipartFile avatarImage) {
-        this.avatarImage = avatarImage;
-    }
-    public MultipartFile getAvatarImage() { return avatarImage; }
+    private byte[] avatarImage;
+    private String avatarImageName;
 }

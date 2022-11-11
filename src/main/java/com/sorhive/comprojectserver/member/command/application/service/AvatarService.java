@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.member.command.application.service;
 
-import com.sorhive.comprojectserver.config.file.S3ConvertFile;
+import com.sorhive.comprojectserver.config.file.S3AvatarImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
@@ -9,7 +9,6 @@ import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -33,6 +31,7 @@ import java.util.*;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-07       부시연           최초 생성
+ * 2022-11-11       부시연           바이트배열로 대응
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -43,75 +42,14 @@ import java.util.*;
 public class AvatarService {
 
     private static final Logger log = LoggerFactory.getLogger(AvatarService.class);
-    private final S3ConvertFile s3ConvertFile;
     private final AvatarRepository avatarRepository;
-    private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
-
-    @Value("${url.avatar}")
-    private String url;
-
-    @Transactional
-    public ResponseAvatarImageAiDto insertAvatarImage(String accessToken, AvatarImageDto avatarImageDto) {
-
-        log.info("[AvatarService] insertImage Start ===============");
-        log.info("[AvatarService] avatarImageDto : " + avatarImageDto);
-        String changeName = UUID.randomUUID().toString().replace("-", "");
-
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-
-        try {
-            if (avatarImageDto.getAvatarImage() != null) {
-                AvatarImage avatarImage = new AvatarImage(
-                        memberCode,
-                        s3ConvertFile.upload(avatarImageDto.getAvatarImage(),"images"),
-                        avatarImageDto.getAvatarImage().getResource().getFilename(),
-                        changeName
-                );
-                avatarImageRepository.save(avatarImage);
-
-                Optional<AvatarImage> imagePath = avatarImageRepository.findById(memberCode);
-
-                HttpHeaders headers = new HttpHeaders();
-
-                Charset utf8 = Charset.forName("UTF-8");
-
-                MediaType mediaType = new MediaType("application", "json", utf8);
-
-                headers.setContentType(mediaType);
-
-                Map<String, Object> map = new HashMap<>();
-                String path = imagePath.get().getPath();
-                map.put("url", path);
-
-                JSONObject params = new JSONObject(map);
-
-                System.out.println(params);
-
-                HttpEntity<JSONObject> requestEntity
-                        = new HttpEntity<>(params, headers);
-
-                RestTemplate restTemplate = new RestTemplate();
-
-                ResponseEntity<ResponseAvatarImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseAvatarImageAiDto.class);
-
-                log.info("[AvatarService] insertImage End ===============");
-
-                return res.getBody();
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return new ResponseAvatarImageAiDto();
-    }
 
     @Transactional
     public Long createAvatar(String accessToken, AvatarCreateDto avatarCreateDto) {
 
-        log.info("[AvatarService] insertImage Start ===============");
-        log.info("[AvatarService] avatarImageDto : " + avatarCreateDto);
+        log.info("[AvatarService] createAvatar Start ===============");
+        log.info("[AvatarService] avatarCreateDto : " + avatarCreateDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
