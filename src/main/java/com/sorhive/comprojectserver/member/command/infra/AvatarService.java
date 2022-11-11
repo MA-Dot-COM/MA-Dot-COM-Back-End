@@ -50,10 +50,9 @@ public class AvatarService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        String memberAvatarImageName = "avatar_" + memberCode + ".png";
-
         try {
             if(avatarCreateDto.getMemberAvatarImage() != null) {
+                String memberAvatarImageName = "avatar_" + memberCode + ".png";
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
                 Member member = memberData.get();
                 member.setAvatarImagePath(
