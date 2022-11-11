@@ -3,7 +3,6 @@ package com.sorhive.comprojectserver.member.query.member;
 import com.sorhive.comprojectserver.common.jpa.Rangeable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
