@@ -4,12 +4,10 @@ import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
 import com.sorhive.comprojectserver.member.command.application.service.AvatarService;
+import com.sorhive.comprojectserver.member.infra.AvatarImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.io.IOException;
 
 /**
  * <pre>
@@ -31,16 +29,19 @@ public class AvatarContoller {
 
     private AvatarService avatarService;
 
-    public AvatarContoller(AvatarService avatarService) {
+    private AvatarImageService avatarImageService;
+
+    public AvatarContoller(AvatarService avatarService, AvatarImageService avatarImageService) {
         this.avatarService = avatarService;
+        this.avatarImageService = avatarImageService;
     }
 
-    @PostMapping(value = "image", consumes = "multipart/form-data")
-    public ResponseEntity<ResponseDto> avatarImage(@RequestHeader String Authorization, AvatarImageDto avatarImageDto) {
+    @PostMapping(value = "image")
+    public ResponseEntity<ResponseDto> avatarImage(@RequestHeader String Authorization, @RequestBody AvatarImageDto avatarImageDto) {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 이미지 생성 성공", avatarService.insertAvatarImage(accessToken, avatarImageDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아바타 이미지 생성 성공", avatarImageService.insertAvatarImage(accessToken, avatarImageDto)));
 
     }
 
