@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sorhive.comprojectserver.member.query.follow.FollowMapper">
+
+    <resultMap id="memberSummaryResultMap" type="com.sorhive.comprojectserver.member.query.member.MemberSummary">
+        <id property="memberCode" column="member_code"/>
+        <result property="memberName" column="member_name"/>
+        <result property="memberId" column="member_id"/>
+        <result property="avatarImage" column="member_avatar_image"/>
+        <result property="roomImage" column="member_room_image"/>
+        <association property="followMemberSummary" resultMap="followResultMap"/>
+    </resultMap>
+
+    <resultMap id="followResultMap" type="com.sorhive.comprojectserver.member.query.follow.FollowSummary">
+        <id property="followId" column="follow_id"/>
+        <result property="followerId" column="follower_id"/>
+        <result property="followingId" column="following_id"/>
+    </resultMap>
+
+    <select id="findByFollowerId" resultMap="memberSummaryResultMap">
+        select
+               a.member_code
+             , a.member_name
+             , a.member_id
+             , a.member_room_image
+             , b.follow_id
+             , b.follower_id
+             , b.following_id
+          from tbl_members a
+          left join tbl_follows b on b.follower_id = a.member_code
+         where a.member_code = b.follower_id
+          and b.following_id = #{memberCode}
+          and not a.member_code = #{memberCode}
+    </select>
+
+    <select id="findByFollowingId" resultMap="memberSummaryResultMap">
+        select
+               a.member_code
+             , a.member_name
+             , a.member_id
+             , a.member_room_image
+             , b.follow_id
+             , b.follower_id
+             , b.following_id
+          from tbl_members a
+          left join tbl_follows b on b.following_id = a.member_code
+         where a.member_code = b.following_id
+           and b.follower_id = #{memberCode}
+           and not a.member_code = #{memberCode}
+    </select>
+</mapper>

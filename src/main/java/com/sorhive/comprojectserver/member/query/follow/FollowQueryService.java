@@ -22,28 +22,28 @@ import java.util.List;
 @Service
 public class FollowQueryService {
 
-    private final FollowDataDao followDataDao;
+    private final FollowMapper followMapper;
     private final TokenProvider tokenProvider;
 
-    public FollowQueryService(FollowDataDao followDataDao, TokenProvider tokenProvider) {
-        this.followDataDao = followDataDao;
+    public FollowQueryService(FollowMapper followMapper, TokenProvider tokenProvider) {
+        this.followMapper = followMapper;
         this.tokenProvider = tokenProvider;
     }
 
     public Object findFollowerList(String accessToken) {
 
-        Long followerId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<FollowData> followData = followDataDao.findByFollowerId(followerId);
+        List<FollowData> followData = followMapper.findByFollowerId(memberCode);
 
         return followData;
     }
 
     public Object findFollowingList(String accessToken) {
 
-        Long followingId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<FollowData> followData = followDataDao.findByFollowingId(followingId);
+        List<FollowData> followData = followMapper.findByFollowingId(memberCode);
 
         return followData;
     }

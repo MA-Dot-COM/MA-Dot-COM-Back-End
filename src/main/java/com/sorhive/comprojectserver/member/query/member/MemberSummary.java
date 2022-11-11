@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.query.member;
 
+import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
 import lombok.Getter;
 
 /**
@@ -23,9 +24,9 @@ public class MemberSummary {
     private Long memberCode;
     private String memberName;
     private String memberId;
-    private String onlineImage;
-    private String offlineImage;
-    private FollowingMemberSummary followingMemberSummary;
+    private String avatarImage;
+    private String roomImage;
+    private FollowSummary followSummary;
 
     protected MemberSummary() {}
 }

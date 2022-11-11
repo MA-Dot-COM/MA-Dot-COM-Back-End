@@ -1,8 +1,8 @@
 package com.sorhive.comprojectserver.lifing.command.domain.repository;
 
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
-import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import org.springframework.data.repository.Repository;
+
 import java.util.Optional;
 
 /**

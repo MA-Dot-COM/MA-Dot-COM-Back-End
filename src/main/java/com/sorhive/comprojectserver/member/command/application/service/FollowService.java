@@ -45,17 +45,17 @@ public class FollowService {
     }
 
     @Transactional
-    public Object createFollow(String accessToken, Long followerId) {
+    public Object createFollow(String accessToken, Long followingId) {
         log.info("[FollowService] createFollow Start ===============");
-        log.info("[FollowService] followId : " + followerId);
+        log.info("[FollowService] followId : " + followingId);
 
-        Long followingId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        Long followerId = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        if(memberDataDao.findByMemberCode(followerId) == null) {
+        if(memberDataDao.findByMemberCode(followingId) == null) {
             throw new NoMemberException("해당 회원이 존재하지 않습니다.");
         }
 
-        if(!followRepository.findByFollowerId(new FollowerId(followerId), new FollowingId(followingId)).isEmpty()) {
+        if(!followRepository.findByFollowingId(new FollowerId(followerId), new FollowingId(followingId)).isEmpty()) {
             throw new ExistFollowException("이미 팔로우를 하고 있습니다.");
         }
 

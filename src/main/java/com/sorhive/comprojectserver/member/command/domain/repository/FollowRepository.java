@@ -36,5 +36,6 @@ public interface FollowRepository extends Repository<Follow, Long> {
             "where follow.deleteYn = 'N' " +
             "and follow.followingId = :followingId " +
             "and follow.followerId = :followerId")
-    Optional<Follow> findByFollowerId(@Param("followerId")FollowerId followerId, @Param("followingId")FollowingId followingId);
+    Optional<Follow> findByFollowingId(@Param("followerId")FollowerId followerId, @Param("followingId")FollowingId followingId);
+
 }

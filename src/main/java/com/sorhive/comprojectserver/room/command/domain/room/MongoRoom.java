@@ -1,14 +1,9 @@
 package com.sorhive.comprojectserver.room.command.domain.room;
 
-import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
-import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

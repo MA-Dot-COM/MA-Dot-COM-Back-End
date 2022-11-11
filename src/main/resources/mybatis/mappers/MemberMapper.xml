@@ -8,12 +8,15 @@
         <id property="memberCode" column="member_code"/>
         <result property="memberName" column="member_name"/>
         <result property="memberId" column="member_id"/>
-        <result property="onlineImage" column="member_online_image"/>
-        <result property="offlineImage" column="member_offline_image"/>
-        <association property="followingMemberSummary" javaType="com.sorhive.comprojectserver.member.query.member.FollowingMemberSummary">
-            <id property="followId" column="follow_id"/>
-            <result property="followingId" column="following_id"/>
-        </association>
+        <result property="avatarImage" column="member_avatar_image"/>
+        <result property="roomImage" column="member_room_image"/>
+        <association property="followMemberSummary" resultMap="followResultMap"/>
+    </resultMap>
+
+    <resultMap id="followResultMap" type="com.sorhive.comprojectserver.member.query.follow.FollowSummary">
+        <id property="followId" column="follow_id"/>
+        <result property="followerId" column="follower_id"/>
+        <result property="followingId" column="following_id"/>
     </resultMap>
 
     <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">
