@@ -1,4 +1,4 @@
-//package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
+package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;//package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 //
 //import javax.persistence.AttributeOverride;
 //import javax.persistence.AttributeOverrides;

@@ -1,4 +1,4 @@
-//package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
+package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;//package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
 //
 //import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 //

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sorhive.comprojectserver.member.query.member.MemberMapper">
+
+    <resultMap id="memberSummaryResultMap" type="com.sorhive.comprojectserver.member.query.member.MemberSummary">
+        <id property="memberCode" column="member_code"/>
+        <result property="memberName" column="member_name"/>
+        <result property="memberId" column="member_id"/>
+        <result property="onlineImage" column="member_online_image"/>
+        <result property="offlineImage" column="member_offline_image"/>
+        <association property="followingMemberSummary" javaType="com.sorhive.comprojectserver.member.query.member.FollowingMemberSummary">
+            <id property="followId" column="follow_id"/>
+            <result property="followingId" column="following_id"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">
+        select
+        a.member_code
+        , a.member_id
+        , a.member_name
+        , a.member_offline_image
+        , a.member_online_image
+        , b.follow_id
+        , b.follower_id
+        from tbl_members a
+        join tbl_follows b on a.member_code = b.following_id
+        where b.following_id = #{ memberCode }
+        limit 30 offset #{ offset }
+    </select>
+</mapper>
