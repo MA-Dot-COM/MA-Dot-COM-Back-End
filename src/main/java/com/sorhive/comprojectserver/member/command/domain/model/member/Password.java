@@ -3,7 +3,6 @@ package com.sorhive.comprojectserver.member.command.domain.model.member;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 /**
  * <pre>

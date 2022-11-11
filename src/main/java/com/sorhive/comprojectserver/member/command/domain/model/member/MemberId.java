@@ -1,10 +1,7 @@
 package com.sorhive.comprojectserver.member.command.domain.model.member;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 

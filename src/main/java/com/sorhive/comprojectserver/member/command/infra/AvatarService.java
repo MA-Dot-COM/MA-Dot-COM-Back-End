@@ -50,18 +50,16 @@ public class AvatarService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        String memberAvatarImageName = "avatar_" + memberCode + ".png";
+
+        byte[] avatarImage = avatarCreateDto.getMemberAvatarImage();
 
         try {
-            if(avatarCreateDto.getMemberAvatarImage() != null) {
+            if(avatarImage != null) {
+
+                String memberAvatarImageName = "avatar_" + memberCode + ".png";
                 Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
                 Member member = memberData.get();
-                member.setAvatarImagePath(
-                        s3MemberFile.upload(
-                                avatarCreateDto.getMemberAvatarImage(),
-                                "images",
-                                memberAvatarImageName)
-                );
+                member.setAvatarImagePath(s3MemberFile.upload(avatarImage, "images", memberAvatarImageName));
                 memberRepository.save(member);
             }
         } catch (IOException e) {

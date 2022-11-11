@@ -2,13 +2,6 @@ package com.sorhive.comprojectserver.member.command.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.sql.Timestamp;
 
 /**
  * <pre>

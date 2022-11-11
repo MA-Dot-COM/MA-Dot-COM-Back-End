@@ -4,12 +4,7 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRol
 import com.sorhive.comprojectserver.member.command.domain.model.member.Password;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Collection;
 
 /**
  * <pre>
@@ -50,6 +45,5 @@ public class MemberData {
 
     protected MemberData() {
     }
-
 
 }

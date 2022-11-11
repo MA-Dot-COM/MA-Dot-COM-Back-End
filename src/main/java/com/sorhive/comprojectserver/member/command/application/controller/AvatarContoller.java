@@ -3,11 +3,13 @@ package com.sorhive.comprojectserver.member.command.application.controller;
 import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
-import com.sorhive.comprojectserver.member.command.infra.AvatarService;
 import com.sorhive.comprojectserver.member.command.infra.AvatarImageService;
+import com.sorhive.comprojectserver.member.command.infra.AvatarService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * <pre>
@@ -45,8 +47,8 @@ public class AvatarContoller {
 
     }
 
-    @PostMapping("/")
-    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String Authorization, @RequestBody AvatarCreateDto avatarCreateDto) {
+    @PostMapping(value = "create")
+    public ResponseEntity<ResponseDto> createAvatar(@RequestHeader String Authorization, @Valid @RequestBody AvatarCreateDto avatarCreateDto) {
 
         String accessToken = Authorization.substring(7);
 

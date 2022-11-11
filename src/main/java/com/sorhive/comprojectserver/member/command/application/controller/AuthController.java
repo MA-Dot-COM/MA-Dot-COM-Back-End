@@ -4,7 +4,6 @@ import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.member.command.application.dto.LoginDto;
 import com.sorhive.comprojectserver.member.command.application.dto.SignUpDto;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
-import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
