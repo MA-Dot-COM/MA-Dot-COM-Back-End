@@ -2,7 +2,9 @@ package com.sorhive.comprojectserver.lifing.command.infra;
 
 import com.sorhive.comprojectserver.config.file.S3LifingImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
+import com.sorhive.comprojectserver.lifing.command.application.dto.ResponseLifingDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.ResponseLifingImageAiDto;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
@@ -10,7 +12,11 @@ import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWri
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingImageRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
+import com.sorhive.comprojectserver.lifing.query.LifingImageMapper;
+import com.sorhive.comprojectserver.lifing.query.LifingImagePath;
+import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -44,15 +50,17 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class LifingImageService {
+public class LifingService {
 
-    private static final Logger log = LoggerFactory.getLogger(LifingImageService.class);
+    private static final Logger log = LoggerFactory.getLogger(LifingService.class);
     private final S3LifingImageFile s3LifingImageFile;
     private final LifingImageRepository lifingImageRepository;
     private final LifingRepository lifingRepository;
 
     private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
+    private final LifingImageMapper lifingImageMapper;
+    private final MemberRepository memberRepository;
 
     @Value("${url.lifing}")
     private String url;
@@ -69,14 +77,8 @@ public class LifingImageService {
 
         try {
             if (lifingImageDto.getLifingImage() != null) {
-                LifingImage lifingImage = new LifingImage(
-                        s3LifingImageFile.upload(lifingImageDto.getLifingImage(), changeName, "images"),
-                        lifingImageDto.getLifingImageName(),
-                        changeName
-                );
-                lifingImageRepository.save(lifingImage);
 
-                Optional<LifingImage> imagePath = lifingImageRepository.findById(memberCode);
+                String lifingPath = s3LifingImageFile.upload(lifingImageDto.getLifingImage(), changeName, "images");
 
                 HttpHeaders headers = new HttpHeaders();
 
@@ -87,15 +89,13 @@ public class LifingImageService {
                 headers.setContentType(mediaType);
 
                 Map<String, Object> map = new HashMap<>();
-                String path = imagePath.get().getPath();
-                map.put("url", path);
+                map.put("url", lifingPath);
 
                 JSONObject params = new JSONObject(map);
 
                 System.out.println(params);
 
-                HttpEntity<JSONObject> requestEntity
-                        = new HttpEntity<>(params, headers);
+                HttpEntity<JSONObject> requestEntity = new HttpEntity<>(params, headers);
 
                 RestTemplate restTemplate = new RestTemplate();
 
@@ -103,12 +103,16 @@ public class LifingImageService {
 
                 LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
 
-                Lifing lifing = new Lifing(
-                        lifingWriter,
-                        res.getBody().getLifing()
-                );
+                Long analyzedLifingNo = res.getBody().getLifing();
 
-                lifingRepository.save(lifing);
+                LifingImage lifingImage = new LifingImage(
+                        lifingPath,
+                        lifingImageDto.getLifingImageName(),
+                        changeName,
+                        analyzedLifingNo,
+                        lifingWriter
+                );
+                lifingImageRepository.save(lifingImage);
 
                 log.info("[LifingImageService] insertImage End ===============");
 
@@ -121,4 +125,39 @@ public class LifingImageService {
         return new ResponseLifingImageAiDto();
     }
 
+    public Object createLifing(String accessToken, LifingCreateDto lifingCreateDto) {
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
+
+        Long lifingNo = lifingCreateDto.getLifingNo();
+        String lifingConetent = lifingCreateDto.getLifingContent();
+
+        LifingImagePath lifingImagePath = lifingImageMapper.findLifingImageByMemberCode(memberCode);
+
+        Lifing lifing = new Lifing(
+                lifingWriter,
+                lifingNo,
+                lifingConetent,
+                lifingImagePath.getLifingPath()
+        );
+
+        lifingRepository.save(lifing);
+
+        Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
+        Member member = memberData.get();
+        member.setLifingNo(lifingNo);
+        memberRepository.save(member);
+
+        ResponseLifingDto responseLifingDto = new ResponseLifingDto();
+
+        responseLifingDto.setLifingId(lifing.getLifingId());
+        responseLifingDto.setLifingContent(lifing.getLifingConetent());
+        responseLifingDto.setLifingImagePath(lifing.getLifingImagePath());
+        responseLifingDto.setLifingNo(lifing.getLifingNo());
+        responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
+
+        return responseLifingDto;
+    }
 }

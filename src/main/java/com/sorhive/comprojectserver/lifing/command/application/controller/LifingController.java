@@ -3,8 +3,7 @@ package com.sorhive.comprojectserver.lifing.command.application.controller;
 import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
-import com.sorhive.comprojectserver.lifing.command.application.service.LifingService;
-import com.sorhive.comprojectserver.lifing.command.infra.LifingImageService;
+import com.sorhive.comprojectserver.lifing.command.infra.LifingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +27,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1")
 public class LifingController {
 
-    private final LifingImageService lifingImageService;
-
     private final LifingService lifingService;
 
-    public LifingController(LifingImageService lifingImageService, LifingService lifingService) {
-        this.lifingImageService = lifingImageService;
+    public LifingController(LifingService lifingService) {
         this.lifingService = lifingService;
     }
 
@@ -42,7 +38,7 @@ public class LifingController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 이미지 생성 성공", lifingImageService.insertLifingImage(accessToken, lifingImageDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 이미지 생성 성공", lifingService.insertLifingImage(accessToken, lifingImageDto)));
 
     }
 

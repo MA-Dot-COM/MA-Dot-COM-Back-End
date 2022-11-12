@@ -1,11 +1,10 @@
-package com.sorhive.comprojectserver.lifing.command.application.service;
+package com.sorhive.comprojectserver.lifing.query;
 
-import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
-import org.springframework.stereotype.Service;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <pre>
- * Class : LifingService
+ * Class : LifingMapper
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -18,10 +17,9 @@ import org.springframework.stereotype.Service;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-@Service
-public class LifingService {
-    public Object createLifing(String accessToken, LifingCreateDto lifingCreateDto) {
+@Mapper
+public interface LifingImageMapper {
 
-        return null;
-    }
+    LifingImagePath findLifingImageByMemberCode(Long memberCode);
+
 }

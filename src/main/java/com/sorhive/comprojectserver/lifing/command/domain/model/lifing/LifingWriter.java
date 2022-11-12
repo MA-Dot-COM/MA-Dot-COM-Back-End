@@ -26,7 +26,7 @@ import java.util.Objects;
 public class LifingWriter {
 
     @AttributeOverrides(
-            @AttributeOverride(name = "value", column = @Column(name = "lifing_wrtier_code"))
+            @AttributeOverride(name = "value", column = @Column(name = "lifing_writer_code"))
     )
     private MemberCode memberCode;
 
