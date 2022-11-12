@@ -13,6 +13,8 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-11       부시연           최초 생성
+ * 2022-11-11       부시연           자신을 포함한 전체 회원 조회
+ * 2022-11-11       부시연           제일 높은 회원 코드값 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,4 +24,6 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
     List<MemberSummary> findAllByMemberCode(Long memberCode, Long offset);
+
+    int findMaxMemberCode();
 }

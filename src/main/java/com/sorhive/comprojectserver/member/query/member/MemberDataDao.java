@@ -1,12 +1,8 @@
 package com.sorhive.comprojectserver.member.query.member;
 
-import com.sorhive.comprojectserver.common.jpa.Rangeable;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <pre>
@@ -17,6 +13,9 @@ import java.util.Optional;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-10-31       부시연           최초 생성
+ * 2022-11-12       부시연           회원 아이디 검색 시 자기 자신 제외 기능 추가
+ * 2022-11-12       부시연           자신을 제외한 전체 회원 목록 조회
+ * 2022-11-13       부시연           자신을 제외한 멤버 코드 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -25,17 +24,12 @@ import java.util.Optional;
 public interface MemberDataDao extends Repository<MemberData, String> {
 
     MemberData findById(String memberId);
-    
-    List<MemberData> findByNameLike(String name, Pageable pageable);
 
-    List<MemberData> findAll(Specification<MemberData> spec, Pageable pageable);
+    List<MemberData> findAllByMemberCodeIsNot(Long memberCode);
 
-    List<MemberData> getRange(Specification<MemberData> spec, Rangeable rangeable);
-
-    List<MemberData> findFirst3ByNameLikeOrderByName(String name);
-    Optional<MemberData> findFirstByNameLikeOrderByName(String name);
-
-    List<MemberData> findByIdLike(String memberId);
+    List<MemberData> findByIdLikeAndMemberCodeIsNot(String memberId, Long memberCode);
 
     MemberData findByMemberCode(Long memberCode);
+
+    MemberData findByMemberCodeAndMemberCodeIsNot(Long memberCode, Long temp);
 }
