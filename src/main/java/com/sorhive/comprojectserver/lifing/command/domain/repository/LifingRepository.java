@@ -1,5 +1,8 @@
 package com.sorhive.comprojectserver.lifing.command.domain.repository;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
+import org.springframework.data.repository.Repository;
+
 /**
  * <pre>
  * Class : StoryRepository
@@ -14,5 +17,7 @@ package com.sorhive.comprojectserver.lifing.command.domain.repository;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-public interface LifingRepository {
+public interface LifingRepository extends Repository<Lifing, Long> {
+
+    void save(Lifing lifing);
 }

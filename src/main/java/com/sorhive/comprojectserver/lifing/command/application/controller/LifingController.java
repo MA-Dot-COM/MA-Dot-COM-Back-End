@@ -1,7 +1,9 @@
 package com.sorhive.comprojectserver.lifing.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
+import com.sorhive.comprojectserver.lifing.command.application.service.LifingService;
 import com.sorhive.comprojectserver.lifing.command.infra.LifingImageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +30,11 @@ public class LifingController {
 
     private final LifingImageService lifingImageService;
 
-    public LifingController(LifingImageService lifingImageService) {
+    private final LifingService lifingService;
+
+    public LifingController(LifingImageService lifingImageService, LifingService lifingService) {
         this.lifingImageService = lifingImageService;
+        this.lifingService = lifingService;
     }
 
     @PostMapping("lifing/image")
@@ -41,4 +46,12 @@ public class LifingController {
 
     }
 
+    @PostMapping("lifing")
+    public ResponseEntity<ResponseDto> createLifing(@RequestHeader String Authorization, @RequestBody LifingCreateDto lifingCreateDto) {
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 생성 성공", lifingService.createLifing(accessToken, lifingCreateDto)));
+
+    }
 }
