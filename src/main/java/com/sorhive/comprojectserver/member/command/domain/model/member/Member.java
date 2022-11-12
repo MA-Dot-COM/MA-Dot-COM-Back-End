@@ -73,6 +73,9 @@ public class Member implements UserDetails {
     @Column(name = "member_avatar_image")
     private String avatarImagePath;
 
+    @Column(name = "member_lifing_no")
+    private Long lifingNo;
+
     protected Member() { }
 
     public Member(MemberId memberId, String memberName, String password) {
@@ -133,6 +136,8 @@ public class Member implements UserDetails {
 
     public String getAvatarImagePath() { return avatarImagePath; }
 
+    public Long getLifingNo() { return lifingNo; }
+
     public void setRoomImagePath(String roomImagePath) {
 
         this.roomImagePath = roomImagePath;
@@ -141,6 +146,11 @@ public class Member implements UserDetails {
 
     public void setAvatarImagePath(String avatarImagePath) {
         this.avatarImagePath = avatarImagePath;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void setLifingNo(Long lifingNo) {
+        this.lifingNo = lifingNo;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 

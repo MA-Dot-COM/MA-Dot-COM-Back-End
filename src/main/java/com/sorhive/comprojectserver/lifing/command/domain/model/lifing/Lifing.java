@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -7,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : Story
+ * Class : Lifing
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,6 +22,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_lifing")
+@Getter
 public class Lifing {
 
     @Id
@@ -33,6 +35,9 @@ public class Lifing {
 
     @Column(name = "lifing_no")
     private Long lifingNo;
+
+    @Column(name = "lifing_image_path")
+    private String lifingImagePath;
 
     private LifingWriter lifingWriter;
 
@@ -49,9 +54,13 @@ public class Lifing {
     @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
-    public Lifing(LifingWriter lifingWriter, Long lifingNo) {
+    protected Lifing() { }
+
+    public Lifing(LifingWriter lifingWriter, Long lifingNo, String lifingConetent, String lifingImagePath) {
         this.lifingWriter = lifingWriter;
         this.lifingNo = lifingNo;
+        this.lifingConetent = lifingConetent;
+        this.lifingImagePath = lifingImagePath;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = 'N';

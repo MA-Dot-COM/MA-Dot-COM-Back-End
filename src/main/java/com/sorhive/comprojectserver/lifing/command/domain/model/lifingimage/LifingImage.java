@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -42,16 +43,23 @@ public class LifingImage {
     @Column(name = "lifing_saved_name")
     private String savedName;
 
+    @Column(name = "anaylzed_lifing_no")
+    private Long analyzedLifingNo;
+
     @Column(name = "lifing_upload_time")
     private Timestamp uploadTime;
 
+    private LifingWriter lifingWriter;
+
     protected LifingImage() { }
-    public LifingImage(String path, String orginalName, String savedName) {
+    public LifingImage(String path, String orginalName, String savedName, Long analyzedLifingNo, LifingWriter lifingWriter) {
 
         this.path = path;
         this.orginalName = orginalName;
         this.savedName = savedName;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.analyzedLifingNo = analyzedLifingNo;
+        this.lifingWriter = lifingWriter;
 
     }
 

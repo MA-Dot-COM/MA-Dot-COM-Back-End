@@ -10,7 +10,8 @@
         <result property="memberId" column="member_id"/>
         <result property="avatarImage" column="member_avatar_image"/>
         <result property="roomImage" column="member_room_image"/>
-        <association property="followMemberSummary" resultMap="followResultMap"/>
+        <result property="lifingNo" column="member_lifing_no"/>
+        <association property="followSummary" resultMap="followResultMap"/>
     </resultMap>
 
     <resultMap id="followResultMap" type="com.sorhive.comprojectserver.member.query.follow.FollowSummary">
@@ -26,11 +27,12 @@
              , a.member_name
              , a.member_avatar_image
              , a.member_room_image
+             , a.member_lifing_no
              , b.follow_id
              , b.follower_id
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
-         where b.following_id = #{ memberCode }
+         where b.follower_id = #{ memberCode }
          limit 30 offset #{ offset }
     </select>
 </mapper>

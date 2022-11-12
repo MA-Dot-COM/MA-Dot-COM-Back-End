@@ -10,9 +10,9 @@
         <result property="memberId" column="member_id"/>
         <result property="avatarImage" column="member_avatar_image"/>
         <result property="roomImage" column="member_room_image"/>
-        <association property="followMemberSummary" resultMap="followResultMap"/>
+        <association property="followSummary" resultMap="followResultMap"/>
     </resultMap>
-
+    
     <resultMap id="followResultMap" type="com.sorhive.comprojectserver.member.query.follow.FollowSummary">
         <id property="followId" column="follow_id"/>
         <result property="followerId" column="follower_id"/>
@@ -31,8 +31,8 @@
           from tbl_members a
           left join tbl_follows b on b.follower_id = a.member_code
          where a.member_code = b.follower_id
-          and b.following_id = #{memberCode}
-          and not a.member_code = #{memberCode}
+           and b.following_id = #{memberCode}
+           and not a.member_code = #{memberCode}
     </select>
 
     <select id="findByFollowingId" resultMap="memberSummaryResultMap">

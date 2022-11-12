@@ -1,10 +1,10 @@
-package com.sorhive.comprojectserver.lifing.command.application.dto;
+package com.sorhive.comprojectserver.lifing.query;
 
 import lombok.Getter;
 
 /**
  * <pre>
- * Class : LifingCreateDto
+ * Class : LifingImageData
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -18,9 +18,10 @@ import lombok.Getter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-public class LifingCreateDto {
+public class LifingImagePath {
 
-    private Long lifingNo;
-    private String lifingContent;
+    private Long id;
+    private String lifingPath;
+    private Long analyzedLifingNo;
 
 }

@@ -26,6 +26,7 @@ public class MemberSummary {
     private String memberId;
     private String avatarImage;
     private String roomImage;
+    private Long lifingNo;
     private FollowSummary followSummary;
 
     protected MemberSummary() {}
