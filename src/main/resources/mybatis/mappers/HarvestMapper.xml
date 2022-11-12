@@ -10,6 +10,7 @@
         <result property="harvestWriterName" column="harvest_writer_name"/>
         <result property="harvestCreateTime" column="harvest_create_time"/>
         <result property="harvestDeleteYn" column="harvest_delete_yn"/>
+        <result property="honeyCount" column="honey_count"/>
         <association property="harvestImageSummary" resultMap="harvestImageResultMap"></association>
         <association property="harvestCommentSummary" resultMap="HarvestCommentResultMap"></association>
     </resultMap>
@@ -43,8 +44,8 @@
              , a.harvest_writer_name
              , a.harvest_create_time
              , a.harvest_delete_yn
+             , a.honey_count
              , b.harvest_image_path
-             , (select count(harvest_id) from tbl_honey) as honeycount
           from tbl_harvests a
           left join tbl_harvest_images b on(a.harvest_id = b.harvest_id)
          where harvest_writer_code = #{memberCode}
@@ -57,7 +58,7 @@
                harvest_id
              , harvest_content
              , harvest_writer_name
-             , (select count(harvest_id) from tbl_honey) as honeycount
+             , a.honey_count
              , harvest_create_time
              , harvest_delete_yn
           from tbl_harvests

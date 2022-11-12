@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.harvest.query;
 
-import com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment.NoHarvestException;
+import com.sorhive.comprojectserver.harvest.command.application.exception.NoHarvestException;
 import com.sorhive.comprojectserver.harvest.query.dto.HarvestCommentSummary;
 import com.sorhive.comprojectserver.harvest.query.dto.HarvestImageSummary;
 import com.sorhive.comprojectserver.harvest.query.dto.HarvestRequestDto;
