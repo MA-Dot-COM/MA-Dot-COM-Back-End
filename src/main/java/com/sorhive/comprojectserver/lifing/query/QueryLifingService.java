@@ -4,6 +4,8 @@ import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,12 +29,15 @@ public class QueryLifingService {
 
     private static final Logger log = LoggerFactory.getLogger(QueryLifingService.class);
     private final LifingDataDao lifingDataDao;
-    private final TokenProvider tokenProvider;
-    public Object findAllLifingByMemberCode(String accessToken) {
+    public Object findAllLifingByMemberCode(LifingRequestDto lifingRequestDto) {
+
         log.info("[QueryLifingService] findAllLifingByMemberCode Start ============================");
+        log.info("[QueryLifingService] lifingRequestDto" + lifingRequestDto);
 
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        int pageNo = lifingRequestDto.getPageNo() - 1;
 
-        return lifingDataDao.findAllLifingByMemberCodeOrderByUploadTimeDesc(memberCode);
+        Pageable paging = PageRequest.of(pageNo, 2);
+
+        return lifingDataDao.findAllLifingByMemberCodeContainingOrderByUploadTimeDesc(lifingRequestDto.getMemberCode(), paging);
     }
 }

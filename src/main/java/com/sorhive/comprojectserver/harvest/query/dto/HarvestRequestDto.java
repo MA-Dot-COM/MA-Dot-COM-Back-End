@@ -1,13 +1,10 @@
-package com.sorhive.comprojectserver.lifing.query;
+package com.sorhive.comprojectserver.harvest.query.dto;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.Repository;
-
-import java.util.List;
+import lombok.Getter;
 
 /**
  * <pre>
- * Class : LifingDataDao
+ * Class : HarvestRequestDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,7 +17,10 @@ import java.util.List;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface LifingDataDao extends Repository<LifingData, Long> {
-    List<LifingData> findAllLifingByMemberCodeContainingOrderByUploadTimeDesc(Long memberCode, Pageable pageable);
+@Getter
+public class HarvestRequestDto {
+
+    private Long memberCode;
+    private int pageNo;
 
 }

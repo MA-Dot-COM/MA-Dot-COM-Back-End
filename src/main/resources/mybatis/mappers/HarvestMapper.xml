@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sorhive.comprojectserver.harvest.query.HarvestMapper">
+
+    <resultMap id="harvestResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestSummary">
+        <id property="harvestId" column="harvest_id"/>
+        <result property="harvestContent" column="harvest_content"/>
+        <result property="harvestWriterName" column="harvest_writer_name"/>
+        <result property="harvestCreateTime" column="harvest_create_time"/>
+        <result property="harvestDeleteYn" column="harvest_delete_yn"/>
+        <association property="harvestImageSummary" resultMap="harvestImageResultMap"></association>
+        <association property="harvestCommentSummary" resultMap="HarvestCommentResultMap"></association>
+    </resultMap>
+
+    <resultMap id="harvestImageResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestImageSummary">
+        <id property="havestImageId" column="harvest_image_id"/>
+        <result property="harvestImagePath" column="harvest_image_path"/>
+        <result property="harvestImageOriginalName" column="lifing_original_name"/>
+    </resultMap>
+
+    <resultMap id="HarvestCommentResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestCommentSummary">
+        <id property="harvestCommentId" column="harvest_comment_id"/>
+        <result property="harvestCommentContent" column="harvest_comment_content"/>
+        <result property="harvestCommentWriterName" column="harvest_comment_writer_name"/>
+        <result property="harvestCommentCreateTime" column="harvest_comment_create_time"/>
+        <result property="harvestCommentDeleteYn" column="harvest_comment_delete_yn"/>
+    </resultMap>
+
+    <resultMap id="HarvestHoneyResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestHoneyDto">
+        <id property="honeyId" column="honey_id"/>
+        <result property="honeyCreateTime" column="honey_create_time"/>
+        <result property="honeyDeleteYn" column="honey_delete_yn"/>
+        <result property="harvestId" column="harvest_id"/>
+        <result property="memberCode" column="member_code"/>
+    </resultMap>
+
+    <select id="selectAllHarvest" resultMap="lifingPathResultMap">
+        select
+               harvest_id
+             , harvest_content
+             , harvest_writer_name
+             , harvest_create_time
+             , harvest_delete_yn
+          from tbl_harvests
+         where harvest_writer_code = #{memberCode}
+         limit 5 offset #{ page }
+    </select>
+
+    <select id="selectAllHarvestComments" resultMap="HarvestCommentResultMap">
+        select
+               harvest_comment_id
+             , harvest_comment_content
+             , harvest_comment_writer_name
+             , harvest_comment_create_time
+             , harvest_comment_delete_yn
+          from tbl_harvest_comments
+         where harvest_id = #{harvestId}
+    </select>
+    <select id="selectAllHarvestImages" resultMap="harvestImageResultMap">
+        select
+               harvest_image_id
+             , harvest_image_path
+             , lifing_original_name
+          from tbl_harvest_images
+         where harvest_id = #{harvestId}
+    </select>
+
+    <select id="countHoney" resultMap="HarvestHoneyResultMap">
+        select
+               count(harvest_id)
+          from tbl_honey
+         where harvest_id = ${harvestId}
+    </select>
+
+</mapper>

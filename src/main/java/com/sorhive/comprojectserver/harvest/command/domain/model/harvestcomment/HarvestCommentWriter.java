@@ -30,7 +30,7 @@ public class HarvestCommentWriter {
     )
     private MemberCode memberCode;
 
-    @Column(name = "harvest_writer_name")
+    @Column(name = "harvest_comment_writer_name")
     private String name;
 
     protected HarvestCommentWriter() {}

@@ -33,6 +33,8 @@ public class HarvestComment {
     @Column(name = "harvest_comment_content")
     private String content;
 
+    private HarvestCommentWriter harvestCommentWriter;
+
     @Column(name = "harvest_comment_create_time")
     private Timestamp createTime;
 

@@ -1,9 +1,10 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.honeyharvest;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -22,9 +23,12 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_honey")
+@Getter
 public class HoneyHarvest {
 
-    @EmbeddedId
+    @Id
+    @Column(name="honey_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private HoneyHarvestId id;
 
     @Column(name = "honey_create_time")
@@ -35,4 +39,10 @@ public class HoneyHarvest {
 
     @Column(name = "honey_delete_yn")
     private Character deleteYn;
+
+    @Embedded
+    private HarvestId harvestId;
+
+    @Embedded
+    private MemberCode memberCode;
 }
