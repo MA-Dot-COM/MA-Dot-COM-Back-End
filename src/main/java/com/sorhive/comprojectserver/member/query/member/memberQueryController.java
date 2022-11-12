@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-11       부시연           최초 생성
+ * 2022-11-11       부시연           회원 목록 조회 추가
+ * 2022-11-11       부시연           회원 검색 추가
+ * 2022-11-12       부시연           회원 검색 수정
+ * 2022-11-13       부시연           룸인 전용 자신을 포함한 랜덤 회원 7명 조회 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -30,10 +34,12 @@ public class memberQueryController {
         this.memberQueryService = memberQueryService;
     }
 
-    @GetMapping("member/{memberId}")
-    public ResponseEntity<ResponseDto> findMemberByMemberId(@PathVariable String memberId) {
+    @GetMapping("member/id/{memberId}")
+    public ResponseEntity<ResponseDto> findMemberByMemberId(@RequestHeader String Authorization, @PathVariable String memberId) {
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findMemberByMemberId(memberId)));
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findMemberByMemberId(accessToken, memberId)));
     }
 
     @GetMapping("member/list/{page}")
@@ -42,5 +48,13 @@ public class memberQueryController {
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 목록 조회 성공", memberQueryService.findAllByMemberCode(accessToken, page)));
+    }
+
+    @GetMapping("member/roomin")
+    public ResponseEntity<ResponseDto> findRandomMember(@RequestHeader String Authorization) {
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 랜덤 조회 성공", memberQueryService.findRandomMember(accessToken)));
     }
 }

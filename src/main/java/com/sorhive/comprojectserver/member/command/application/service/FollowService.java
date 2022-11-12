@@ -4,6 +4,7 @@ import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.ExistFollowException;
 import com.sorhive.comprojectserver.member.command.application.NoFollowException;
 import com.sorhive.comprojectserver.member.command.application.NoMemberException;
+import com.sorhive.comprojectserver.member.command.application.exception.SameMemberException;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerId;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowingId;
@@ -25,6 +26,9 @@ import java.util.Optional;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-10       부시연           최초 생성
+ * 2022-11-10       부시연           팔로우 추가
+ * 2022-11-10       부시연           팔로우 삭제
+ * 2022-11-12       부시연           동일 인물일 때 팔로우 하는 버그 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -50,6 +54,10 @@ public class FollowService {
         log.info("[FollowService] followId : " + followingId);
 
         Long followerId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(followerId == followingId) {
+            throw new SameMemberException("동일한 회원입니다.");
+        }
 
         if(memberDataDao.findByMemberCode(followingId) == null) {
             throw new NoMemberException("해당 회원이 존재하지 않습니다.");

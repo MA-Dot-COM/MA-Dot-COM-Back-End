@@ -8,7 +8,7 @@ import javax.persistence.*;
 /**
  * <pre>
  * Class : MemberData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 조회를 위한 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -40,6 +40,7 @@ public class MemberData {
     private Character deleteYn;
 
     @Column(name = "member_room_image")
+    @ColumnDefault("''")
     private String memberRoomImage;
 
     protected MemberData() {

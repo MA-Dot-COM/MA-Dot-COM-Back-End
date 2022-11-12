@@ -35,4 +35,10 @@
          where b.follower_id = #{ memberCode }
          limit 30 offset #{ offset }
     </select>
+
+    <select id="findMaxMemberCode" resultType="int">
+        select
+               max(member_code)
+          from tbl_members;
+    </select>
 </mapper>
