@@ -24,6 +24,7 @@ public class HarvestCommentSummary {
 
     private Long harvestCommentId;
     private String harvestCommentContent;
+    private String harvestCommentWriterName;
     private Character harvestCommentDeleteYn;
     private Timestamp harvestCommentCreateTime;
 

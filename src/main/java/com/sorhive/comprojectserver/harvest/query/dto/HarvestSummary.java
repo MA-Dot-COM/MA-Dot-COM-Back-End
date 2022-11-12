@@ -28,8 +28,9 @@ public class HarvestSummary {
     private String harvestWriterName;
     private String harvestContent;
     private Timestamp harvestCreateTime;
+    private Long honeyCount;
 
-    private List<HarvestCommentSummary> harvestCommentSummaries;
-    private List<HarvestImageSummary> harvestImageSummaries;
+    private List<HarvestCommentSummary> harvestCommentSummary;
+    private List<HarvestImageSummary> harvestImageSummary;
 
 }

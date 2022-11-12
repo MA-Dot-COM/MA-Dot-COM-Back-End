@@ -29,4 +29,6 @@ public interface HarvestMapper {
     List<HarvestImageSummary> selectAllHarvestImages(Long harvestId);
 
     List<HarvestCommentSummary> selectAllHarvestComments(Long harvestId);
+
+    HarvestSummary selectHarvestByHarvestId(Long harvestId);
 }
