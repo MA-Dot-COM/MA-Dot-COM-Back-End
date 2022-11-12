@@ -1,10 +1,10 @@
 package com.sorhive.comprojectserver.harvest.query;
 
-import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sorhive.comprojectserver.harvest.query.dto.HarvestRequestDto;
+import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * <pre>
@@ -21,17 +21,22 @@ import java.util.Optional;
  * @version 1(클래스 버전)
  */
 @Service
+@AllArgsConstructor
 public class QueryHarvestService {
 
-    private HarvestDataDAO harvestDataDAO;
+    private HarvestMapper harvestMapper;
+    private static final Logger log = LoggerFactory.getLogger(QueryHarvestService.class);
 
-    @Autowired
-    public QueryHarvestService(HarvestDataDAO harvestDataDAO) { this.harvestDataDAO = harvestDataDAO; }
+    public Object selectAllHarvest(HarvestRequestDto harvestRequestDto) {
 
-    public HarvestData getHarvestData(Long harvestId) {
+        Long memberCode = harvestRequestDto.getMemberCode();
+        int pageNo = harvestRequestDto.getPageNo() - 1;
 
-        Optional<HarvestData> harvestData = harvestDataDAO.findById(new HarvestId(harvestId));
+        return harvestMapper.selectAllHarvest(memberCode, pageNo);
+    }
 
-        return harvestData.orElseThrow(() -> new NotFoundHarvestException("해당 하베스트 코드를 조회할 수 없습니다."));
+    public Object selectHarvestDetail() {
+
+        return null;
     }
 }

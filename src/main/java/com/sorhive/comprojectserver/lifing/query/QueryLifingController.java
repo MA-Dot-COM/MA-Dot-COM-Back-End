@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,11 +32,9 @@ public class QueryLifingController {
     private final QueryLifingService queryLifingService;
 
     @GetMapping("lifing")
-    public ResponseEntity<ResponseDto> findAllLifingByMemberCode(@RequestHeader String Authorization) {
+    public ResponseEntity<ResponseDto> findAllLifingByMemberCode(@RequestBody LifingRequestDto lifingRequestDto) {
 
-        String accessToken = Authorization.substring(7);
-
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 조회 성공", queryLifingService.findAllLifingByMemberCode(accessToken)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 조회 성공", queryLifingService.findAllLifingByMemberCode(lifingRequestDto)));
     }
 
 }

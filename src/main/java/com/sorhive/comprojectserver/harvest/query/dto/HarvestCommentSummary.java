@@ -1,13 +1,12 @@
-package com.sorhive.comprojectserver.lifing.query;
+package com.sorhive.comprojectserver.harvest.query.dto;
 
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.Repository;
+import lombok.Getter;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : LifingDataDao
+ * Class : HarvestCommentSummary
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,7 +19,12 @@ import java.util.List;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface LifingDataDao extends Repository<LifingData, Long> {
-    List<LifingData> findAllLifingByMemberCodeContainingOrderByUploadTimeDesc(Long memberCode, Pageable pageable);
+@Getter
+public class HarvestCommentSummary {
+
+    private Long harvestCommentId;
+    private String harvestCommentContent;
+    private Character harvestCommentDeleteYn;
+    private Timestamp harvestCommentCreateTime;
 
 }

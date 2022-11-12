@@ -4,6 +4,7 @@ import com.sorhive.comprojectserver.config.file.S3HarvestImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.harvest.command.application.dto.HarvestCreateDto;
 import com.sorhive.comprojectserver.harvest.command.application.dto.ResponseHarvestDto;
+import com.sorhive.comprojectserver.harvest.command.application.dto.ResponseHarvestImageDto;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestWriter;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestWriterService;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -62,8 +65,11 @@ public class HarvestInfraService {
         responseHarvestDto.setHarvestId(harvest.getHarvestId());
         responseHarvestDto.setHarvestCreateTime(harvest.getCreateTime());
         responseHarvestDto.setHarvestContent(harvest.getHarvestContent());
+
         try {
             if(harvestCreateDto.getHarvestImage() != null) {
+
+                List<String> harvestImagePathList = new ArrayList<>();
 
                 for (int i = 0; i < harvestCreateDto.getHarvestImage().size(); i++) {
 
@@ -81,8 +87,12 @@ public class HarvestInfraService {
                             changeName,
                             harvest
                     );
-                    
+
+                    harvestImagePathList.add(harvestImagePath);
+
                 }
+
+                responseHarvestDto.setHarvestImagePath(harvestImagePathList);
 
                 return responseHarvestDto;
 

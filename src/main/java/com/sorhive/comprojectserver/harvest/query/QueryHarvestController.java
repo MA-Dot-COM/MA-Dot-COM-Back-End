@@ -1,14 +1,12 @@
 package com.sorhive.comprojectserver.harvest.query;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.harvest.query.dto.HarvestRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -36,6 +34,16 @@ public class QueryHarvestController {
         this.queryHarvestService = queryHarvestService;
     }
 
+    @GetMapping("harvest")
+    public ResponseEntity<ResponseDto> selectAllHarvest(@RequestBody HarvestRequestDto harvestRequestDto) {
+
+        return ResponseEntity.ok().body(
+                new ResponseDto(HttpStatus.OK
+                        , "하베스트 조회 성공"
+                        , queryHarvestService.selectAllHarvest(harvestRequestDto)));
+
+    }
+
     @GetMapping("harvest/{harvestId}")
     public ResponseEntity<ResponseDto> selectHarvestDetail(@PathVariable Long harvestId) {
 
@@ -44,7 +52,7 @@ public class QueryHarvestController {
         return ResponseEntity.ok().body(
                 new ResponseDto(HttpStatus.OK
                         , "하베스트 상세 조회 성공"
-                        , queryHarvestService.getHarvestData(harvestId)));
+                        , queryHarvestService.selectHarvestDetail()));
 
     }
 }
