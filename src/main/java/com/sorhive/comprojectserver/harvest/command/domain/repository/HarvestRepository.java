@@ -3,8 +3,6 @@ package com.sorhive.comprojectserver.harvest.command.domain.repository;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
 import org.springframework.data.repository.Repository;
 
-import java.util.Optional;
-
 /**
  * <pre>
  * Class : HarvestRepository

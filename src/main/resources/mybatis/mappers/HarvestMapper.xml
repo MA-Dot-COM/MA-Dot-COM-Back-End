@@ -48,7 +48,20 @@
           from tbl_harvests a
           left join tbl_harvest_images b on(a.harvest_id = b.harvest_id)
          where harvest_writer_code = #{memberCode}
-         limit 5 offset #{ page }
+         order by harvest_id desc
+         limit 5 offset #{ pageNo }
+    </select>
+
+    <select id="selectHarvestByHarvestId" resultMap="harvestResultMap">
+        select
+               harvest_id
+             , harvest_content
+             , harvest_writer_name
+             , (select count(harvest_id) from tbl_honey) as honeycount
+             , harvest_create_time
+             , harvest_delete_yn
+          from tbl_harvests
+         where harvest_id = #{harvestId};
     </select>
 
     <select id="selectAllHarvestComments" resultMap="HarvestCommentResultMap">
@@ -60,12 +73,13 @@
              , harvest_comment_delete_yn
           from tbl_harvest_comments
          where harvest_id = #{harvestId}
+         order by harvest_comment_id desc
     </select>
     <select id="selectAllHarvestImages" resultMap="harvestImageResultMap">
         select
                harvest_image_id
              , harvest_image_path
-             , lifing_original_name
+             , harvest_original_name
           from tbl_harvest_images
          where harvest_id = #{harvestId}
     </select>
