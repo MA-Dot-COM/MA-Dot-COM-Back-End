@@ -27,6 +27,6 @@ public class ResponseHarvestDto {
 
     private Long harvestId;
     private String harvestContent;
-    private List<HarvestImageDto> harvestImage;
+    private List<String> harvestImagePath;
     private Timestamp harvestCreateTime;
 }

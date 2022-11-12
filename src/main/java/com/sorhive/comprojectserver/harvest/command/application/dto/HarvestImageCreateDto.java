@@ -3,11 +3,9 @@ package com.sorhive.comprojectserver.harvest.command.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
  * <pre>
- * Class : HarvestCreateDto
+ * Class : HarvestImageDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -22,8 +20,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class HarvestCreateDto {
+public class HarvestImageCreateDto {
 
-    private String harvestContent;
-    private List<HarvestImageCreateDto> harvestImage;
+    private byte[] harvestImage;
+    private String harvestImageName;
 }

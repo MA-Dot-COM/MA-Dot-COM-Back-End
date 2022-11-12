@@ -1,8 +1,6 @@
 package com.sorhive.comprojectserver.lifing.query;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.Getter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

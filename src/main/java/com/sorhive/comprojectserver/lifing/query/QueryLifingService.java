@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.lifing.query;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.room.query.QueryRoomService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
