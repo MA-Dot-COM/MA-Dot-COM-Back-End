@@ -1,6 +1,9 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
 
-import javax.persistence.*;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,7 +26,6 @@ import java.util.Objects;
 public class HarvestCommentId implements Serializable {
 
     @Column(name="harvest_comment_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long value;
 
     protected HarvestCommentId() {

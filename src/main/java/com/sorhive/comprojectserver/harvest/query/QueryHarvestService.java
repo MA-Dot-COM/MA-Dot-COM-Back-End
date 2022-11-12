@@ -21,12 +21,12 @@ import java.util.Optional;
  * @version 1(클래스 버전)
  */
 @Service
-public class HarvestQueryService {
+public class QueryHarvestService {
 
     private HarvestDataDAO harvestDataDAO;
 
     @Autowired
-    public HarvestQueryService(HarvestDataDAO harvestDataDAO) { this.harvestDataDAO = harvestDataDAO; }
+    public QueryHarvestService(HarvestDataDAO harvestDataDAO) { this.harvestDataDAO = harvestDataDAO; }
 
     public HarvestData getHarvestData(Long harvestId) {
 

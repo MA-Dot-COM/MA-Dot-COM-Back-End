@@ -1,7 +1,6 @@
-package com.sorhive.comprojectserver.harvest;
+package com.sorhive.comprojectserver.harvest.query;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
-import com.sorhive.comprojectserver.harvest.query.HarvestQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,13 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api/v1")
-public class HarvestController {
+public class QueryHarvestController {
 
-    private static final Logger log = LoggerFactory.getLogger(HarvestController.class);
-    private final HarvestQueryService harvestQueryService;
+    private static final Logger log = LoggerFactory.getLogger(QueryHarvestController.class);
+    private final QueryHarvestService queryHarvestService;
 
-    public HarvestController(HarvestQueryService harvestQueryService) {
-        this.harvestQueryService = harvestQueryService;
+    public QueryHarvestController(QueryHarvestService queryHarvestService) {
+        this.queryHarvestService = queryHarvestService;
     }
 
     @GetMapping("harvest/{harvestId}")
@@ -45,7 +44,7 @@ public class HarvestController {
         return ResponseEntity.ok().body(
                 new ResponseDto(HttpStatus.OK
                         , "하베스트 상세 조회 성공"
-                        , harvestQueryService.getHarvestData(harvestId)));
+                        , queryHarvestService.getHarvestData(harvestId)));
 
     }
 }

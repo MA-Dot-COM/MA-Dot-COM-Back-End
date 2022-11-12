@@ -1,11 +1,9 @@
 package com.sorhive.comprojectserver.harvest.query;
 
-import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestId;
+import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * <pre>
@@ -23,34 +21,20 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tbl_harvests")
+@Getter
 public class HarvestData {
 
-    @EmbeddedId
-    private HarvestId harvestId;
+    @Id
+    @Column(name="harvest_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long harvestId;
 
     @Column(name = "harvest_content")
     private String content;
 
     @Column(name = "harvest_delete_yn")
+    @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
     protected HarvestData() {}
-
-    public HarvestData(HarvestId harvestId, String content, Character deleteYn) {
-        this.harvestId = harvestId;
-        this.content = content;
-        this.deleteYn = deleteYn;
-    }
-
-    public HarvestId getHarvestId() {
-        return harvestId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Character getDeleteYn() {
-        return deleteYn;
-    }
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FeedId
+ * Class : HarvestId
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
