@@ -1,13 +1,14 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment;
 
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : FeedComment
+ * Class : HarvestComment
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -21,10 +22,13 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_harvest_comments")
+@Getter
 public class HarvestComment {
 
-    @EmbeddedId
-    private HarvestCommentId id;
+    @Id
+    @Column(name="harvest_comment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "harvest_comment_content")
     private String content;
@@ -44,46 +48,7 @@ public class HarvestComment {
     @ManyToOne
     @JoinColumn(name = "harvest_id")
     private Harvest harvest;
-//
-//    @Embedded
-//    private HarvestWriter harvestWriter;
 
     protected HarvestComment() {}
-
-    public HarvestComment(HarvestCommentId id, String content, Timestamp createTime, Timestamp uploadTime, Timestamp deleteTime, Character deleteYn, Harvest harvest) {
-        this.id = id;
-        this.content = content;
-        this.createTime = createTime;
-        this.uploadTime = uploadTime;
-        this.deleteTime = deleteTime;
-        this.deleteYn = deleteYn;
-        this.harvest = harvest;
-    }
-
-    public HarvestCommentId getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public Timestamp getUploadTime() {
-        return uploadTime;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
-
-    public Character getDeleteYn() {
-        return deleteYn;
-    }
-
-    public Harvest getHarvest() { return harvest; }
 
 }

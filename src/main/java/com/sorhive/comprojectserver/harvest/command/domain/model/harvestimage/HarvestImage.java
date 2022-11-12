@@ -1,12 +1,12 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.harvestimage;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
+
+import javax.persistence.*;
+
 /**
  * <pre>
- * Class : FeedImage
+ * Class : HarvestImage
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -22,8 +22,10 @@ import javax.persistence.Table;
 @Table(name = "tbl_harvest_images")
 public class HarvestImage {
 
-    @EmbeddedId
-    private HarvestImageId id;
+    @Id
+    @Column(name="harvest_image_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "harvest_image_path")
     private String path;
@@ -34,29 +36,9 @@ public class HarvestImage {
     @Column(name = "lifing_saved_name")
     private String savedName;
 
-    public HarvestImage() {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "harvest_id")
+    private Harvest harvest;
 
-    public HarvestImage(HarvestImageId id, String path, String orginalName, String savedName) {
-        this.id = id;
-        this.path = path;
-        this.orginalName = orginalName;
-        this.savedName = savedName;
-    }
-
-    public HarvestImageId getId() {
-        return id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public String getOrginalName() {
-        return orginalName;
-    }
-
-    public String getSavedName() {
-        return savedName;
-    }
+    protected HarvestImage() { }
 }

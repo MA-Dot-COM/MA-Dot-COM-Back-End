@@ -1,11 +1,18 @@
 package com.sorhive.comprojectserver.harvest.command.domain.model.harvest;
 
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment.HarvestComment;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvestimage.HarvestImage;
+import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
- * Class : Feed
+ * Class : Harvest
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -19,6 +26,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_harvests")
+@Getter
 public class Harvest {
 
     @Id
@@ -28,6 +36,8 @@ public class Harvest {
 
     @Column(name = "harvest_content")
     private String harvestContent;
+
+    private HarvestWriter harvestWriter;
 
     @Column(name = "harvest_create_time")
     private Timestamp createTime;
@@ -39,35 +49,24 @@ public class Harvest {
     private Timestamp deleteTime;
 
     @Column(name = "harvest_delete_yn")
+    @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
+    protected List<HarvestComment> harvestComments = new ArrayList<>();
 
-    protected Harvest() {
+    @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
+    protected List<HarvestImage> harvestImages = new ArrayList<>();
+
+    protected Harvest() { }
+
+    public Harvest(HarvestWriter harvestWriter, String harvestContent) {
+
+        this.harvestWriter = harvestWriter;
+        this.harvestContent = harvestContent;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+
     }
-
-
-    public Long getHarvestId() {
-        return harvestId;
-    }
-
-    public String getHarvestContent() {
-        return harvestContent;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public Timestamp getUploadTime() {
-        return uploadTime;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
-
-    public Character getDeleteYn() {
-        return deleteYn;
-    }
-
 }
