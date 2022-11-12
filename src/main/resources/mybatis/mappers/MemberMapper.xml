@@ -21,16 +21,16 @@
 
     <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">
         select
-        a.member_code
-        , a.member_id
-        , a.member_name
-        , a.member_offline_image
-        , a.member_online_image
-        , b.follow_id
-        , b.follower_id
-        from tbl_members a
-        join tbl_follows b on a.member_code = b.following_id
-        where b.following_id = #{ memberCode }
-        limit 30 offset #{ offset }
+               a.member_code
+             , a.member_id
+             , a.member_name
+             , a.member_avatar_image
+             , a.member_room_image
+             , b.follow_id
+             , b.follower_id
+          from tbl_members a
+          left join tbl_follows b on a.member_code = b.following_id
+         where b.following_id = #{ memberCode }
+         limit 30 offset #{ offset }
     </select>
 </mapper>

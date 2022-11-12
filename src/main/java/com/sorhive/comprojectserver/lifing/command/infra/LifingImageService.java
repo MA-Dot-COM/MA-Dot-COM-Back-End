@@ -4,8 +4,13 @@ import com.sorhive.comprojectserver.config.file.S3LifingImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.ResponseLifingImageAiDto;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriterService;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingImageRepository;
+import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -44,6 +49,9 @@ public class LifingImageService {
     private static final Logger log = LoggerFactory.getLogger(LifingImageService.class);
     private final S3LifingImageFile s3LifingImageFile;
     private final LifingImageRepository lifingImageRepository;
+    private final LifingRepository lifingRepository;
+
+    private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
 
     @Value("${url.lifing}")
@@ -92,6 +100,15 @@ public class LifingImageService {
                 RestTemplate restTemplate = new RestTemplate();
 
                 ResponseEntity<ResponseLifingImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseLifingImageAiDto.class);
+
+                LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
+
+                Lifing lifing = new Lifing(
+                        lifingWriter,
+                        res.getBody().getLifing()
+                );
+
+                lifingRepository.save(lifing);
 
                 log.info("[LifingImageService] insertImage End ===============");
 

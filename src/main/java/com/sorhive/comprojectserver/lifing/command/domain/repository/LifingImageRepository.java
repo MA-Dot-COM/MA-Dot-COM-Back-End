@@ -22,6 +22,5 @@ import java.util.Optional;
  */
 public interface LifingImageRepository extends Repository<LifingImage, Long> {
     void save(LifingImage lifingImage);
-
     Optional<LifingImage> findById(Long memberCode);
 }

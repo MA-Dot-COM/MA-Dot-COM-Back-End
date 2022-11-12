@@ -1,9 +1,8 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -24,8 +23,18 @@ import java.sql.Timestamp;
 @Table(name = "tbl_lifing")
 public class Lifing {
 
-    @EmbeddedId
-    private LifingId id;
+    @Id
+    @Column(name="lifing_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long lifingId;
+
+    @Column(name = "lifing_content")
+    private String lifingConetent;
+
+    @Column(name = "lifing_no")
+    private Long lifingNo;
+
+    private LifingWriter lifingWriter;
 
     @Column(name = "lifing_create_time")
     private Timestamp createTime;
@@ -37,5 +46,14 @@ public class Lifing {
     private Timestamp deleteTime;
 
     @Column(name = "lifing_delete_yn")
+    @ColumnDefault(value = "'N'")
     private Character deleteYn;
+
+    public Lifing(LifingWriter lifingWriter, Long lifingNo) {
+        this.lifingWriter = lifingWriter;
+        this.lifingNo = lifingNo;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+    }
 }
