@@ -1,10 +1,10 @@
-package com.sorhive.comprojectserver.harvest.command.domain.model.harvest;
+package com.sorhive.comprojectserver.harvest.query.dto;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import java.util.List;
 
 /**
  * <pre>
- * Class : HarvestWriterService
+ * Class : HarvestResponseDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -17,7 +17,8 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface HarvestWriterService {
+public class HarvestResponseDto {
 
-    HarvestWriter createHarvestWriter(MemberCode harvestWriterMemberCode);
+    private List<HarvestSummary> harvestSummaryList;
+    private List<HarvestImageSummary> harvestImageSummaryList;
 }

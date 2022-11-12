@@ -52,7 +52,7 @@ public class QueryHarvestController {
         return ResponseEntity.ok().body(
                 new ResponseDto(HttpStatus.OK
                         , "하베스트 상세 조회 성공"
-                        , queryHarvestService.selectHarvestDetail()));
+                        , queryHarvestService.selectHarvestDetail(harvestId)));
 
     }
 }

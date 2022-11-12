@@ -1,10 +1,11 @@
-package com.sorhive.comprojectserver.harvest.command.domain.model.harvest;
+package com.sorhive.comprojectserver.harvest.command.application.dto;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <pre>
- * Class : HarvestWriterService
+ * Class : HarvestCommentCreateDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -17,7 +18,9 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface HarvestWriterService {
+@Getter
+@Setter
+public class HarvestCommentCreateDto {
 
-    HarvestWriter createHarvestWriter(MemberCode harvestWriterMemberCode);
+    private String harvestCommentContent;
 }

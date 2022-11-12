@@ -29,7 +29,7 @@ public class HoneyHarvest {
     @Id
     @Column(name="honey_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private HoneyHarvestId id;
+    private Long id;
 
     @Column(name = "honey_create_time")
     private Timestamp createTime;

@@ -1,10 +1,11 @@
-package com.sorhive.comprojectserver.harvest.command.domain.model.harvest;
+package com.sorhive.comprojectserver.harvest.command.domain.repository;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment.HarvestComment;
+import org.springframework.data.repository.Repository;
 
 /**
  * <pre>
- * Class : HarvestWriterService
+ * Class : HarvestCommentRepository
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -17,7 +18,7 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface HarvestWriterService {
+public interface HarvestCommentRepository extends Repository<HarvestComment, Long> {
 
-    HarvestWriter createHarvestWriter(MemberCode harvestWriterMemberCode);
+    void save(HarvestComment harvestComment);
 }

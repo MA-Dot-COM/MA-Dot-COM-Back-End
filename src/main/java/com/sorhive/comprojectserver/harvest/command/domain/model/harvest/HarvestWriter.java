@@ -26,7 +26,7 @@ import java.util.Objects;
 public class HarvestWriter {
 
     @AttributeOverrides(
-            @AttributeOverride(name = "value", column = @Column(name = "harvest_wrtier_code"))
+            @AttributeOverride(name = "value", column = @Column(name = "harvest_writer_code"))
     )
     private MemberCode memberCode;
 
