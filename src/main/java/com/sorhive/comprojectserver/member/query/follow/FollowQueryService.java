@@ -36,7 +36,11 @@ public class FollowQueryService {
 
         List<FollowData> followData = followMapper.findByFollowerId(memberCode);
 
-        return followData;
+        FollowerListResponseDto followerListResponseDto = new FollowerListResponseDto();
+        followerListResponseDto.setFollowerData(followData);
+        followerListResponseDto.setFollowerCount(followData.size());
+
+        return followerListResponseDto;
     }
 
     public Object findFollowingList(String accessToken) {
@@ -45,6 +49,10 @@ public class FollowQueryService {
 
         List<FollowData> followData = followMapper.findByFollowingId(memberCode);
 
-        return followData;
+        FollowingListResponseDto followingListResponseDto = new FollowingListResponseDto();
+        followingListResponseDto.setFollowerData(followData);
+        followingListResponseDto.setFollowingCount(followData.size());
+
+        return followingListResponseDto;
     }
 }
