@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-12       부시연           하베스트 생성 추가
+ * 2022-11-12       부시연           하브스트 댓글 생성 추가
+ * 2022-11-12       부시연           허니 생성 추가
+ * 2022-11-12       부시연           허니 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -48,7 +52,25 @@ public class HarvestController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 생성 성공", harvestService.createHarvestComment(accessToken, harvestId, harvestCommentCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 댓글 추가 성공", harvestService.createHarvestComment(accessToken, harvestId, harvestCommentCreateDto)));
+
+    }
+    
+    @PostMapping("honey/{harvestId}")
+    public ResponseEntity<ResponseDto> createHoney(@RequestHeader String Authorization, @PathVariable Long harvestId) {
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "허니 추가 성공", harvestService.createHoney(accessToken, harvestId)));
+
+    }
+
+    @DeleteMapping("honey/{harvestId}")
+    public ResponseEntity<ResponseDto> deleteHoney(@RequestHeader String Authorization, @PathVariable Long harvestId) {
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "허니 삭제 성공", harvestService.deleteHoney(accessToken, harvestId)));
 
     }
 }

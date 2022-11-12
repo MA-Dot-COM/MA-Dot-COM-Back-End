@@ -3,6 +3,8 @@ package com.sorhive.comprojectserver.harvest.command.domain.repository;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
 import org.springframework.data.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * <pre>
  * Class : HarvestRepository
@@ -22,4 +24,6 @@ public interface HarvestRepository extends Repository<Harvest, Long> {
     Harvest findByHarvestId(Long id);
 
     void save(Harvest harvest);
+
+    Optional<Harvest> findByHarvestIdAndDeleteYnEquals(Long harvestId, char n);
 }

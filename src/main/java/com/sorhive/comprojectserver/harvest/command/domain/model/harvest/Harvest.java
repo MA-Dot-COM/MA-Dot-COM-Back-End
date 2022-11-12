@@ -19,6 +19,7 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
+ * 2022-11-12       부시연           총 허니 개수 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -52,6 +53,10 @@ public class Harvest {
     @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
+    @Column(name = "honey_count")
+    @ColumnDefault("0")
+    private Long honeyCount;
+
     @OneToMany(mappedBy = "harvest", cascade = CascadeType.ALL)
     protected List<HarvestComment> harvestComments = new ArrayList<>();
 
@@ -68,5 +73,8 @@ public class Harvest {
         this.uploadTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = 'N';
 
+    }
+    public void setHoneyCount(Long honeyCount) {
+        this.honeyCount += honeyCount;
     }
 }
