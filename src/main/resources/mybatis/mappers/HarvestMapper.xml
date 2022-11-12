@@ -17,7 +17,7 @@
     <resultMap id="harvestImageResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestImageSummary">
         <id property="havestImageId" column="harvest_image_id"/>
         <result property="harvestImagePath" column="harvest_image_path"/>
-        <result property="harvestImageOriginalName" column="lifing_original_name"/>
+        <result property="harvestImageOriginalName" column="harvest_original_name"/>
     </resultMap>
 
     <resultMap id="HarvestCommentResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestCommentSummary">
@@ -36,14 +36,17 @@
         <result property="memberCode" column="member_code"/>
     </resultMap>
 
-    <select id="selectAllHarvest" resultMap="lifingPathResultMap">
+    <select id="selectAllHarvest" resultMap="harvestResultMap">
         select
-               harvest_id
-             , harvest_content
-             , harvest_writer_name
-             , harvest_create_time
-             , harvest_delete_yn
-          from tbl_harvests
+               a.harvest_id
+             , a.harvest_content
+             , a.harvest_writer_name
+             , a.harvest_create_time
+             , a.harvest_delete_yn
+             , b.harvest_image_path
+             , (select count(harvest_id) from tbl_honey) as honeycount
+          from tbl_harvests a
+          left join tbl_harvest_images b on(a.harvest_id = b.harvest_id)
          where harvest_writer_code = #{memberCode}
          limit 5 offset #{ page }
     </select>

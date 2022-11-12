@@ -35,7 +35,16 @@ public class QueryHarvestService {
         return harvestMapper.selectAllHarvest(memberCode, pageNo);
     }
 
-    public Object selectHarvestDetail() {
+    public Object selectHarvestDetail(Long harvestId) {
+
+        if(harvestMapper.selectAllHarvestImages(harvestId) != null) {
+
+        }
+
+        if(harvestMapper.selectAllHarvestComments(harvestId) != null) {
+
+        }
+
 
         return null;
     }

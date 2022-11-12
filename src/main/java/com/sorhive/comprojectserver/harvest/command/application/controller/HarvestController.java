@@ -1,7 +1,9 @@
 package com.sorhive.comprojectserver.harvest.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.harvest.command.application.dto.HarvestCommentCreateDto;
 import com.sorhive.comprojectserver.harvest.command.application.dto.HarvestCreateDto;
+import com.sorhive.comprojectserver.harvest.command.application.service.HarvestService;
 import com.sorhive.comprojectserver.harvest.command.infra.HarvestInfraService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,12 +32,23 @@ public class HarvestController {
 
     private final HarvestInfraService harvestInfraService;
 
+    private final HarvestService harvestService;
+
     @PostMapping("harvest")
-    public ResponseEntity<ResponseDto> createLifing(@RequestHeader String Authorization, @RequestBody HarvestCreateDto harvestCreateDto) {
+    public ResponseEntity<ResponseDto> createHarvest(@RequestHeader String Authorization, @RequestBody HarvestCreateDto harvestCreateDto) {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 생성 성공", harvestInfraService.createLifing(accessToken, harvestCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 생성 성공", harvestInfraService.createHarvest(accessToken, harvestCreateDto)));
+
+    }
+
+    @PostMapping("harvest/comment/{harvestId}")
+    public ResponseEntity<ResponseDto> createHarvestComment(@RequestHeader String Authorization, @PathVariable Long harvestId, @RequestBody HarvestCommentCreateDto harvestCommentCreateDto) {
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 생성 성공", harvestService.createHarvestComment(accessToken, harvestId, harvestCommentCreateDto)));
 
     }
 }

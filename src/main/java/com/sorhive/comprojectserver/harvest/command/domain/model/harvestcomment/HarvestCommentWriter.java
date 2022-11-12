@@ -26,7 +26,7 @@ import java.util.Objects;
 public class HarvestCommentWriter {
 
     @AttributeOverrides(
-            @AttributeOverride(name = "value", column = @Column(name = "harvest_comment_wrtier_code"))
+            @AttributeOverride(name = "value", column = @Column(name = "harvest_comment_writer_code"))
     )
     private MemberCode memberCode;
 
@@ -39,7 +39,6 @@ public class HarvestCommentWriter {
         this.memberCode = memberCode;
         this.name = name;
     }
-
     public MemberCode getMemberCode() {
         return memberCode;
     }

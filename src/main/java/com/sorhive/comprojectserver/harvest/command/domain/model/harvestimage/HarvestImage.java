@@ -30,7 +30,7 @@ public class HarvestImage {
     @Column(name = "harvest_image_path")
     private String path;
 
-    @Column(name = "lifing_original_name")
+    @Column(name = "harvest_original_name")
     private String orginalName;
 
     @Column(name = "lifing_saved_name")

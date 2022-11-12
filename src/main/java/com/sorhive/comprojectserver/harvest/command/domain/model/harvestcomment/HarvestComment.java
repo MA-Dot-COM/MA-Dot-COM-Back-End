@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment
 
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.Harvest;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -45,6 +46,7 @@ public class HarvestComment {
     private Timestamp deleteTime;
 
     @Column(name = "harvest_comment_delete_yn")
+    @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
     @ManyToOne
@@ -53,4 +55,12 @@ public class HarvestComment {
 
     protected HarvestComment() {}
 
+    public HarvestComment(HarvestCommentWriter harvestCommentWriter, String harvestCommentContent, Harvest harvest) {
+        this.harvestCommentWriter = harvestCommentWriter;
+        this.content = harvestCommentContent;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+        this.harvest = harvest;
+    }
 }

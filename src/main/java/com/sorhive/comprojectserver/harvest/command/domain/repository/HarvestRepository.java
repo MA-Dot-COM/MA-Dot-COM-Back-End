@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 public interface HarvestRepository extends Repository<Harvest, Long> {
 
-    Optional<Harvest> findByHarvestId(Long id);
+    Harvest findByHarvestId(Long id);
 
     void save(Harvest harvest);
 }

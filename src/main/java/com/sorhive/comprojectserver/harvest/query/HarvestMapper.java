@@ -1,5 +1,8 @@
 package com.sorhive.comprojectserver.harvest.query;
 
+import com.sorhive.comprojectserver.harvest.query.dto.HarvestCommentSummary;
+import com.sorhive.comprojectserver.harvest.query.dto.HarvestImageSummary;
+import com.sorhive.comprojectserver.harvest.query.dto.HarvestSummary;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -21,5 +24,9 @@ import java.util.List;
  */
 @Mapper
 public interface HarvestMapper {
-    List<Object> selectAllHarvest(Long memberCode, int pageNo);
+    List<HarvestSummary> selectAllHarvest(Long memberCode, int pageNo);
+
+    List<HarvestImageSummary> selectAllHarvestImages(Long harvestId);
+
+    List<HarvestCommentSummary> selectAllHarvestComments(Long harvestId);
 }

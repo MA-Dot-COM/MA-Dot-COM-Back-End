@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.harvest.command.infra;
 
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestWriter;
 import com.sorhive.comprojectserver.harvest.command.domain.model.harvest.HarvestWriterService;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment.HarvestCommentWriter;
+import com.sorhive.comprojectserver.harvest.command.domain.model.harvestcomment.HarvestCommentWriterService;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.query.member.MemberData;
 import com.sorhive.comprojectserver.member.query.member.MemberQueryService;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * <pre>
- * Class : HarvestWriterServiceImpl
+ * Class : HarvestCommentWriterServiceImpl
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -25,15 +27,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class HarvestWriterServiceImpl implements HarvestWriterService {
+public class HarvestCommentWriterServiceImpl implements HarvestCommentWriterService {
 
     private MemberQueryService memberQueryService;
 
     @Override
-    public HarvestWriter createHarvestWriter(MemberCode harvestWriterMemberCode) {
+    public HarvestCommentWriter createHarvestCommentWriter(MemberCode harvestCommentWriterMemberCode) {
 
-        MemberData memberData = memberQueryService.getMemberData(harvestWriterMemberCode.getValue());
+        MemberData memberData = memberQueryService.getMemberData(harvestCommentWriterMemberCode.getValue());
 
-        return new HarvestWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new HarvestCommentWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
     }
 }
