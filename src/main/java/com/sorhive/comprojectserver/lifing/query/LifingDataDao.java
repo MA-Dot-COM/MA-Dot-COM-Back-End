@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.lifing.query;
 
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class : LifingDataDao
@@ -18,5 +20,5 @@ import org.springframework.data.repository.Repository;
  * @see (참고할 class 또는 외부 url)
  */
 public interface LifingDataDao extends Repository<LifingData, Long> {
-    Object findAllLifingByMemberCodeOrderByUploadTimeDesc(Long memberCode);
+    List<LifingData> findAllLifingByMemberCodeOrderByUploadTimeDesc(Long memberCode);
 }
