@@ -68,12 +68,15 @@ public class Member implements UserDetails {
     private Character deleteYn;
 
     @Column(name = "member_room_image")
+    @ColumnDefault("''")
     private String roomImagePath;
 
     @Column(name = "member_avatar_image")
+    @ColumnDefault("''")
     private String avatarImagePath;
 
     @Column(name = "member_lifing_no")
+    @ColumnDefault("0")
     private Long lifingNo;
 
     protected Member() { }
