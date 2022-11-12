@@ -18,6 +18,6 @@
              , max(lifing_upload_time)
           from tbl_lifing_image
          where lifing_writer_code = #{memberCode}
-         group by lifing_upload_time;
+         group by lifing_writer_code;
     </select>
 </mapper>

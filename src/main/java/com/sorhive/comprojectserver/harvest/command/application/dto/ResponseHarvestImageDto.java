@@ -5,7 +5,7 @@ import lombok.Setter;
 
 /**
  * <pre>
- * Class : HarvestImageDto
+ * Class : ResponseHarvestImageDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -20,7 +20,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class HarvestImageDto {
+public class ResponseHarvestImageDto {
 
     private String harvestImagePath;
+
+    public ResponseHarvestImageDto() {
+    }
 }

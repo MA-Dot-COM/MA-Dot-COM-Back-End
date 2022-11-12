@@ -41,4 +41,12 @@ public class HarvestImage {
     private Harvest harvest;
 
     protected HarvestImage() { }
+
+    public HarvestImage(String harvestImagePath, String originalName, String changeName, Harvest harvestId) {
+
+        this.path = harvestImagePath;
+        this.orginalName = originalName;
+        this.savedName = changeName;
+        this.harvest = harvest;
+    }
 }
