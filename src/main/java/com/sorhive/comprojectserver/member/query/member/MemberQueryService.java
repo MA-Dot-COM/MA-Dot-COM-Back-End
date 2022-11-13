@@ -176,6 +176,70 @@ public class MemberQueryService {
 
     }
 
+    public Object findRoomInMember(String accessToken, Long roomId) {
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        FindRoomInMemberResponseDto findRoomInMemberResponseDto = new FindRoomInMemberResponseDto();
+
+        List<MemberData> memberDataList = new ArrayList<>();
+
+        MemberData followerMemberData = memberDataDao.findByMemberCode(roomId);
+
+        if(followerMemberData == null) {
+            throw new NoMemberException("회원 정보가 없습니다");
+        }
+
+        memberDataList.add(followerMemberData);
+
+        int count = 0;
+
+        int maxMemberCode = memberMapper.findMaxMemberCode();
+
+        while(true) {
+
+
+            int memberSize[] = new int[maxMemberCode];
+
+            Random randomNo = new Random();
+
+            for (int i = 0; i < maxMemberCode; i++) {
+
+                memberSize[i] = randomNo.nextInt(maxMemberCode) + 1;
+
+                for (int j = 0; j < i; j++) {
+                    if (memberSize[i] == memberSize[j]) {
+                        i--;
+                    }
+                }
+            }
+
+            int count2 = 0;
+
+            for (int k = 0; k < maxMemberCode; k++) {
+
+                MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNot((long) memberSize[k], memberCode);
+
+                if (tempMemberData != null) {
+
+                    memberDataList.add(tempMemberData);
+                    count++;
+                    if(count == 6 || count == maxMemberCode)  {
+                        break;
+                    }
+                }
+
+            }
+
+            break;
+
+        }
+
+        findRoomInMemberResponseDto.setMemberDtoList(memberDataList);
+
+        return findRoomInMemberResponseDto;
+
+    }
     public Object findAllMember(String accessToken) {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));

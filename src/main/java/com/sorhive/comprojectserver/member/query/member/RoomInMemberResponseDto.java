@@ -7,8 +7,8 @@ import java.util.List;
 
 /**
  * <pre>
- * Class : FindRandomMemberResponseDto
- * Comment: 랜덤 회원 조회 전송 객체
+ * Class : RoomInMemberResponseDto
+ * Comment: 룸인을 위한 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class FindRandomMemberResponseDto {
+public class RoomInMemberResponseDto {
 
     private List<MemberData> memberDtoList;
 

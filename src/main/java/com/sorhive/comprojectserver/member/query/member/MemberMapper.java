@@ -28,4 +28,6 @@ public interface MemberMapper {
     int findMaxMemberCode();
 
     List<MemberSummary> findAllFollowerByMemberCode(Long memberCode, long offset);
+
+    MemberData findByMemberCode(Long roomId);
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * <pre>
  * Class : memberQueryController
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 조회용 컨트롤러
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-11       부시연           회원 목록 조회 추가
  * 2022-11-11       부시연           회원 검색 추가
  * 2022-11-12       부시연           회원 검색 수정
- * 2022-11-13       부시연           룸인 전용 자신을 포함한 랜덤 회원 7명 조회 기능 추가
+ * 2022-11-13       부시연           하이브 전용 자신을 포함한 랜덤 회원 7명 조회 기능 추가
  * 2022-11-13       부시연           자신을 제외한 회원 목록 조회 추가
+ * 2022-11-13       부시연           룸인 전용 자신과 룸인한 상대를 포함한 회원 7명 조회 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -35,6 +36,7 @@ public class memberQueryController {
         this.memberQueryService = memberQueryService;
     }
 
+    /* 회원 아이디 검색 */
     @GetMapping("member/id/{memberId}")
     public ResponseEntity<ResponseDto> findMemberByMemberId(@RequestHeader String Authorization, @PathVariable String memberId) {
 
@@ -43,6 +45,7 @@ public class memberQueryController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findMemberByMemberId(accessToken, memberId)));
     }
 
+    /* 전체 회원 목록 조회 */
     @GetMapping("member/list")
     public ResponseEntity<ResponseDto> findAllMember(@RequestHeader String Authorization) {
 
@@ -51,6 +54,7 @@ public class memberQueryController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findAllMember(accessToken)));
     }
 
+    /* 자신이 팔로우 한 회원 목록 조회 */
     @GetMapping("member/list/{page}")
     public ResponseEntity<ResponseDto> findAllByMemberCode(@RequestHeader String Authorization, @PathVariable Long page) {
 
@@ -58,8 +62,18 @@ public class memberQueryController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 목록 조회 성공", memberQueryService.findAllByMemberCode(accessToken, page)));
     }
+    
+    /* 룸인 할 때 회원 조회 */
+    @GetMapping("member/roomin/{roomId}")
+    public ResponseEntity<ResponseDto> findRoomInMember(@RequestHeader String Authorization,@PathVariable Long roomId) {
 
-    @GetMapping("member/roomin")
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 랜덤 조회 성공", memberQueryService.findRoomInMember(accessToken, roomId)));
+    }
+
+    /* 벌집 타기 할 때 랜덤 회원 조회 */
+    @GetMapping("member/hive")
     public ResponseEntity<ResponseDto> findRandomMember(@RequestHeader String Authorization) {
 
         String accessToken = Authorization.substring(7);
