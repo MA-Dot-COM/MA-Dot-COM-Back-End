@@ -34,7 +34,7 @@ public class RoomQueryController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 조회 성공", roomQueryService.selectRoomDetail(accessToken, roomId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "방 조회 성공", roomQueryService.selectRoomDetail(accessToken, roomId)));
     }
     
 }
