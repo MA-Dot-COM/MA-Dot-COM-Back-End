@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * <pre>
  * Class : S3LifingImageFile
- * Comment: 클래스에 대한 간단 설명
+ * Comment: S3 라이핑 이미지 파일 저장
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

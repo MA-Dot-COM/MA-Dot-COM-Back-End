@@ -5,7 +5,7 @@ import org.springframework.data.domain.Sort;
 /**
  * <pre>
  * Class : Rangeable
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 조회할 범위 값 저장
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

@@ -2,8 +2,20 @@ package com.sorhive.comprojectserver.config.dto;
 
 import org.springframework.http.HttpStatus;
 
-
-
+/**
+ * <pre>
+ * Class : ApiExceptionDto
+ * Comment: : Api 예외처리 전송 객체
+ * History
+ * ================================================================
+ * DATE             AUTHOR           NOTE
+ * ----------------------------------------------------------------
+ * 2022-11-04       부시연           최초 생성
+ * </pre>
+ *
+ * @author 부시연(최초 작성자)
+ * @version 1(클래스 버전)
+ */
 public class ApiExceptionDto {
     private int state;
     private String message;

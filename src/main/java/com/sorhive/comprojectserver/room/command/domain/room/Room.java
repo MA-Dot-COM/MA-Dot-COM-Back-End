@@ -3,6 +3,7 @@ package com.sorhive.comprojectserver.room.command.domain.room;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -41,6 +42,7 @@ public class Room {
     private String roomNo;
 
     @Column(name = "room_count")
+    @ColumnDefault("0")
     private Long roomCount;
 
     @Column(name = "room_create_time")
