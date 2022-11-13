@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.harvest.command.infra;
 
-import com.sorhive.comprojectserver.config.file.S3HarvestImageFile;
+import com.sorhive.comprojectserver.file.S3HarvestImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.harvest.command.application.dto.HarvestCreateDto;
 import com.sorhive.comprojectserver.harvest.command.application.dto.ResponseHarvestDto;

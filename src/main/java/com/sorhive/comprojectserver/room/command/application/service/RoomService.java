@@ -1,32 +1,20 @@
 package com.sorhive.comprojectserver.room.command.application.service;
 
-import com.sorhive.comprojectserver.config.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
-import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
 import com.sorhive.comprojectserver.room.command.application.dto.GuestBookCreateRequestDto;
 import com.sorhive.comprojectserver.room.command.application.dto.GuestBookCreateResponseDto;
-import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBookWriter;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBookWriterService;
 import com.sorhive.comprojectserver.room.command.domain.repository.GuestBookRepository;
-import com.sorhive.comprojectserver.room.command.domain.repository.MongoRoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
-import com.sorhive.comprojectserver.room.command.domain.room.MongoRoom;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
-import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
-import com.sorhive.comprojectserver.room.command.domain.room.RoomCreatorService;
 import com.sorhive.comprojectserver.room.query.NoRoomException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * <pre>

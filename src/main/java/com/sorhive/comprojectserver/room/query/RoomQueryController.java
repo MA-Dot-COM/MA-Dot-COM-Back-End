@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-10       부시연           최초 생성
+ * 2022-11-10       부시연           방 조회 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -33,7 +34,7 @@ public class RoomQueryController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 조회 성공", roomQueryService.selectRoomDetail(accessToken, roomId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "방 조회 성공", roomQueryService.selectRoomDetail(accessToken, roomId)));
     }
-
+    
 }
