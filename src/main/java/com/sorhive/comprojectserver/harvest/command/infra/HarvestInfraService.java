@@ -44,9 +44,7 @@ public class HarvestInfraService {
     private static final Logger log = LoggerFactory.getLogger(HarvestInfraService.class);
     private final TokenProvider tokenProvider;
     private final HarvestRepository harvestRepository;
-    private final HarvestCommentRepository harvestCommentRepository;
     private final HarvestWriterService harvestWriterService;
-    private final HarvestCommentWriterService harvestCommentWriterService;
     private final S3HarvestImageFile s3HarvestImageFile;
 
     public Object createHarvest(String accessToken, HarvestCreateDto harvestCreateDto) {

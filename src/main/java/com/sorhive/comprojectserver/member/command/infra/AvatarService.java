@@ -1,7 +1,7 @@
 package com.sorhive.comprojectserver.member.command.infra;
 
-import com.sorhive.comprojectserver.config.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.file.S3MemberFile;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
 import com.sorhive.comprojectserver.member.command.domain.model.avatar.Avatar;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
