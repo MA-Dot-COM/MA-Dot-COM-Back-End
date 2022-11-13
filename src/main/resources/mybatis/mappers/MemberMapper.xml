@@ -38,6 +38,23 @@
          limit 30 offset #{ offset }
     </select>
 
+    <select id="findAllFollowerByFollowerCode" resultMap="memberSummaryResultMap">
+        select
+               a.member_code
+             , a.member_id
+             , a.member_name
+             , a.member_avatar_image
+             , a.member_room_image
+             , a.member_lifing_no
+             , a.member_lifing_yn
+             , b.follow_id
+             , b.follower_id
+        from tbl_members a
+        left join tbl_follows b on a.member_code = b.following_id
+        where b.follower_id = #{ memberCode }
+        limit 6
+    </select>
+
     <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">
         select
                a.member_code
