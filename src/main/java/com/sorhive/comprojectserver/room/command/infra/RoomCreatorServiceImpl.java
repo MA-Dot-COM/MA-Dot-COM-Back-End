@@ -33,6 +33,6 @@ public class RoomCreatorServiceImpl implements RoomCreatorService {
 
         MemberData memberData = memberQueryService.getMemberData(roomCreatorMemberCode.getValue());
 
-        return new RoomCreator(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new RoomCreator(MemberCode.of(memberData.getMemberCode()), memberData.getName(), memberData.getId());
     }
 }

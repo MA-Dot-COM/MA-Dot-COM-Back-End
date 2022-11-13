@@ -27,6 +27,7 @@ public class GuestBookCreateResponseDto {
     private Long guestBookId;
     private String guestBookContent;
     private Long guestBookWriterCode;
+    private String guestBookWriterId;
     private String guestBookWriterName;
     private Long roomId;
     private Date createTime;

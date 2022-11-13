@@ -33,6 +33,6 @@ public class GuestBookWriterServiceImpl implements GuestBookWriterService {
 
         MemberData memberData = memberQueryService.getMemberData(guestbookWriterMemberCode.getValue());
 
-        return new GuestBookWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new GuestBookWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName(), memberData.getId());
     }
 }

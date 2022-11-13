@@ -30,4 +30,7 @@ public interface MemberMapper {
     List<MemberSummary> findAllFollowerByMemberCode(Long memberCode, long offset);
 
     MemberData findByMemberCode(Long roomId);
+
+    List<MemberData> findAllFollowerByFollowerCode(Long roomId);
+
 }

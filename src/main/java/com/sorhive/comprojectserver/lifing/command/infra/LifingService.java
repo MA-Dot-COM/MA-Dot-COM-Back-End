@@ -157,6 +157,7 @@ public class LifingService {
         responseLifingDto.setLifingImagePath(lifing.getLifingImagePath());
         responseLifingDto.setLifingNo(lifing.getLifingNo());
         responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
+        responseLifingDto.setLifingWriter(lifing.getLifingWriter());
 
         return responseLifingDto;
     }

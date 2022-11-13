@@ -39,6 +39,12 @@ public class GuestBookData {
     @Column(name = "guestbook_writer_code")
     private Long memberCode;
 
+    @Column(name = "guestbook_writer_name")
+    private String memberName;
+
+    @Column(name = "guestbook_writer_id")
+    private String memberId;
+
     @Column(name= "room_id")
     private Long roomId;
 

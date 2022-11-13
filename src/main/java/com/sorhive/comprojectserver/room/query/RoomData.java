@@ -36,10 +36,13 @@ public class RoomData {
     private Long id;
 
     @Column(name = "room_creator_code")
-    private Long code;
+    private Long creatorCode;
 
     @Column(name = "room_creator_name")
-    private String name;
+    private String creatorName;
+
+    @Column(name = "room_creator_id")
+    private String creatorId;
 
     @Column(name="room_no")
     private String roomNo;

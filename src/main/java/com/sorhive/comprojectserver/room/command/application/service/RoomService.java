@@ -81,6 +81,7 @@ public class RoomService {
         guestBookCreateResponseDto.setCreateTime(guestBook.getCreateTime());
         guestBookCreateResponseDto.setGuestBookWriterCode(guestBook.getGuestBookWriter().getMemberCode().getValue());
         guestBookCreateResponseDto.setGuestBookWriterName(guestBook.getGuestBookWriter().getName());
+        guestBookCreateResponseDto.setGuestBookWriterId(guestBook.getGuestBookWriter().getId());
         guestBookCreateResponseDto.setRoomId(guestBook.getRoom().getId());
 
         log.info("[RoomService] guestBookCreateResponseDto {}", guestBookCreateResponseDto);
