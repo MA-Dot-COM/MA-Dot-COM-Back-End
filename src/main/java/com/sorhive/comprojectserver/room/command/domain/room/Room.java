@@ -3,10 +3,11 @@ package com.sorhive.comprojectserver.room.command.domain.room;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +26,6 @@ import java.util.List;
  * @version 1(클래스 버전)
  */
 @Getter
-@Setter
 @Entity
 @Table(name = "tbl_rooms")
 public class Room {
@@ -39,6 +39,16 @@ public class Room {
     @Column(name="room_no")
     private String roomNo;
 
+    @Column(name = "room_count")
+    private Long roomCount;
+
+    @Column(name = "room_create_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
+
+    @Column(name = "room_upload_time")
+    private Timestamp uploadTime;
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
 
@@ -48,9 +58,13 @@ public class Room {
     protected Room() { }
 
     public Room(Long id, String roomNo, RoomCreator roomCreator) {
-        setId(id);
-        setRoomNo(roomNo);
-        setRoomCreator(roomCreator);
+        this.id = id;
+        this.roomNo = roomNo;
+        this.roomCreator = roomCreator;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public void setRoomCount(Long roomCount) {
+        this.roomCount += roomCount;
+    }
 }

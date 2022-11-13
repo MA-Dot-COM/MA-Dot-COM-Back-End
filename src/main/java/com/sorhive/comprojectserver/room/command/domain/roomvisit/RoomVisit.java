@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.room.command.domain.roomvisit;
 
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import com.sorhive.comprojectserver.room.command.domain.room.RoomId;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -32,16 +34,21 @@ public class RoomVisit {
     private Timestamp time;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "fk_room_id")
     private Room room;
 
     @Embedded
-    private RoomVisitor roomVisitor;
+    private MemberCode memberCode;
+
+    @Embedded
+    private RoomId roomId;
 
     protected RoomVisit() {}
-    public RoomVisit(Long id, Timestamp time) {
-        this.id = id;
-        this.time = time;
+
+    public RoomVisit(MemberCode memberCode, RoomId roomId) {
+        this.memberCode = memberCode;
+        this.roomId = roomId;
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     public Long getId() {

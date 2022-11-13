@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_guestbooks")
+@Getter
 public class GuestBook {
 
     @Id
@@ -51,29 +53,4 @@ public class GuestBook {
     private Character deleteYn;
 
     protected GuestBook () {}
-    public Long getId() {
-        return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-
-    public Timestamp getUploadTime() {
-        return uploadTime;
-    }
-
-    public Timestamp getDeleteTime() {
-        return deleteTime;
-    }
-
-    public Character getDeleteYn() {
-        return deleteYn;
-    }
-
-    public GuestBookWriter getGuestBookWriter() { return guestBookWriter; }
 }

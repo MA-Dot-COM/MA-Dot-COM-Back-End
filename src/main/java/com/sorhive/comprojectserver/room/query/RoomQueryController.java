@@ -24,22 +24,16 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/v1")
 @AllArgsConstructor
-public class QueryRoomController {
+public class RoomQueryController {
 
-    private final QueryRoomService queryRoomService;
+    private final RoomQueryService roomQueryService;
 
     @GetMapping("room/{roomId}")
-    public ResponseEntity<ResponseDto> selectRoomDetail(@PathVariable Long roomId) {
-
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 조회 성공", queryRoomService.selectRoomDetail(roomId)));
-    }
-
-    @GetMapping("room/list")
-    public ResponseEntity<ResponseDto> selectRoomList(@RequestHeader String Authorization) {
+    public ResponseEntity<ResponseDto> selectRoomDetail(@RequestHeader String Authorization, @PathVariable Long roomId) {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 조회 성공", queryRoomService.selectRoomList(accessToken)));
-
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 조회 성공", roomQueryService.selectRoomDetail(accessToken, roomId)));
     }
+
 }
