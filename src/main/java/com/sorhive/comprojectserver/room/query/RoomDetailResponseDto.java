@@ -26,8 +26,9 @@ import java.util.Map;
 @Setter
 public class RoomDetailResponseDto {
 
-    private List<GuestBookData> guestBookDataList;
-    private String id;
+    private Long roomId;
+    private String mongoRoomid;
     private RoomCreator roomCreator;
+    private List<GuestBookData> guestBookDataList;
     private List<Map<String,Object>> furnitures;
 }

@@ -61,7 +61,7 @@ public class RoomQueryService {
             throw new NoRoomException("룸 데이터가 존재하지 않습니다.");
         }
 
-        /* 방문하려는 사람의 방이 방 주인이 아닐 경우*/
+        /* 방문하려는 사람의 방이 방 주인이 아닐 경우 */
         if(roomId != memberCode) {
 
             /* 방의 조회수 증가 */
@@ -87,13 +87,18 @@ public class RoomQueryService {
 
         }
 
-        String roomNo = roomDataDao.findById(roomId).getRoomNo();
+        /* 룸 데이터 조회하기 */
+        RoomData roomData = roomDataDao.findById(roomId);
 
+        String roomNo = roomData.getRoomNo();
+        roomDetailResponseDto.setRoomId(roomData.getId());
+
+        /* 몽고 DB에 있는 해당 룸 데이터 조회하기 */
         Optional<MongoRoom> mongoRooms = mongoRoomRepository.findById(roomNo);
 
         roomDetailResponseDto.setRoomCreator(mongoRooms.get().getRoomCreator());
         roomDetailResponseDto.setFurnitures(mongoRooms.get().getFurnitures());
-        roomDetailResponseDto.setId(mongoRooms.get().getId());
+        roomDetailResponseDto.setMongoRoomid(mongoRooms.get().getId());
 
         return roomDetailResponseDto;
 
