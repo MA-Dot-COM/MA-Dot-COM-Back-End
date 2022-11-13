@@ -10,6 +10,18 @@
         <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
     </resultMap>
 
+    <resultMap id="lifingResultMap" type="com.sorhive.comprojectserver.lifing.query.LifingData">
+        <id property="lifingId" column="lifing_id"/>
+        <result property="lifingConetent" column="lifing_content"/>
+        <result property="lifingNo" column="lifing_no"/>
+        <result property="lifingImagePath" column="lifing_image_path"/>
+        <result property="memberCode" column="lifing_writer_code"/>
+        <result property="memberId" column="lifing_writer_id"/>
+        <result property="name" column="lifing_writer_name"/>
+        <result property="uploadTime" column="lifing_upload_time"/>
+        <result property="deleteYn" column="lifing_delete_yn"/>
+    </resultMap>
+
     <select id="findLifingImageByMemberCode" resultMap="lifingPathResultMap">
         select
                lifing_image_id
@@ -19,5 +31,21 @@
           from tbl_lifing_image
          where lifing_writer_code = #{memberCode}
          group by lifing_writer_code;
+    </select>
+
+    <select id="findAllLifingByMemberCode" resultMap="lifingResultMap">
+        select
+               a.lifing_id
+             , a.lifing_content
+             , a.lifing_image_path
+             , a.lifing_writer_code
+             , a.lifing_writer_id
+             , a.lifing_writer_name
+             , a.lifing_upload_time
+             , a.lifing_delete_yn
+          from tbl_lifings a
+         where lifing_writer_code = #{ memberCode }
+         order by a.lifing_upload_time desc
+         limit 3 offset #{pageNo}
     </select>
 </mapper>

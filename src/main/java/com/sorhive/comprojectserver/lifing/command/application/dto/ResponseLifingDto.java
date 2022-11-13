@@ -2,7 +2,6 @@ package com.sorhive.comprojectserver.lifing.command.application.dto;
 
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;

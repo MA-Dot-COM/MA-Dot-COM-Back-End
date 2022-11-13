@@ -2,10 +2,7 @@ package com.sorhive.comprojectserver.lifing.query;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -24,12 +21,13 @@ import java.sql.Timestamp;
  * @see (참고할 class 또는 외부 url)
  */
 @Entity
-@Table(name = "tbl_lifing")
+@Table(name = "tbl_lifings")
 @Getter
 public class LifingData {
 
     @Id
     @Column(name="lifing_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long lifingId;
 
     @Column(name = "lifing_content")
@@ -45,7 +43,7 @@ public class LifingData {
     private Long memberCode;
 
     @Column(name = "lifing_writer_id")
-    private Long memberId;
+    private String lifingWriterId;
 
     @Column(name = "lifing_writer_name")
     private String name;
