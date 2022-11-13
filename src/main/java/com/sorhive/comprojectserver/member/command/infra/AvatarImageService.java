@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.member.command.infra;
 
-import com.sorhive.comprojectserver.file.S3AvatarImageFile;
+import com.sorhive.comprojectserver.config.file.S3AvatarImageFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
 import com.sorhive.comprojectserver.member.command.application.dto.ResponseAvatarImageAiDto;
