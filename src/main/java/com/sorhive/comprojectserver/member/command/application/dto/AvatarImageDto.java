@@ -3,10 +3,12 @@ package com.sorhive.comprojectserver.member.command.application.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <pre>
  * Class : AvatarImageDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 이미지 생성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -21,6 +23,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class AvatarImageDto {
+
+    @NotNull
     private byte[] avatarImage;
+
+    @NotNull
     private String avatarImageName;
+
 }

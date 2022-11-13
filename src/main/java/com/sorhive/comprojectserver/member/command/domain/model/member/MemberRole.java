@@ -2,8 +2,8 @@ package com.sorhive.comprojectserver.member.command.domain.model.member;
 
 /**
  * <pre>
- * Class : MemberState
- * Comment: 클래스에 대한 간단 설명
+ * Class : MemberRole
+ * Comment: 멤버 역할에 대한 상수 집합
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

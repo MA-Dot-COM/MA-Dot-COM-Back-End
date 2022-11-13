@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : MemberRepository
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 회원 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

@@ -5,8 +5,8 @@ import org.springframework.data.repository.Repository;
 
 /**
  * <pre>
- * Class : StoryRepository
- * Comment: 클래스에 대한 간단 설명
+ * Class : LifingRepository
+ * Comment: 라이핑 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

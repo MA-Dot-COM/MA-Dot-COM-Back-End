@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : LifingData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 데이터 전송객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

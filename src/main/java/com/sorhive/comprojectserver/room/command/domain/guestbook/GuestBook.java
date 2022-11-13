@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * <pre>
  * Class : GuestBook
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

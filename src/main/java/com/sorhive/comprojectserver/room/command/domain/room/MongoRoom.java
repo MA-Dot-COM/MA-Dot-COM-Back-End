@@ -9,8 +9,8 @@ import java.util.Map;
 
 /**
  * <pre>
- * Class : Room
- * Comment: 클래스에 대한 간단 설명
+ * Class : MongoRoom
+ * Comment: 몽고 DB 방 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -22,11 +22,10 @@ import java.util.Map;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-
-
 @Getter
 @Document(collection = "room")
 public class MongoRoom {
+    
     @Id
     private String id;
     private RoomCreator roomCreator;

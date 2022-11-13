@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * <pre>
  * Class : ResponseLifingImageAiDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: AI 서버에서 돌아오는 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

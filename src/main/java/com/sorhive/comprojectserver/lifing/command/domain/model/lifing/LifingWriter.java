@@ -12,8 +12,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : Writer
- * Comment: 클래스에 대한 간단 설명
+ * Class : LifingWriter
+ * Comment: 라이핑 작성자 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

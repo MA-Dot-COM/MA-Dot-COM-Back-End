@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * <pre>
  * Class : GuestBookData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

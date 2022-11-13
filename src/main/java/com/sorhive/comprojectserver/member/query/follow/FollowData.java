@@ -11,7 +11,7 @@ import javax.persistence.Table;
 /**
  * <pre>
  * Class : FollowData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 팔로우 데이터 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

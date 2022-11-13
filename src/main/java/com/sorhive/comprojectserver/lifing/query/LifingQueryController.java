@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.lifing.query;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * <pre>
  * Class : LifingQueryController
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 조회용 컨트롤러
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-12       부시연           회원 번호로 회원의 모든 라이핑 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -27,14 +30,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1")
 @AllArgsConstructor
-public class QueryLifingController {
+public class LifingQueryController {
 
-    private final QueryLifingService queryLifingService;
+    private static final Logger log = LoggerFactory.getLogger(LifingQueryController.class);
+    private final LifingQueryService lifingQueryService;
 
+    /** 방 번호로 모든 라이핑 조회하기 */
     @GetMapping("lifing")
     public ResponseEntity<ResponseDto> findAllLifingByMemberCode(@RequestBody LifingRequestDto lifingRequestDto) {
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 조회 성공", queryLifingService.findAllLifingByMemberCode(lifingRequestDto)));
+        log.info("[QueryLifingController] findAllLifingByMemberCode Start ==========");
+        log.info("[QueryLifingController] lifingRequestDto : " + lifingRequestDto);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 조회 성공", lifingQueryService.findAllLifingByMemberCode(lifingRequestDto)));
     }
 
 }

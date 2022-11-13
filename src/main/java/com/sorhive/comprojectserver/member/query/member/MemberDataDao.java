@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : MemberDataDAO
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 데이터 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

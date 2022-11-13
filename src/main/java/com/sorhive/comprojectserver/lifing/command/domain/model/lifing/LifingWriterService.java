@@ -5,7 +5,7 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
 /**
  * <pre>
  * Class : LifingWriterService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 작성자 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

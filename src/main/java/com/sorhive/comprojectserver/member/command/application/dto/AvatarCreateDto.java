@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <pre>
  * Class : AvatarCreateDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 생성 요청 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -24,14 +26,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AvatarCreateDto {
 
+    @NotNull
     private Integer faceType;
 
+    @NotNull
     private Integer eyeBrowsType;
 
+    @NotNull
     private Integer eyeType;
 
+    @NotNull
     private Integer hairType;
 
+    @NotNull
     private byte[] memberAvatarImage;
 
 }

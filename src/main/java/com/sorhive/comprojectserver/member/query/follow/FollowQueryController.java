@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.member.query.follow;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <pre>
- * Class : MemberQueryController
- * Comment: 클래스에 대한 간단 설명
+ * Class : FollowQueryController
+ * Comment: 팔로우 조회 컨트롤러
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1")
 public class FollowQueryController {
 
+    private static final Logger log = LoggerFactory.getLogger(FollowQueryController.class);
     private final FollowQueryService followQueryService;
 
     public FollowQueryController(FollowQueryService followQueryService) {
@@ -36,6 +39,8 @@ public class FollowQueryController {
     @GetMapping("follower")
     public ResponseEntity<ResponseDto> findFollowerList(@RequestHeader String Authorization) {
 
+        log.info("[FollowQueryController] findFollowerList Start ==================");
+
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "팔로워 목록 조회 성공", followQueryService.findFollowerList(accessToken)));
@@ -43,6 +48,8 @@ public class FollowQueryController {
 
     @GetMapping("following")
     public ResponseEntity<ResponseDto> findFollowingList(@RequestHeader String Authorization) {
+
+        log.info("[FollowQueryController] findFollowingList Start ==================");
 
         String accessToken = Authorization.substring(7);
 

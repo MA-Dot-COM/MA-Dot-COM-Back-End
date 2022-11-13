@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : LifingImageRepository
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 이미지 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

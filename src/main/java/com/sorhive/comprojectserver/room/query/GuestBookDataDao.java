@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : GuestBookDataDao
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 데이터 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -23,4 +23,5 @@ public interface GuestBookDataDao extends Repository<GuestBookData, Long> {
 
     List<GuestBookData> findByMemberCodeAndRoomIdAndDeleteYnEquals(Long memberCode, Long roomId, char n);
 
+    List<GuestBookData> findByRoomIdAndDeleteYnEquals(Long roomId, char n);
 }

@@ -10,8 +10,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : Writer
- * Comment: 클래스에 대한 간단 설명
+ * Class : AvatarCreator
+ * Comment: 아바타 생성자 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

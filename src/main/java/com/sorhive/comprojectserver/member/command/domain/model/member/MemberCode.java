@@ -6,8 +6,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : MemberNo
- * Comment: 클래스에 대한 간단 설명
+ * Class : MemberCode
+ * Comment: 멤버 코드 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

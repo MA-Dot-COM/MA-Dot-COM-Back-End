@@ -9,8 +9,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : FollowId
- * Comment: 클래스에 대한 간단 설명
+ * Class : FollowerId
+ * Comment: 팔로워 아이디 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

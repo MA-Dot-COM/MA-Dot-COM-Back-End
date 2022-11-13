@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.room.query;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +29,15 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class RoomQueryController {
 
+    private static final Logger log = LoggerFactory.getLogger(RoomQueryController.class);
     private final RoomQueryService roomQueryService;
 
+    /** 방 상세 조회 */
     @GetMapping("room/{roomId}")
     public ResponseEntity<ResponseDto> selectRoomDetail(@RequestHeader String Authorization, @PathVariable Long roomId) {
+
+        log.info("[RoomQueryController] selectRoomDetail Start ===============");
+        log.info("[RoomQueryController] roomId : " + roomId);
 
         String accessToken = Authorization.substring(7);
 

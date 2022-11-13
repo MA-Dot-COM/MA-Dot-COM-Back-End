@@ -1,7 +1,9 @@
 package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.NoMemberException;
+import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.Random;
 /**
  * <pre>
  * Class : MemberQueryService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 조회용 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -32,10 +34,9 @@ import java.util.Random;
 @Service
 public class MemberQueryService {
 
+    private static final Logger log = LoggerFactory.getLogger(MemberQueryService.class);
     private MemberDataDao memberDataDao;
-
     private MemberMapper memberMapper;
-
     private final TokenProvider tokenProvider;
 
     public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, TokenProvider tokenProvider) {
@@ -47,6 +48,9 @@ public class MemberQueryService {
     /** 회원 아이디로 회원검색 */
     public MemberData getMemberData(String memberId) {
 
+        log.info("[MemberQueryService] getMemberData Start ================");
+        log.info("[MemberQueryService] memberId : " + memberId);
+
         MemberData memberData = memberDataDao.findById(memberId);
         if (memberData == null) {
             throw new NoMemberException();
@@ -56,6 +60,10 @@ public class MemberQueryService {
     }
 
     public MemberData getMemberData(Long memberCode) {
+
+        log.info("[MemberQueryService] getMemberData Start ================");
+        log.info("[MemberQueryService] memberCode : " + memberCode);
+
         MemberData memberData = memberDataDao.findByMemberCode(memberCode);
         if(memberData == null) {
             throw new NoMemberException();
@@ -67,6 +75,9 @@ public class MemberQueryService {
 
     /** 회원 ID 검색 */
     public List<MemberData> findMemberByMemberId(String accessToken, String memberId) {
+
+        log.info("[MemberQueryService] findMemberByMemberId Start ================");
+        log.info("[MemberQueryService] memberId : " + memberId);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
@@ -81,6 +92,9 @@ public class MemberQueryService {
 
     /** 멤버코드로 팔로우 하고 있는 회원 조회 */
     public FindAllMemberResponseDto findAllByMemberCode(String accessToken, Long offset) {
+
+        log.info("[MemberQueryService] findAllByMemberCode Start ================");
+        log.info("[MemberQueryService] offset : " + offset);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
@@ -115,6 +129,8 @@ public class MemberQueryService {
 
     /** 랜덤 회원 조회 */
     public FindRandomMemberResponseDto findRandomMember(String accessToken) {
+
+        log.info("[MemberQueryService] findRandomMember Start ================");
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
@@ -184,12 +200,15 @@ public class MemberQueryService {
     /** 룸인 회원 조회 */
     public FindRoomInMemberResponseDto findRoomInMember(String accessToken, Long roomId) {
 
+        log.info("[MemberQueryService] findRoomInMember Start ================");
+
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         FindRoomInMemberResponseDto findRoomInMemberResponseDto = new FindRoomInMemberResponseDto();
 
         List<MemberData> memberDataList = new ArrayList<>();
 
+        /* 회원번호로 조회하기 */
         MemberData followerMemberData = memberDataDao.findByMemberCode(roomId);
 
         if(followerMemberData == null) {
@@ -276,8 +295,11 @@ public class MemberQueryService {
     /** 모든 회원 조회 */
     public List<MemberData> findAllMember(String accessToken) {
 
+        log.info("[MemberQueryService] findAllMember Start ================");
+
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        /* 자신을 제외한 모든 회원 조회하기 */
         List<MemberData> memberData = memberDataDao.findAllByMemberCodeIsNot(memberCode);
 
         if (memberData == null) {

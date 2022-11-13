@@ -1,13 +1,15 @@
 package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * <pre>
- * Class : memberQueryController
+ * Class : MemberQueryController
  * Comment: 멤버 조회용 컨트롤러
  * History
  * ================================================================
@@ -28,17 +30,21 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("api/v1")
-public class memberQueryController {
+public class MemberQueryController {
 
+    private static final Logger log = LoggerFactory.getLogger(MemberQueryController.class);
     private final MemberQueryService memberQueryService;
 
-    public memberQueryController(MemberQueryService memberQueryService) {
+    public MemberQueryController(MemberQueryService memberQueryService) {
         this.memberQueryService = memberQueryService;
     }
 
     /* 회원 아이디 검색 */
     @GetMapping("member/id/{memberId}")
     public ResponseEntity<ResponseDto> findMemberByMemberId(@RequestHeader String Authorization, @PathVariable String memberId) {
+
+        log.info("[MemberQueryController] findMemberByMemberId Start =================");
+        log.info("[MemberQueryController] memberId : " + memberId);
 
         String accessToken = Authorization.substring(7);
 
@@ -49,6 +55,8 @@ public class memberQueryController {
     @GetMapping("member/list")
     public ResponseEntity<ResponseDto> findAllMember(@RequestHeader String Authorization) {
 
+        log.info("[MemberQueryController] findAllMember Start =================");
+
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findAllMember(accessToken)));
@@ -57,6 +65,9 @@ public class memberQueryController {
     /* 자신이 팔로우 한 회원 목록 조회 */
     @GetMapping("member/list/{page}")
     public ResponseEntity<ResponseDto> findAllByMemberCode(@RequestHeader String Authorization, @PathVariable Long page) {
+
+        log.info("[MemberQueryController] findAllByMemberCode Start =================");
+        log.info("[MemberQueryController] page : " + page);
 
         String accessToken = Authorization.substring(7);
 
@@ -67,6 +78,9 @@ public class memberQueryController {
     @GetMapping("member/roomin/{roomId}")
     public ResponseEntity<ResponseDto> findRoomInMember(@RequestHeader String Authorization,@PathVariable Long roomId) {
 
+        log.info("[MemberQueryController] findRoomInMember Start =================");
+        log.info("[MemberQueryController] roomId : " + roomId);
+
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 랜덤 조회 성공", memberQueryService.findRoomInMember(accessToken, roomId)));
@@ -75,6 +89,8 @@ public class memberQueryController {
     /* 벌집 타기 할 때 랜덤 회원 조회 */
     @GetMapping("member/hive")
     public ResponseEntity<ResponseDto> findRandomMember(@RequestHeader String Authorization) {
+
+        log.info("[MemberQueryController] findRandomMember Start =================");
 
         String accessToken = Authorization.substring(7);
 

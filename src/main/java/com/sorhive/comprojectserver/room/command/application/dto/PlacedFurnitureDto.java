@@ -3,7 +3,7 @@ package com.sorhive.comprojectserver.room.command.application.dto;
 /**
  * <pre>
  * Class : PlacedFurnitureDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 배치된 가구들에 대한 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

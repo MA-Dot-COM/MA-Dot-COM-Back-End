@@ -5,6 +5,8 @@ import com.sorhive.comprojectserver.room.command.application.dto.GuestBookCreate
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.application.service.RoomService;
 import com.sorhive.comprojectserver.room.command.infra.RoomInfraService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +16,7 @@ import javax.validation.Valid;
 /**
  * <pre>
  * Class : RoomController
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 컨트롤러
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -33,6 +35,7 @@ import javax.validation.Valid;
 @RequestMapping("api/v1")
 public class RoomController {
 
+    private static final Logger log = LoggerFactory.getLogger(RoomController.class);
     private final RoomService roomService;
     private final RoomInfraService roomInfraService;
 
@@ -41,16 +44,24 @@ public class RoomController {
         this.roomInfraService = roomInfraService;
     }
 
+    /** 방 생성 */
     @PostMapping(value = "room")
     public ResponseEntity<ResponseDto> createRoom(@RequestHeader String Authorization, @Valid @RequestBody RoomCreateDto roomCreateDto) {
+
+        log.info("[RoomController] createRoom Start ===================");
+        log.info("[RoomController] roomCreateDto : " + roomCreateDto);
 
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomInfraService.createRoom(accessToken, roomCreateDto)));
     }
 
+    /** 방명록 생성 */
     @PostMapping(value = "guestbook")
     public ResponseEntity<ResponseDto> createGuestBook(@RequestHeader String Authorization, @Valid @RequestBody GuestBookCreateRequestDto guestBookCreateRequestDto) {
+
+        log.info("[RoomController] createGuestBook Start ===================");
+        log.info("[RoomController] GuestBookCreateRequestDto : " + guestBookCreateRequestDto);
 
         String accessToken = Authorization.substring(7);
 

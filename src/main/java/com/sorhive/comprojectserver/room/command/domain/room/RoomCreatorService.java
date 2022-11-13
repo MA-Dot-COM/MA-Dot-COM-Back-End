@@ -5,7 +5,7 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCod
 /**
  * <pre>
  * Class : RoomCreatorService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 생성자 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
