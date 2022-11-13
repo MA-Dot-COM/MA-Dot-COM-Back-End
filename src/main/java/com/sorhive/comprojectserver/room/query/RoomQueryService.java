@@ -52,9 +52,9 @@ public class RoomQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        Optional<Room> roomData = roomRepository.findById(roomId);
+        Room room = roomRepository.findById(roomId);
 
-        if(roomData == null) {
+        if(room == null) {
             throw new NoRoomException("룸 데이터가 존재하지 않습니다.");
         }
 
@@ -62,7 +62,6 @@ public class RoomQueryService {
         if(roomId != memberCode) {
 
             /* 방의 조회수 증가 */
-            Room room = roomData.get();
             room.setRoomCount(1L);
             roomRepository.save(room);
 

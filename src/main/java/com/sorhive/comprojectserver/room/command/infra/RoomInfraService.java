@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.room.command.application.service;
+package com.sorhive.comprojectserver.room.command.infra;
 
 import com.sorhive.comprojectserver.config.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
@@ -30,75 +30,84 @@ import java.util.Optional;
 
 /**
  * <pre>
- * Class : RoomService
+ * Class : RoomInfraService
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-13       부시연           최초 생성
- * 2022-11-13       부시연           방명록 생성 추가
+ * 2022-11-07       부시연           최초 생성
+ * 2022-11-09       부시연           방 생성 추가
+ * 2022-11-10       부시연           접속용 방이미지 생성 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
 @Service
-public class RoomService {
+public class RoomInfraService {
 
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
+    private final MongoRoomRepository mongoRoomRepository;
     private final RoomRepository roomRepository;
-    private final GuestBookRepository guestBookRepository;
-    private final GuestBookWriterService guestBookWriterService;
+    private final RoomCreatorService roomCreatorService;
+    private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
+    private S3MemberFile s3MemberFile;
 
 
-    public RoomService(RoomRepository roomRepository, GuestBookRepository guestBookRepository, GuestBookWriterService guestBookWriterService, TokenProvider tokenProvider) {
+    public RoomInfraService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, TokenProvider tokenProvider, S3MemberFile s3MemberFile) {
+        this.mongoRoomRepository = mongoRoomRepository;
         this.roomRepository = roomRepository;
-        this.guestBookRepository = guestBookRepository;
-        this.guestBookWriterService = guestBookWriterService;
+        this.roomCreatorService = roomCreatorService;
+        this.memberRepository = memberRepository;
         this.tokenProvider = tokenProvider;
+        this.s3MemberFile = s3MemberFile;
     }
 
-    public GuestBookCreateResponseDto createGuestBook(String accessToken, GuestBookCreateRequestDto guestBookCreateRequestDto) {
-
-        log.info("[RoomService] createRoom Start ===================================");
-        log.info("[RoomService] roomCreateDto {}", guestBookCreateRequestDto);
+    @Transactional
+    public String createRoom(String accessToken, RoomCreateDto roomCreateDto) {
+        log.info("[RoomInfraService] createRoom Start ===================================");
+        log.info("[RoomInfraService] roomCreateDto {}", roomCreateDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        GuestBookWriter guestBookWriter = guestBookWriterService.createGuestBookWriter(new MemberCode(memberCode));
+        byte[] roomImage = roomCreateDto.getRoomImage();
 
-        String guestBookContent = guestBookCreateRequestDto.getContent();
-        Long roomId = guestBookCreateRequestDto.getRoomId();
+        try {
+            if(roomImage != null) {
 
-        Room room = roomRepository.findById(roomId);
+                Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
+                Member member = memberData.get();
+                member.setRoomImagePath(s3MemberFile.upload(roomImage, "images", "room_" + memberCode + ".png"));
+                memberRepository.save(member);
+            }
 
-        if(room == null) {
-            throw new NoRoomException("해당 방은 존재하지 않습니다.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        GuestBook guestBook = new GuestBook(
-                guestBookContent,
-                guestBookWriter,
-                room
+        RoomCreator roomCreator = roomCreatorService.createRoomCreator(new MemberCode(memberCode));
+
+        MongoRoom mongoRoom = new MongoRoom(
+                roomCreator,
+                roomCreateDto.getFurnitures()
         );
 
-        guestBookRepository.save(guestBook);
+        mongoRoomRepository.save(mongoRoom);
 
-        GuestBookCreateResponseDto guestBookCreateResponseDto = new GuestBookCreateResponseDto();
+        Room newRoom = new Room(
+                roomCreator.getMemberCode().getValue(),
+                mongoRoom.getId(),
+                roomCreator
+        );
 
-        guestBookCreateResponseDto.setGuestBookId(guestBook.getId());
-        guestBookCreateResponseDto.setGuestBookContent(guestBook.getContent());
-        guestBookCreateResponseDto.setCreateTime(guestBook.getCreateTime());
-        guestBookCreateResponseDto.setGuestBookWriterCode(guestBook.getGuestBookWriter().getMemberCode().getValue());
-        guestBookCreateResponseDto.setGuestBookWriterName(guestBook.getGuestBookWriter().getName());
-        guestBookCreateResponseDto.setRoomId(guestBook.getRoom().getId());
+        roomRepository.save(newRoom);
 
-        log.info("[RoomService] guestBookCreateResponseDto {}", guestBookCreateResponseDto);
-        log.info("[RoomService] createRoom End ===================================");
+        log.info("[RoomInfraService] createRoom End ==============================");
 
-        return guestBookCreateResponseDto;
+        return mongoRoom.getId();
+
     }
 
 }
