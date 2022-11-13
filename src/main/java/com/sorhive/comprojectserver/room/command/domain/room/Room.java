@@ -3,6 +3,7 @@ package com.sorhive.comprojectserver.room.command.domain.room;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -43,7 +44,7 @@ public class Room {
     private Long roomCount;
 
     @Column(name = "room_create_time")
-    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date createTime;
 
     @Column(name = "room_upload_time")
@@ -67,4 +68,5 @@ public class Room {
     public void setRoomCount(Long roomCount) {
         this.roomCount += roomCount;
     }
+
 }

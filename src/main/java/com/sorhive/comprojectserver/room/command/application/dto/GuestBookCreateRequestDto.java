@@ -1,5 +1,7 @@
 package com.sorhive.comprojectserver.room.command.application.dto;
 
+import lombok.Getter;
+
 /**
  * <pre>
  * Class : GuestBookCreateDto
@@ -14,24 +16,10 @@ package com.sorhive.comprojectserver.room.command.application.dto;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-public class GuestBookCreateDto {
+@Getter
+public class GuestBookCreateRequestDto {
 
+    private Long roomId;
     private String content;
-    private String furnitureCategoryNumber;
-    private Long furnitureNumber;
 
-    public GuestBookCreateDto() {
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getFurnitureCategoryNumber() {
-        return furnitureCategoryNumber;
-    }
-
-    public Long getFurnitureNumber() {
-        return furnitureNumber;
-    }
 }

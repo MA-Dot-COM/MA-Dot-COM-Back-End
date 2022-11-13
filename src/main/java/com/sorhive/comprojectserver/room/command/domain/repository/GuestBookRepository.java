@@ -1,22 +1,25 @@
 package com.sorhive.comprojectserver.room.command.domain.repository;
 
-import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import org.springframework.data.repository.Repository;
 
 /**
  * <pre>
- * Class : RoomRepository
+ * Class : GuestBookRepository
  * Comment: 클래스에 대한 간단 설명
  * History
+ * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-03       부시연           RoomRepository 최초 생성
+ * 2022-11-13       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
+ * @see (참고할 class 또는 외부 url)
  */
-public interface RoomRepository extends Repository<Room, Long> {
-    void save(Room room);
-    Room findById(Long roomId);
+public interface GuestBookRepository extends Repository<GuestBook, Long> {
+
+    void save(GuestBook guestBook);
+
 }

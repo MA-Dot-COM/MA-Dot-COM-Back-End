@@ -2,9 +2,12 @@ package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * <pre>
@@ -15,6 +18,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
+ * 2022-11-13       부시연           @CreationTimestamp 를 이용하여 기본 생성 시간 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -36,12 +40,14 @@ public class GuestBook {
     @Embedded
     private GuestBookWriter guestBookWriter;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
+
+    /* 기본 생성 시간 추가 */
     @Column(name = "guestbook_create_time")
-    private Timestamp createTime;
+    @CreationTimestamp
+    private Date createTime;
 
     @Column(name = "guestbook_upload_time")
     private Timestamp uploadTime;
@@ -50,7 +56,18 @@ public class GuestBook {
     private Timestamp deleteTime;
 
     @Column(name = "guestbook_delete_yn")
+    @ColumnDefault("'N'")
     private Character deleteYn;
 
     protected GuestBook () {}
+
+    public GuestBook(String guestBookContent, GuestBookWriter guestBookWriter, Room room) {
+
+        this.content = guestBookContent;
+        this.room = room;
+        this.guestBookWriter = guestBookWriter;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+
+    }
 }
