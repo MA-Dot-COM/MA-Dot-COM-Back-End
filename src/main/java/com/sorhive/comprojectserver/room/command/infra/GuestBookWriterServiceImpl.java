@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * <pre>
  * Class : GuestBookWriterServiceImpl
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 작성자 서비스 구현체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

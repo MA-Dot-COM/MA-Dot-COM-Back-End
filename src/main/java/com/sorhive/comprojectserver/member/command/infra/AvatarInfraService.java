@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.command.infra;
 
+import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.file.S3MemberFile;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarCreateDto;
@@ -17,8 +18,8 @@ import java.util.Optional;
 
 /**
  * <pre>
- * Class : AvatarService
- * Comment: 클래스에 대한 간단 설명
+ * Class : AvatarInfraService
+ * Comment: 아바타 인프라 서비스(외부 서버와 연동 : 파일서버)
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -31,22 +32,23 @@ import java.util.Optional;
  * @version 1(클래스 버전)
  */
 @Service
-public class AvatarService {
+public class AvatarInfraService {
 
-    private static final Logger log = LoggerFactory.getLogger(AvatarService.class);
+    private static final Logger log = LoggerFactory.getLogger(AvatarInfraService.class);
     private final AvatarRepository avatarRepository;
     private final TokenProvider tokenProvider;
 
     private final MemberRepository memberRepository;
     private S3MemberFile s3MemberFile;
 
-    public AvatarService(AvatarRepository avatarRepository, TokenProvider tokenProvider, MemberRepository memberRepository, S3MemberFile s3MemberFile) {
+    public AvatarInfraService(AvatarRepository avatarRepository, TokenProvider tokenProvider, MemberRepository memberRepository, S3MemberFile s3MemberFile) {
         this.avatarRepository = avatarRepository;
         this.tokenProvider = tokenProvider;
         this.memberRepository = memberRepository;
         this.s3MemberFile = s3MemberFile;
     }
 
+    /** 아바타 생성하기 */
     @Transactional
     public Long createAvatar(String accessToken, AvatarCreateDto avatarCreateDto) {
 
@@ -56,6 +58,10 @@ public class AvatarService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         String memberAvatarImageName = "avatar_" + memberCode + ".png";
+
+        if(avatarCreateDto.getMemberAvatarImage() == null) {
+            throw new NoContentException("아바타 이미지가 없습니다.");
+        }
 
         byte[] avatarImage = avatarCreateDto.getMemberAvatarImage();
 

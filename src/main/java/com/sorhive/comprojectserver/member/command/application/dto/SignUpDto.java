@@ -1,9 +1,14 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import javax.validation.constraints.NotNull;
+
 /**
  * <pre>
  * Class : SignUpDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 회원 생성 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -14,32 +19,18 @@ package com.sorhive.comprojectserver.member.command.application.dto;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
+@AllArgsConstructor
+@Getter
 public class SignUpDto {
 
+    @NotNull
     private String memberId;
 
-//    @NotBlank(message = "닉네임을 입력헤주세요")
+    @NotNull
     private String memberName;
 
+    @NotNull
     private String password;
 
     protected SignUpDto() {}
-
-    public SignUpDto(String memberId, String memberName, String password) {
-        this.memberId = memberId;
-        this.memberName = memberName;
-        this.password = password;
-    }
-
-    public String getMemberId() {
-        return memberId;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

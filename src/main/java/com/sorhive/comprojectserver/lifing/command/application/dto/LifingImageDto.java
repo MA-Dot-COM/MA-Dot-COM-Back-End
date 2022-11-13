@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * <pre>
  * Class : LifingImageDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 이미지 작성 요청 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

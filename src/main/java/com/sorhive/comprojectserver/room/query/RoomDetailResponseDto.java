@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * <pre>
  * Class : RoomDetailResponseDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 상세 조회 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

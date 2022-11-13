@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository;
 /**
  * <pre>
  * Class : AvatarRepository
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

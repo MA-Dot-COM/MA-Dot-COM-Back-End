@@ -1,9 +1,9 @@
-package com.sorhive.comprojectserver.member.command.application;
+package com.sorhive.comprojectserver.member.command.application.exception;
 
 /**
  * <pre>
- * Class : IdPasswordNotMatchingException
- * Comment: 클래스에 대한 간단 설명
+ * Class : NoFollowException
+ * Comment: 해당 팔로우가 없을 때 예외처리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -15,20 +15,20 @@ package com.sorhive.comprojectserver.member.command.application;
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  */
-public class NoMemberException extends RuntimeException {
-    public NoMemberException() {
+public class NoFollowException extends RuntimeException {
+    public NoFollowException() {
         super();
     }
 
-    public NoMemberException(String message) {
+    public NoFollowException(String message) {
         super(message);
     }
 
-    public NoMemberException(String message, Throwable cause) {
+    public NoFollowException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NoMemberException(Throwable cause) {
+    public NoFollowException(Throwable cause) {
         super(cause);
     }
 

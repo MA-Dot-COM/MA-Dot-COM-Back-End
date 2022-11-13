@@ -2,7 +2,7 @@ package com.sorhive.comprojectserver.room.query;
 /**
  * <pre>
  * Class : NoRoomException
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방이 없을 때 예외처리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

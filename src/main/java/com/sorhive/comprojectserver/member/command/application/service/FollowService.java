@@ -1,9 +1,9 @@
 package com.sorhive.comprojectserver.member.command.application.service;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.ExistFollowException;
-import com.sorhive.comprojectserver.member.command.application.NoFollowException;
-import com.sorhive.comprojectserver.member.command.application.NoMemberException;
+import com.sorhive.comprojectserver.member.command.application.exception.ExistFollowException;
+import com.sorhive.comprojectserver.member.command.application.exception.NoFollowException;
+import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.command.application.exception.SameMemberException;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerId;
@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : FollowService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 팔로우 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -48,6 +48,7 @@ public class FollowService {
         this.tokenProvider = tokenProvider;
     }
 
+    /** 팔로우 추가 */
     @Transactional
     public Object createFollow(String accessToken, Long followingId) {
         log.info("[FollowService] createFollow Start ===============");
@@ -78,6 +79,7 @@ public class FollowService {
 
     }
 
+    /** 팔로우 제거 */
     @Transactional
     public Object deleteFollow(Long followId) {
         log.info("[FollowService] deleteFollow Start ===============");

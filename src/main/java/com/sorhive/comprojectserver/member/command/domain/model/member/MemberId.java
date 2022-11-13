@@ -7,8 +7,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : IdPasswordNotMatchingException
- * Comment: 클래스에 대한 간단 설명
+ * Class : MemberId
+ * Comment: 멤버 아이디 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

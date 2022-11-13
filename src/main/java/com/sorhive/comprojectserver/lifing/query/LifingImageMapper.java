@@ -4,8 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <pre>
- * Class : LifingMapper
- * Comment: 클래스에 대한 간단 설명
+ * Class : LifingImageMapper
+ * Comment: 라이핑 이미지 매퍼
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

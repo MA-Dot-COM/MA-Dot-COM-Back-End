@@ -3,7 +3,7 @@ package com.sorhive.comprojectserver.member.command.exception;
 /**
  * <pre>
  * Class : IdPasswordNotMatchingException
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아이디 비밀번호 불일치 예외처리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

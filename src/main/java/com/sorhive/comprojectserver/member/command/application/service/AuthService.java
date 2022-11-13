@@ -18,12 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * <pre>
  * Class : AuthService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 인증 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-06       부시연           최초 생성
+ * 2022-11-06       부시연           회원 가입
+ * 2022-11-07       부시연           로그인
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -45,6 +47,7 @@ public class AuthService {
     }
 
 
+    /** 회원 가입*/
     @Transactional
     public Long signup(SignUpDto signUpDto) {
         log.info("[AuthService] Signup Start ===================================");
@@ -63,6 +66,7 @@ public class AuthService {
         return member.getMemberCode();
     }
 
+    /** 로그인 */
     @Transactional
     public TokenDto login(LoginDto loginDto) {
         log.info("[AuthService] Login Start ===================================");
@@ -71,20 +75,20 @@ public class AuthService {
 
         Member member;
 
-        // 1. 아이디 조회
+        /* 1. 아이디 조회 */
         try{
              member = memberRepository.findByMemberId(loginDto.getMemberId());
         } catch (Exception e) {
             throw new LoginFailedException("잘못된 아이디 또는 비밀번호입니다");
         };
 
-        // 2. 비밀번호 매칭
+        /* 2. 비밀번호 매칭 */
         if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword().toString())) {
             log.info("[AuthService] Password Match Fail!!!!!!!!!!!!");
             throw new LoginFailedException("잘못된 아이디 또는 비밀번호입니다");
         }
 
-        // 3. 토큰 발급
+        /* 3. 토큰 발급 */
         TokenDto tokenDto = tokenProvider.generateTokenDto(member);
         log.info("[AuthService] tokenDto {}", tokenDto);
 

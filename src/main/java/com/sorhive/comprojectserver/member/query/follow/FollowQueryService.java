@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.member.query.follow;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 @Service
 public class FollowQueryService {
 
+    private static final Logger log = LoggerFactory.getLogger(FollowQueryController.class);
     private final FollowMapper followMapper;
     private final TokenProvider tokenProvider;
 
@@ -30,26 +33,34 @@ public class FollowQueryService {
         this.tokenProvider = tokenProvider;
     }
 
-    public Object findFollowerList(String accessToken) {
+    /** 팔로워 목록 조회하기 */
+    public FollowerListResponseDto findFollowerList(String accessToken) {
+
+        log.info("[FollowQueryService] findFollowerList Start ================");
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         List<FollowData> followData = followMapper.findByFollowerId(memberCode);
 
         FollowerListResponseDto followerListResponseDto = new FollowerListResponseDto();
+
         followerListResponseDto.setFollowerData(followData);
         followerListResponseDto.setFollowerCount(followData.size());
 
         return followerListResponseDto;
     }
 
-    public Object findFollowingList(String accessToken) {
+    /** 팔로잉 목록 조회하기 */
+    public FollowingListResponseDto findFollowingList(String accessToken) {
+
+        log.info("[FollowQueryService] findFollowingList Start ================");
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         List<FollowData> followData = followMapper.findByFollowingId(memberCode);
 
         FollowingListResponseDto followingListResponseDto = new FollowingListResponseDto();
+
         followingListResponseDto.setFollowerData(followData);
         followingListResponseDto.setFollowingCount(followData.size());
 

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : ResponseLifingDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 생성 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -23,12 +23,13 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-@NoArgsConstructor
 public class ResponseLifingDto {
+
     private Long lifingId;
     private String lifingContent;
     private String lifingImagePath;
     private Long lifingNo;
     private Timestamp lifingCreateTime;
     private LifingWriter lifingWriter;
+
 }

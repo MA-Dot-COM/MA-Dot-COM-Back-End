@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : FollowMapper
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 팔로우 매퍼
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

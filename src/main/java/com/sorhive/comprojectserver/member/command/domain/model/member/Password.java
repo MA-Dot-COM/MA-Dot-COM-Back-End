@@ -6,8 +6,8 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * <pre>
- * Class : IdPasswordNotMatchingException
- * Comment: 클래스에 대한 간단 설명
+ * Class : Password
+ * Comment: 패스워드 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

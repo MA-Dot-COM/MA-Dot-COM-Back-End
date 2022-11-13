@@ -4,8 +4,8 @@ import lombok.Getter;
 
 /**
  * <pre>
- * Class : FollowingMemberSummary
- * Comment: 클래스에 대한 간단 설명
+ * Class : FollowSummary
+ * Comment: 팔로우 요약 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -19,6 +19,7 @@ import lombok.Getter;
  */
 @Getter
 public class FollowSummary {
+    
     private Long followId;
     private Long followingId;
     private Long followerId;

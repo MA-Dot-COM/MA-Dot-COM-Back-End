@@ -5,8 +5,8 @@ import lombok.Setter;
 
 /**
  * <pre>
- * Class : AvatarImageAiDto
- * Comment: 클래스에 대한 간단 설명
+ * Class : RequestAvatarImageAiDto
+ * Comment: AI 아바타 이미지 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

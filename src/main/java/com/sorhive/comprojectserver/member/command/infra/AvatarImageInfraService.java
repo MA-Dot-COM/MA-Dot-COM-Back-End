@@ -24,8 +24,8 @@ import java.util.Optional;
 
 /**
  * <pre>
- * Class : AvatarImageService
- * Comment: 클래스에 대한 간단 설명
+ * Class : AvatarImageInfraService
+ * Comment: 아바타 이미지 인프라 서비스(외부 서버와 연동 : 파일서버, AI 서버)
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -39,9 +39,9 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
-public class AvatarImageService {
+public class AvatarImageInfraService {
 
-    private static final Logger log = LoggerFactory.getLogger(AvatarImageService.class);
+    private static final Logger log = LoggerFactory.getLogger(AvatarImageInfraService.class);
     private final S3AvatarImageFile s3AvatarImageFile;
     private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
@@ -49,52 +49,63 @@ public class AvatarImageService {
     @Value("${url.avatar}")
     private String url;
 
+    /** 아바타 이미지 생성 */
     @Transactional
     public ResponseAvatarImageAiDto insertAvatarImage(String accessToken, AvatarImageDto avatarImageDto) {
 
-        log.info("[AvatarService] insertAvatarImage Start ===============");
-        log.info("[AvatarService] avatarImageDto : " + avatarImageDto);
+        log.info("[AvatarImageInfraService] insertAvatarImage Start ===============");
+        log.info("[AvatarImageInfraService] avatarImageDto : " + avatarImageDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        /* 중복되지 않게 아바타 이미지 이름 생성 */
         String changeName = avatarImageDto.getAvatarImageName() + "avatar_" + memberCode + ".png";
 
         try {
+            
+            /* 아바타이미지가 있다면 */
             if (avatarImageDto.getAvatarImage() != null) {
+                
+                /* 아바타 이미지 생성 */
                 AvatarImage avatarImage = new AvatarImage(
                         memberCode,
                         s3AvatarImageFile.upload(avatarImageDto.getAvatarImage(), changeName, "images"),
                         avatarImageDto.getAvatarImageName(),
                         changeName
                 );
+                
+                /* 아바타 이미지 저장하기 */
                 avatarImageRepository.save(avatarImage);
 
+                /* 아바타 이미지 URL 뽑아오기 */
                 Optional<AvatarImage> imagePath = avatarImageRepository.findById(memberCode);
 
+                /* 헤더 설정하기 */
                 HttpHeaders headers = new HttpHeaders();
-
                 Charset utf8 = Charset.forName("UTF-8");
-
                 MediaType mediaType = new MediaType("application", "json", utf8);
-
                 headers.setContentType(mediaType);
 
+                /* 바디 설정하기 */
                 Map<String, Object> map = new HashMap<>();
                 String path = imagePath.get().getPath();
                 map.put("url", path);
 
+                /* JSON 파싱하기 */
                 JSONObject params = new JSONObject(map);
 
-                System.out.println(params);
+                log.info("params : " + params);
 
+                /* 헤더와 바디 담기 */
                 HttpEntity<JSONObject> requestEntity
                         = new HttpEntity<>(params, headers);
 
                 RestTemplate restTemplate = new RestTemplate();
 
+                /* PUT 방식으로 AI 서버에 요청하기 */
                 ResponseEntity<ResponseAvatarImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseAvatarImageAiDto.class);
 
-                log.info("[AvatarService] insertImage End ===============");
+                log.info("[AvatarImageInfraService] insertImage End ===============");
 
                 return res.getBody();
             }

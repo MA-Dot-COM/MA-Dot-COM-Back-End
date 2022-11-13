@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * <pre>
  * Class : MemberSummary
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 요약 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

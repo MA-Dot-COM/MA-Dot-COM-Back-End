@@ -7,7 +7,7 @@ import lombok.Setter;
 /**
  * <pre>
  * Class : RequestLifingImageAiDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: AI 서버에 보내는 라이핑 이미지 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -24,4 +24,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RequestLifingImageAiDto {
     private String url;
+
 }

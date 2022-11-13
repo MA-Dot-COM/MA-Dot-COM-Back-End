@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : RoomData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 데이터 전송객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

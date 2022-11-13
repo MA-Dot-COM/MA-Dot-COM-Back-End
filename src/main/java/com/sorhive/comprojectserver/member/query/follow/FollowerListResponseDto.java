@@ -7,8 +7,8 @@ import java.util.List;
 
 /**
  * <pre>
- * Class : FollwerResponseDto
- * Comment: 클래스에 대한 간단 설명
+ * Class : FollowerResponseDto
+ * Comment: 팔로워 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

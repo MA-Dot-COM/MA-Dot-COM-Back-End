@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
 /**
  * <pre>
  * Class : RoomCreateDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 생성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -29,6 +30,7 @@ public class RoomCreateDto {
 
     private List<Map<String,Object>> furnitures;
 
+    @NotNull
     private byte[] roomImage;
 
 }

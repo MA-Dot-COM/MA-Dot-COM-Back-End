@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : MemberMapper
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 멤버 매퍼
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

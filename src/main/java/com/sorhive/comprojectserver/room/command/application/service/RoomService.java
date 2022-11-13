@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 /**
  * <pre>
  * Class : RoomService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -48,6 +48,7 @@ public class RoomService {
         this.tokenProvider = tokenProvider;
     }
 
+    /** 방명록 생성 */
     public GuestBookCreateResponseDto createGuestBook(String accessToken, GuestBookCreateRequestDto guestBookCreateRequestDto) {
 
         log.info("[RoomService] createRoom Start ===================================");
@@ -55,27 +56,34 @@ public class RoomService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        /* 방명록 작성자 생성 */
         GuestBookWriter guestBookWriter = guestBookWriterService.createGuestBookWriter(new MemberCode(memberCode));
 
+        /* 요청 객체에서 값 꺼내오기 */
         String guestBookContent = guestBookCreateRequestDto.getContent();
         Long roomId = guestBookCreateRequestDto.getRoomId();
 
+        /* 방번호에 맞는 방 찾기 */
         Room room = roomRepository.findById(roomId);
 
         if(room == null) {
             throw new NoRoomException("해당 방은 존재하지 않습니다.");
         }
 
+        /* 방명록 생성하기 */
         GuestBook guestBook = new GuestBook(
                 guestBookContent,
                 guestBookWriter,
                 room
         );
 
+        /* 방명록 저장하기 */
         guestBookRepository.save(guestBook);
 
+        /* 방명록 응답 전송 객체 생성 */
         GuestBookCreateResponseDto guestBookCreateResponseDto = new GuestBookCreateResponseDto();
 
+        /* 응답 객체에 정보 넣기 */
         guestBookCreateResponseDto.setGuestBookId(guestBook.getId());
         guestBookCreateResponseDto.setGuestBookContent(guestBook.getContent());
         guestBookCreateResponseDto.setCreateTime(guestBook.getCreateTime());

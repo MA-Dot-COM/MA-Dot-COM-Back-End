@@ -12,8 +12,8 @@ import java.util.Objects;
 
 /**
  * <pre>
- * Class : Writer
- * Comment: 클래스에 대한 간단 설명
+ * Class : RoomCreator
+ * Comment: 방 생성자 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

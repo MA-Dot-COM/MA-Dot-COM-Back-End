@@ -2,10 +2,12 @@ package com.sorhive.comprojectserver.room.command.application.dto;
 
 import lombok.Getter;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <pre>
  * Class : GuestBookCreateDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 생성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -19,7 +21,10 @@ import lombok.Getter;
 @Getter
 public class GuestBookCreateRequestDto {
 
+    @NotNull
     private Long roomId;
+
+    @NotNull
     private String content;
 
 }

@@ -6,7 +6,7 @@ import lombok.Setter;
 /**
  * <pre>
  * Class : ResponseAvatarImageAiDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 이미지 생성 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -21,7 +21,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ResponseAvatarImageAiDto {
+    
     private Integer face;
     private Integer eyebrows;
     private Integer eye;
+    
 }

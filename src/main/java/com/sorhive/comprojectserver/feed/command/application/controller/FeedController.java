@@ -50,7 +50,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 생성 성공", feedInfraService.createFeed(accessToken, feedCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "하베스트 생성 성공", feedInfraService.createFeed(accessToken, feedCreateDto)));
 
     }
 
@@ -63,7 +63,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "하베스트 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "하베스트 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateDto)));
 
     }
 
@@ -76,7 +76,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "허니 추가 성공", feedService.createHoney(accessToken, feedId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "허니 추가 성공", feedService.createHoney(accessToken, feedId)));
 
     }
 

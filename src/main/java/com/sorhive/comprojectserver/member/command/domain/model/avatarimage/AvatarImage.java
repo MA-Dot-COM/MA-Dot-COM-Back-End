@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : AvatarImage
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 이미지 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

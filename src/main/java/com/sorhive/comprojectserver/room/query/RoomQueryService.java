@@ -77,12 +77,16 @@ public class RoomQueryService {
             roomVisitRepository.save(roomVisit);
         }
 
+        /* 방 상세 조회 응답 객체 생성하기 */
         RoomDetailResponseDto roomDetailResponseDto = new RoomDetailResponseDto();
 
-        if(guestBookDataDao.findByMemberCodeAndRoomIdAndDeleteYnEquals(memberCode, roomId, 'N') != null) {
+        /* 만약 방에 삭제가 안된 방명록이 있다면 */
+        if(guestBookDataDao.findByRoomIdAndDeleteYnEquals(roomId, 'N') != null) {
 
-            List<GuestBookData> guestBookData =  guestBookDataDao.findByMemberCodeAndRoomIdAndDeleteYnEquals(memberCode, roomId, 'N');
+            /* 방명록 리스트 가져오기 */
+            List<GuestBookData> guestBookData =  guestBookDataDao.findByRoomIdAndDeleteYnEquals(roomId, 'N');
 
+            /* 응답 객체에 방명록 리스트 담기 */
             roomDetailResponseDto.setGuestBookDataList(guestBookData);
 
         }
@@ -96,6 +100,7 @@ public class RoomQueryService {
         /* 몽고 DB에 있는 해당 룸 데이터 조회하기 */
         Optional<MongoRoom> mongoRooms = mongoRoomRepository.findById(roomNo);
 
+        /* 응답 객체에 방 정보 담기 */
         roomDetailResponseDto.setRoomCreator(mongoRooms.get().getRoomCreator());
         roomDetailResponseDto.setFurnitures(mongoRooms.get().getFurnitures());
         roomDetailResponseDto.setMongoRoomid(mongoRooms.get().getId());

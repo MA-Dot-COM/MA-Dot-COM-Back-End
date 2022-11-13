@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : FollowDataDao
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 팔로우 데이터 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

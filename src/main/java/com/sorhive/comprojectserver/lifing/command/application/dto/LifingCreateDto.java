@@ -5,7 +5,7 @@ import lombok.Getter;
 /**
  * <pre>
  * Class : LifingCreateDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 작성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

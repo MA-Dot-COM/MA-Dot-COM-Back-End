@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : FollowRepository
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 팔로우 레포지토리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

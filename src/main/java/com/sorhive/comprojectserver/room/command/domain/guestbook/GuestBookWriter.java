@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * <pre>
  * Class : GuestBookWriter
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 방명록 작성자 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
