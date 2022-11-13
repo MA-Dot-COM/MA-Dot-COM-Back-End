@@ -34,6 +34,6 @@ public class FeedCommentWriterServiceImpl implements FeedCommentWriterService {
 
         MemberData memberData = memberQueryService.getMemberData(feedCommentWriterMemberCode.getValue());
 
-        return new FeedCommentWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new FeedCommentWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName(), memberData.getId());
     }
 }

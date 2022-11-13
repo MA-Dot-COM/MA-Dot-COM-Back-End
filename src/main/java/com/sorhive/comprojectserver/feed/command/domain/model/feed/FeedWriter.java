@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.feed.command.domain.model.feed;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -23,6 +25,8 @@ import java.util.Objects;
  * @version 1(클래스 버전)
  */
 @Embeddable
+@AllArgsConstructor
+@Getter
 public class FeedWriter {
 
     @AttributeOverrides(
@@ -33,31 +37,22 @@ public class FeedWriter {
     @Column(name = "feed_writer_name")
     private String name;
 
+    @Column(name = "feed_writer_id")
+    private String id;
+
     protected FeedWriter() {}
-
-    public FeedWriter(MemberCode memberCode, String name) {
-        this.memberCode = memberCode;
-        this.name = name;
-    }
-
-    public MemberCode getMemberCode() {
-        return memberCode;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FeedWriter feedWriter = (FeedWriter) o;
-        return Objects.equals(memberCode, feedWriter.memberCode) && Objects.equals(name, feedWriter.name);
+        FeedWriter that = (FeedWriter) o;
+        return Objects.equals(memberCode, that.memberCode) && Objects.equals(name, that.name) && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberCode, name);
+        return Objects.hash(memberCode, name, id);
     }
 }

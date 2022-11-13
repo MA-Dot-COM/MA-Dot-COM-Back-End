@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.room.command.domain.guestbook;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -23,6 +25,8 @@ import java.util.Objects;
  * @version 1(클래스 버전)
  */
 @Embeddable
+@Getter
+@AllArgsConstructor
 public class GuestBookWriter {
 
     @AttributeOverrides(
@@ -33,31 +37,21 @@ public class GuestBookWriter {
     @Column(name = "guestbook_writer_name")
     private String name;
 
+    @Column(name = "guestbook_writer_id")
+    private String id;
+
     protected GuestBookWriter() {}
-
-    public GuestBookWriter(MemberCode memberCode, String name) {
-        this.memberCode = memberCode;
-        this.name = name;
-    }
-
-    public MemberCode getMemberCode() {
-        return memberCode;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GuestBookWriter that = (GuestBookWriter) o;
-        return Objects.equals(memberCode, that.memberCode) && Objects.equals(name, that.name);
+        return Objects.equals(memberCode, that.memberCode) && Objects.equals(name, that.name) && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberCode, name);
+        return Objects.hash(memberCode, name, id);
     }
 }

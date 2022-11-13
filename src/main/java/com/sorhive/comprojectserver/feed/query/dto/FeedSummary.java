@@ -26,6 +26,7 @@ public class FeedSummary {
     private Long feedId;
     private Character feedDeleteYn;
     private String feedWriterName;
+    private String feedWriterId;
     private String feedContent;
     private Timestamp feedCreateTime;
     private Long honeyCount;

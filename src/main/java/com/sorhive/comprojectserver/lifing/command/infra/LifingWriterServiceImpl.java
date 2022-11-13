@@ -36,7 +36,7 @@ public class LifingWriterServiceImpl implements LifingWriterService {
 
         MemberData memberData = memberQueryService.getMemberData(lifingWriterMemberCode.getValue());
 
-        return new LifingWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new LifingWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName(), memberData.getId());
     }
 
 }

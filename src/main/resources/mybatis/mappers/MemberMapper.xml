@@ -15,6 +15,16 @@
         <association property="followSummary" resultMap="followResultMap"/>
     </resultMap>
 
+    <resultMap id="memberDataResultMap" type="com.sorhive.comprojectserver.member.query.member.MemberData">
+        <id property="memberCode" column="member_code"/>
+        <result property="name" column="member_name"/>
+        <result property="id" column="member_id"/>
+        <result property="avatarImagePath" column="member_avatar_image"/>
+        <result property="memberRoomImage" column="member_room_image"/>
+        <result property="lifingNo" column="member_lifing_no"/>
+        <result property="lifingYn" column="member_lifing_yn"/>
+    </resultMap>
+
     <resultMap id="followResultMap" type="com.sorhive.comprojectserver.member.query.follow.FollowSummary">
         <id property="followId" column="follow_id"/>
         <result property="followerId" column="follower_id"/>
@@ -38,7 +48,7 @@
          limit 30 offset #{ offset }
     </select>
 
-    <select id="findAllFollowerByFollowerCode" resultMap="memberSummaryResultMap">
+    <select id="findAllFollowerByFollowerCode" resultMap="memberDataResultMap">
         select
                a.member_code
              , a.member_id
@@ -47,12 +57,10 @@
              , a.member_room_image
              , a.member_lifing_no
              , a.member_lifing_yn
-             , b.follow_id
-             , b.follower_id
-        from tbl_members a
-        left join tbl_follows b on a.member_code = b.following_id
-        where b.follower_id = #{ memberCode }
-        limit 6
+          from tbl_members a
+          left join tbl_follows b on a.member_code = b.following_id
+         where b.follower_id = #{ memberCode }
+         limit 6
     </select>
 
     <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">

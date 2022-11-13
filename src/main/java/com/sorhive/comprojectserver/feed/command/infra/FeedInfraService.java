@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.feed.command.infra;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.file.S3FeedImageFile;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedDto;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
@@ -9,6 +8,7 @@ import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriter;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriterService;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedimage.FeedImage;
 import com.sorhive.comprojectserver.feed.command.domain.repository.FeedRepository;
+import com.sorhive.comprojectserver.file.S3FeedImageFile;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

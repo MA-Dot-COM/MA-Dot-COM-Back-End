@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.room.command.domain.room;
 
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -23,6 +25,8 @@ import java.util.Objects;
  * @version 1(클래스 버전)
  */
 @Embeddable
+@AllArgsConstructor
+@Getter
 public class RoomCreator {
 
     @AttributeOverrides(
@@ -33,31 +37,21 @@ public class RoomCreator {
     @Column(name = "room_creator_name")
     private String name;
 
+    @Column(name = "room_creator_id")
+    private String id;
+
     protected RoomCreator() {}
-
-    public RoomCreator(MemberCode memberCode, String name) {
-        this.memberCode = memberCode;
-        this.name = name;
-    }
-
-    public MemberCode getMemberCode() {
-        return memberCode;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoomCreator roomCreator = (RoomCreator) o;
-        return Objects.equals(memberCode, roomCreator.memberCode) && Objects.equals(name, roomCreator.name);
+        RoomCreator that = (RoomCreator) o;
+        return Objects.equals(memberCode, that.memberCode) && Objects.equals(name, that.name) && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberCode, name);
+        return Objects.hash(memberCode, name, id);
     }
 }

@@ -35,6 +35,6 @@ public class FeedWriterServiceImpl implements FeedWriterService {
 
         MemberData memberData = memberQueryService.getMemberData(feedWriterMemberCode.getValue());
 
-        return new FeedWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName());
+        return new FeedWriter(MemberCode.of(memberData.getMemberCode()), memberData.getName(), memberData.getId());
     }
 }

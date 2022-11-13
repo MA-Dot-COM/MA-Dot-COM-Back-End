@@ -44,6 +44,9 @@ public class LifingData {
     @Column(name = "lifing_writer_code")
     private Long memberCode;
 
+    @Column(name = "lifing_writer_id")
+    private Long memberId;
+
     @Column(name = "lifing_writer_name")
     private String name;
 

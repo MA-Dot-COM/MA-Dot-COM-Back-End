@@ -25,6 +25,7 @@ public class FeedCommentSummary {
     private Long feedCommentId;
     private String feedCommentContent;
     private String feedCommentWriterName;
+    private String feedCommentWriterId;
     private Character feedCommentDeleteYn;
     private Timestamp feedCommentCreateTime;
 

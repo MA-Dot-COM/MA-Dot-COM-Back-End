@@ -8,6 +8,7 @@
         <id property="feedId" column="feed_id"/>
         <result property="feedContent" column="feed_content"/>
         <result property="feedWriterName" column="feed_writer_name"/>
+        <result property="feedWriterId" column="feed_writer_id"/>
         <result property="feedCreateTime" column="feed_create_time"/>
         <result property="feedDeleteYn" column="feed_delete_yn"/>
         <result property="honeyCount" column="honey_count"/>
@@ -25,6 +26,7 @@
         <id property="feedCommentId" column="feed_comment_id"/>
         <result property="feedCommentContent" column="feed_comment_content"/>
         <result property="feedCommentWriterName" column="feed_comment_writer_name"/>
+        <result property="feedCommentWriterId" column="feed_comment_writer_id"/>
         <result property="feedCommentCreateTime" column="feed_comment_create_time"/>
         <result property="feedCommentDeleteYn" column="feed_comment_delete_yn"/>
     </resultMap>
@@ -42,6 +44,7 @@
                a.feed_id
              , a.feed_content
              , a.feed_writer_name
+             , feed_writer_id
              , a.feed_create_time
              , a.feed_delete_yn
              , a.honey_count
@@ -58,6 +61,7 @@
                feed_id
              , feed_content
              , feed_writer_name
+             , feed_writer_id
              , a.honey_count
              , feed_create_time
              , feed_delete_yn
@@ -70,6 +74,7 @@
                feed_comment_id
              , feed_comment_content
              , feed_comment_writer_name
+             , feed_comment_writer_id
              , feed_comment_create_time
              , feed_comment_delete_yn
           from tbl_feed_comments
