@@ -11,6 +11,7 @@
         <result property="avatarImage" column="member_avatar_image"/>
         <result property="roomImage" column="member_room_image"/>
         <result property="lifingNo" column="member_lifing_no"/>
+        <result property="lifingYn" column="member_lifing_yn"/>
         <association property="followSummary" resultMap="followResultMap"/>
     </resultMap>
 
@@ -20,6 +21,23 @@
         <result property="followingId" column="following_id"/>
     </resultMap>
 
+    <select id="findAllFollowerByMemberCode" resultMap="memberSummaryResultMap">
+        select
+               a.member_code
+             , a.member_id
+             , a.member_name
+             , a.member_avatar_image
+             , a.member_room_image
+             , a.member_lifing_no
+             , a.member_lifing_yn
+             , b.follow_id
+             , b.follower_id
+          from tbl_members a
+          left join tbl_follows b on a.member_code = b.following_id
+         where b.follower_id = #{ memberCode }
+         limit 30 offset #{ offset }
+    </select>
+
     <select id="findAllByMemberCode" resultMap="memberSummaryResultMap">
         select
                a.member_code
@@ -28,12 +46,12 @@
              , a.member_avatar_image
              , a.member_room_image
              , a.member_lifing_no
+             , a.member_lifing_yn
              , b.follow_id
              , b.follower_id
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
-         where b.follower_id = #{ memberCode }
-         limit 30 offset #{ offset }
+         where a.member_code = #{ memberCode }
     </select>
 
     <select id="findMaxMemberCode" resultType="int">

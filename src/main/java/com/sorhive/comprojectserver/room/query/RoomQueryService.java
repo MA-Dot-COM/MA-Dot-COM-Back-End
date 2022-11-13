@@ -2,8 +2,6 @@ package com.sorhive.comprojectserver.room.query;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
-import com.sorhive.comprojectserver.member.query.member.MemberData;
-import com.sorhive.comprojectserver.room.command.domain.repository.GuestBookRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.MongoRoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomVisitRepository;

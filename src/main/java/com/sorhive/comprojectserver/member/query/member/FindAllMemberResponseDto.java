@@ -1,13 +1,14 @@
-package com.sorhive.comprojectserver.room.query;
+package com.sorhive.comprojectserver.member.query.member;
 
-import org.springframework.data.repository.Repository;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
  * <pre>
- * Class : GuestBookDataDao
- * Comment: 클래스에 대한 간단 설명
+ * Class : FindAllMemberResponseDto
+ * Comment: 멤버 전체 조회를 위한 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -19,8 +20,10 @@ import java.util.List;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface GuestBookDataDao extends Repository<GuestBookData, Long> {
+@Getter
+@Setter
+public class FindAllMemberResponseDto {
 
-    List<GuestBookData> findByMemberCodeAndRoomIdAndDeleteYnEquals(Long memberCode, Long roomId, char n);
+    private List<MemberSummary> memberSummary;
 
 }

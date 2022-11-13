@@ -22,6 +22,7 @@ import java.util.Random;
  * 2022-11-12       부시연           회원 검색 수정
  * 2022-11-13       부시연           룸인 전용 자신을 포함한 랜덤 회원 7명 조회 기능 추가
  * 2022-11-13       부시연           자신을 제외한 회원 목록 조회 추가
+ * 2022-11-13       부시연           자신을 포함한 회원 목록 조회 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -79,13 +80,33 @@ public class MemberQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<MemberSummary> memberSummary = memberMapper.findAllByMemberCode(memberCode, offset * 30);
+        MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
+
+        List<MemberSummary> memberSummaryList = new ArrayList<>();
+
+        FindAllMemberResponseDto findAllMemberResponseDto = new FindAllMemberResponseDto();
 
         if (memberSummary == null) {
             throw new NoMemberException();
         }
 
-        return memberSummary;
+        memberSummaryList.add(memberSummary);
+
+        List<MemberSummary> tempMemberSummaryList = memberMapper.findAllFollowerByMemberCode(memberCode, offset * 30);
+
+        if(!tempMemberSummaryList.isEmpty()) {
+
+            for (int i = 0; i < tempMemberSummaryList.size(); i++) {
+
+                memberSummaryList.add(tempMemberSummaryList.get(i));
+
+            }
+
+        }
+
+        findAllMemberResponseDto.setMemberSummary(memberSummaryList);
+
+        return findAllMemberResponseDto;
     }
 
     public Object findRandomMember(String accessToken) {
