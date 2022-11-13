@@ -21,7 +21,7 @@ import java.sql.Timestamp;
  * @version 1(클래스 버전)
  */
 @Entity
-@Table(name = "tbl_lifing")
+@Table(name = "tbl_lifings")
 @Getter
 public class Lifing {
 

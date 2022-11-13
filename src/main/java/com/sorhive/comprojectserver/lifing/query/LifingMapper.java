@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.lifing.query;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class : LifingImageMapper
@@ -18,8 +20,9 @@ import org.apache.ibatis.annotations.Mapper;
  * @see (참고할 class 또는 외부 url)
  */
 @Mapper
-public interface LifingImageMapper {
+public interface LifingMapper {
 
     LifingImagePath findLifingImageByMemberCode(Long memberCode);
 
+    List<LifingData> findAllLifingByMemberCode(int pageNo, int memberCode);
 }

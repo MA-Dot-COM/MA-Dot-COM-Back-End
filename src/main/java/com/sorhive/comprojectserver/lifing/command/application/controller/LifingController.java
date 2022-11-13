@@ -1,9 +1,11 @@
 package com.sorhive.comprojectserver.lifing.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.lifing.command.application.dto.LifingAIImageDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
-import com.sorhive.comprojectserver.lifing.command.infra.LifingService;
+import com.sorhive.comprojectserver.lifing.command.application.service.LifingService;
+import com.sorhive.comprojectserver.lifing.command.infra.LifingInfraService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -32,14 +34,16 @@ import org.springframework.web.bind.annotation.*;
 public class LifingController {
 
     private static final Logger log = LoggerFactory.getLogger(LifingController.class);
+    private final LifingInfraService lifingInfraService;
     private final LifingService lifingService;
 
-    public LifingController(LifingService lifingService) {
+    public LifingController(LifingInfraService lifingInfraService, LifingService lifingService) {
+        this.lifingInfraService = lifingInfraService;
         this.lifingService = lifingService;
     }
 
     /** 라이핑 이미지 생성 */
-    @PostMapping("lifing/image")
+    @PostMapping("lifing/image/ai")
     public ResponseEntity<ResponseDto> lifingImage(@RequestHeader String Authorization, @RequestBody LifingImageDto lifingImageDto) {
 
         log.info("[LifingController] lifingImage Start ===================");
@@ -47,7 +51,20 @@ public class LifingController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 이미지 생성 성공", lifingService.insertLifingImage(accessToken, lifingImageDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 이미지 생성 성공", lifingInfraService.insertLifingImage(accessToken, lifingImageDto)));
+
+    }
+
+    /** 라이핑 AI 분석 이미지 생성 */
+    @PostMapping("lifing/image")
+    public ResponseEntity<ResponseDto> lifingAiImage(@RequestHeader String Authorization, @RequestBody LifingAIImageDto lifingAIImageDto) {
+
+        log.info("[LifingController] lifingAiImage Start ===================");
+        log.info("[LifingController] lifingImageDto : " + lifingAIImageDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 AI 이미지 생성 성공", lifingInfraService.insertLifingAiImage(accessToken, lifingAIImageDto)));
 
     }
 

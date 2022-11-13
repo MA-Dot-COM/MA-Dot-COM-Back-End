@@ -79,7 +79,7 @@ public class Member implements UserDetails {
     private String avatarImagePath;
 
     @Column(name = "member_lifing_no")
-    @ColumnDefault("0")
+    @ColumnDefault("-1")
     private Long lifingNo;
 
     @Column(name = "member_lifing_yn")

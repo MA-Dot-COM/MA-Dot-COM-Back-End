@@ -3,9 +3,9 @@ package com.sorhive.comprojectserver.lifing.query;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -28,18 +28,19 @@ import org.springframework.stereotype.Service;
 public class LifingQueryService {
 
     private static final Logger log = LoggerFactory.getLogger(LifingQueryService.class);
-    private final LifingDataDao lifingDataDao;
+    private final LifingMapper lifngMapper;
 
     /** 회원 번호로 회원의 모든 라이핑 조회*/
     public Object findAllLifingByMemberCode(LifingRequestDto lifingRequestDto) {
 
-        log.info("[QueryLifingService] findAllLifingByMemberCode Start ============================");
-        log.info("[QueryLifingService] lifingRequestDto" + lifingRequestDto);
+        log.info("[LifingQueryService] findAllLifingByMemberCode Start ============");
 
         int pageNo = lifingRequestDto.getPageNo() - 1;
 
-        Pageable paging = PageRequest.of(pageNo, 2);
+        Long memberCode = lifingRequestDto.getMemberCode();
 
-        return lifingDataDao.findAllLifingByMemberCodeContainingOrderByUploadTimeDesc(lifingRequestDto.getMemberCode(), paging);
+        List<LifingData> lifingData = lifngMapper.findAllLifingByMemberCode(pageNo, memberCode.intValue());
+
+        return lifingData;
     }
 }
