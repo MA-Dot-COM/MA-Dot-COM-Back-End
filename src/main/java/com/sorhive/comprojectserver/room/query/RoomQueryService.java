@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.room.query;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
+import com.sorhive.comprojectserver.member.query.member.MemberData;
+import com.sorhive.comprojectserver.room.command.domain.repository.GuestBookRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.MongoRoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomVisitRepository;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -28,6 +31,7 @@ import java.util.Optional;
  * 2022-11-10       부시연           최초 생성
  * 2022-11-10       부시연           룸 상세 조회 추가
  * 2022-11-13       부시연           룸 조회수 기능 추가
+ * 2022-11-13       부시연           방명록 조회 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -42,13 +46,14 @@ public class RoomQueryService {
     private RoomRepository roomRepository;
     private RoomVisitRepository roomVisitRepository;
     private MongoRoomRepository mongoRoomRepository;
+    private GuestBookDataDao guestBookDataDao;
     private TokenProvider tokenProvider;
 
 
     /* 방 상세 조회*/
     @Transactional
-    public Optional<MongoRoom> selectRoomDetail(String accessToken, Long roomId) {
-        log.info("[RoomService] createRoom Start ===================================");
+    public RoomDetailResponseDto selectRoomDetail(String accessToken, Long roomId) {
+        log.info("[RoomService] selectRoomDetail Start ===================================");
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
@@ -74,9 +79,25 @@ public class RoomQueryService {
             roomVisitRepository.save(roomVisit);
         }
 
+        RoomDetailResponseDto roomDetailResponseDto = new RoomDetailResponseDto();
+
+        if(guestBookDataDao.findByMemberCodeAndRoomIdAndDeleteYnEquals(memberCode, roomId, 'N') != null) {
+
+            List<GuestBookData> guestBookData =  guestBookDataDao.findByMemberCodeAndRoomIdAndDeleteYnEquals(memberCode, roomId, 'N');
+
+            roomDetailResponseDto.setGuestBookDataList(guestBookData);
+
+        }
+
         String roomNo = roomDataDao.findById(roomId).getRoomNo();
 
-        return mongoRoomRepository.findById(roomNo);
+        Optional<MongoRoom> mongoRooms = mongoRoomRepository.findById(roomNo);
+
+        roomDetailResponseDto.setRoomCreator(mongoRooms.get().getRoomCreator());
+        roomDetailResponseDto.setFurnitures(mongoRooms.get().getFurnitures());
+        roomDetailResponseDto.setId(mongoRooms.get().getId());
+
+        return roomDetailResponseDto;
 
     }
 

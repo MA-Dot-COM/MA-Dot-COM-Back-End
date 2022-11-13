@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.config.file;
+package com.sorhive.comprojectserver.file;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
@@ -12,19 +12,18 @@ import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * <pre>
- * Class : S3HarvestImageFile
+ * Class : S3AvatarImageFile
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-12      부시연           최초 생성
+ * 2022-10-24       부시연           최초 생성
+ * 2022-11-11       부시연           바이트 배열로 대응
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -32,16 +31,16 @@ import java.io.IOException;
  */
 @Component
 @RequiredArgsConstructor
-public class S3HarvestImageFile {
-    private static final Logger log = LoggerFactory.getLogger(S3LifingImageFile.class);
+public class S3AvatarImageFile {
+    private static final Logger log = LoggerFactory.getLogger(S3AvatarImageFile.class);
     private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public String upload(byte[] harvestImage, String changeName, String dirName) throws IOException {
+    public String upload(byte[] avatarImage, String changeName, String dirName) throws IOException {
 
-        ByteArrayInputStream input_stream= new ByteArrayInputStream(harvestImage);
+        ByteArrayInputStream input_stream= new ByteArrayInputStream(avatarImage);
 
         BufferedImage final_buffered_image = ImageIO.read(input_stream);
 
