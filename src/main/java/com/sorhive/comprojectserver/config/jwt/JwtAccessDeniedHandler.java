@@ -10,6 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * <pre>
+ * Class : JwtAccessDeniedHandler
+ * Comment: 인가 실패 때 상태 번호 핸들러
+ * History
+ * ================================================================
+ * DATE             AUTHOR           NOTE
+ * ----------------------------------------------------------------
+ * 2022-11-06       부시연           최초 생성
+ * </pre>
+ *
+ * @author 부시연(최초 작성자)
+ * @version 1(클래스 버전)
+ */
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 

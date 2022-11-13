@@ -39,6 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         this.memberRepository = memberRepository;
     }
 
+    /* 토큰 이용하여 유저 정보 가져오기 */
     @Override
     public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
         log.info("[CustomUserDetailsService] START ===================================");

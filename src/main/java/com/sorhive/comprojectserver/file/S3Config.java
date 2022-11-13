@@ -11,12 +11,13 @@ import org.springframework.context.annotation.Configuration;
 /**
  * <pre>
  * Class : S3Config
- * Comment: 클래스에 대한 간단 설명
+ * Comment: S3 에 대한 설정 파일
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-10-24       부시연           최초 생성
+ * 2022-11-07       부시연           CI 를 하면서 Iam role 이용으로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)

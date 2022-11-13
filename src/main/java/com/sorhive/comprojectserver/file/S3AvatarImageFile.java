@@ -17,7 +17,7 @@ import java.io.*;
 /**
  * <pre>
  * Class : S3AvatarImageFile
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 아바타 이미지 S3에 저장
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

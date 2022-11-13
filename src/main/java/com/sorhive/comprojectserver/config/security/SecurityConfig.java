@@ -27,6 +27,7 @@ import java.util.Arrays;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-06       부시연           최초 생성
+ * 2022-11-07       부시연           BCrypt 암호화 설정하기
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -46,37 +47,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
     }
 
+    /* BCrypt 암호화 설정하기 */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//
-//        web
-//                // 외부에서 이미지 파일에 접근 가능 하도록 설정
-//                .ignoring();
-//
-//    }
-
+    /* 접근 권한 설정 */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                // CSRF 설정 Disable
+                /* CSRF 설정 Disable */
                 .csrf().disable()
-                // exception handling
+
+                /* exception handling */
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
 
-                // 시큐리티는 기본적으로 세션을 사용하지만 API 서버에선 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정
+                /* 시큐리티는 기본적으로 세션을 사용하지만 API 서버에선 세션을 사용하지 않기 때문에 세션 설정을 Stateless 로 설정 */
                 .and()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                    // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
+                    /* 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정 */
                     .and()
                     .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -85,10 +80,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .cors()
                 .and()
-                // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+
+                /* JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용 */
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
 
+    /* 전송 방식 설정 */
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();

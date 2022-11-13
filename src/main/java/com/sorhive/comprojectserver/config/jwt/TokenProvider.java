@@ -30,6 +30,9 @@ import java.util.stream.Collectors;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-06       부시연           최초 생성
+ * 2022-11-07       부시연           토큰에 멤버 코드 저장
+ * 2022-11-07       부시연           토큰에 회원 아이디 저장
+ * 2022-11-11       부시연           토큰 유효 기간 30분 -> 1일
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -47,12 +50,14 @@ public class TokenProvider {
 
     private final Key key;
 
+    /* 설정파일에서 토큰 암호값 가져오기 */
     public TokenProvider(@Value("${jwt.secret}") String secretKey, UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    /* 토큰 생성하기 */
     public TokenDto generateTokenDto(Member member) {
         log.info("[TokenProvider] generateTokenDto Start ===================================");
         log.info("[TokenProvider] {}", member.getMemberRole());
@@ -79,7 +84,8 @@ public class TokenProvider {
 
         return new TokenDto(BEARER_TYPE, member.getMemberName(), accessToken, accessTokenExpiresIn.getTime());
     }
-
+    
+    /* 유저 아이디(멤버코드) 가져오기 */
     public String getUserId(String accessToken) {
         return Jwts
                 .parserBuilder()
@@ -89,7 +95,8 @@ public class TokenProvider {
                 .getBody()
                 .getSubject();
     }
-
+    
+    /* 유저 코드(유저아이디) 정보 가져오기 */
     public String getUserCode(String accessToken){
         return Jwts
                 .parserBuilder()
@@ -99,6 +106,8 @@ public class TokenProvider {
                 .getBody()
                 .getId();
     }
+
+    /* 토큰 정보 가져오기 */
     public Authentication getAuthentication(String accessToken) {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
@@ -119,6 +128,7 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    /* 토큰 유효성 검사 */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

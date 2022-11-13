@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * <pre>
  * Class : JwtAuthenticationEntryPoint
- * Comment: JWT 토큰 Security 설정
+ * Comment: 인가 실패 때 상태 번호 핸들러
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

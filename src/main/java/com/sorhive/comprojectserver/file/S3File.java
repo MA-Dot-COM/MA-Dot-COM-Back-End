@@ -19,7 +19,7 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : S3File
- * Comment: 클래스에 대한 간단 설명
+ * Comment: S3 파일 저장
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

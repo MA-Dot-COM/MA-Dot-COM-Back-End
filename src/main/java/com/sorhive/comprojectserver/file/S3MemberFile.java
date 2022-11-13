@@ -16,7 +16,7 @@ import java.io.*;
 /**
  * <pre>
  * Class : S3MemberRoomFile
- * Comment: 클래스에 대한 간단 설명
+ * Comment: S3 회원 방 이미지 파일 저장
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

@@ -2,94 +2,94 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sorhive.comprojectserver.harvest.query.HarvestMapper">
+<mapper namespace="com.sorhive.comprojectserver.feed.query.FeedMapper">
 
-    <resultMap id="harvestResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestSummary">
-        <id property="harvestId" column="harvest_id"/>
-        <result property="harvestContent" column="harvest_content"/>
-        <result property="harvestWriterName" column="harvest_writer_name"/>
-        <result property="harvestCreateTime" column="harvest_create_time"/>
-        <result property="harvestDeleteYn" column="harvest_delete_yn"/>
+    <resultMap id="feedResultMap" type="com.sorhive.comprojectserver.feed.query.dto.FeedSummary">
+        <id property="feedId" column="feed_id"/>
+        <result property="feedContent" column="feed_content"/>
+        <result property="feedWriterName" column="feed_writer_name"/>
+        <result property="feedCreateTime" column="feed_create_time"/>
+        <result property="feedDeleteYn" column="feed_delete_yn"/>
         <result property="honeyCount" column="honey_count"/>
-        <association property="harvestImageSummary" resultMap="harvestImageResultMap"></association>
-        <association property="harvestCommentSummary" resultMap="HarvestCommentResultMap"></association>
+        <association property="feedImageSummary" resultMap="feedImageResultMap"></association>
+        <association property="feedCommentSummary" resultMap="feedCommentResultMap"></association>
     </resultMap>
 
-    <resultMap id="harvestImageResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestImageSummary">
-        <id property="havestImageId" column="harvest_image_id"/>
-        <result property="harvestImagePath" column="harvest_image_path"/>
-        <result property="harvestImageOriginalName" column="harvest_original_name"/>
+    <resultMap id="feedImageResultMap" type="com.sorhive.comprojectserver.feed.query.dto.FeedImageSummary">
+        <id property="feedImageId" column="feed_image_id"/>
+        <result property="feedImagePath" column="feed_image_path"/>
+        <result property="feedImageOriginalName" column="feed_original_name"/>
     </resultMap>
 
-    <resultMap id="HarvestCommentResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestCommentSummary">
-        <id property="harvestCommentId" column="harvest_comment_id"/>
-        <result property="harvestCommentContent" column="harvest_comment_content"/>
-        <result property="harvestCommentWriterName" column="harvest_comment_writer_name"/>
-        <result property="harvestCommentCreateTime" column="harvest_comment_create_time"/>
-        <result property="harvestCommentDeleteYn" column="harvest_comment_delete_yn"/>
+    <resultMap id="feedCommentResultMap" type="com.sorhive.comprojectserver.feed.query.dto.FeedCommentSummary">
+        <id property="feedCommentId" column="feed_comment_id"/>
+        <result property="feedCommentContent" column="feed_comment_content"/>
+        <result property="feedCommentWriterName" column="feed_comment_writer_name"/>
+        <result property="feedCommentCreateTime" column="feed_comment_create_time"/>
+        <result property="feedCommentDeleteYn" column="feed_comment_delete_yn"/>
     </resultMap>
 
-    <resultMap id="HarvestHoneyResultMap" type="com.sorhive.comprojectserver.harvest.query.dto.HarvestHoneyDto">
+    <resultMap id="honeyResultMap" type="com.sorhive.comprojectserver.feed.query.dto.HoneyDto">
         <id property="honeyId" column="honey_id"/>
         <result property="honeyCreateTime" column="honey_create_time"/>
         <result property="honeyDeleteYn" column="honey_delete_yn"/>
-        <result property="harvestId" column="harvest_id"/>
+        <result property="feedId" column="feed_id"/>
         <result property="memberCode" column="member_code"/>
     </resultMap>
 
-    <select id="selectAllHarvest" resultMap="harvestResultMap">
+    <select id="selectAllFeed" resultMap="feedResultMap">
         select
-               a.harvest_id
-             , a.harvest_content
-             , a.harvest_writer_name
-             , a.harvest_create_time
-             , a.harvest_delete_yn
+               a.feed_id
+             , a.feed_content
+             , a.feed_writer_name
+             , a.feed_create_time
+             , a.feed_delete_yn
              , a.honey_count
-             , b.harvest_image_path
-          from tbl_harvests a
-          left join tbl_harvest_images b on(a.harvest_id = b.harvest_id)
-         where harvest_writer_code = #{memberCode}
-         order by harvest_id desc
+             , b.feed_image_path
+          from tbl_feeds a
+          left join tbl_feed_images b on(a.feed_id = b.feed_id)
+         where feed_writer_code = #{memberCode}
+         order by feed_id desc
          limit 5 offset #{ pageNo }
     </select>
 
-    <select id="selectHarvestByHarvestId" resultMap="harvestResultMap">
+    <select id="selectFeedByFeedId" resultMap="feedResultMap">
         select
-               harvest_id
-             , harvest_content
-             , harvest_writer_name
+               feed_id
+             , feed_content
+             , feed_writer_name
              , a.honey_count
-             , harvest_create_time
-             , harvest_delete_yn
-          from tbl_harvests
-         where harvest_id = #{harvestId};
+             , feed_create_time
+             , feed_delete_yn
+          from tbl_feeds
+         where feed_id = #{feedId};
     </select>
 
-    <select id="selectAllHarvestComments" resultMap="HarvestCommentResultMap">
+    <select id="selectAllFeedComments" resultMap="feedCommentResultMap">
         select
-               harvest_comment_id
-             , harvest_comment_content
-             , harvest_comment_writer_name
-             , harvest_comment_create_time
-             , harvest_comment_delete_yn
-          from tbl_harvest_comments
-         where harvest_id = #{harvestId}
-         order by harvest_comment_id desc
+               feed_comment_id
+             , feed_comment_content
+             , feed_comment_writer_name
+             , feed_comment_create_time
+             , feed_comment_delete_yn
+          from tbl_feed_comments
+         where feed_id = #{feedId}
+         order by feed_comment_id desc
     </select>
-    <select id="selectAllHarvestImages" resultMap="harvestImageResultMap">
+    <select id="selectAllFeedImages" resultMap="feedImageResultMap">
         select
-               harvest_image_id
-             , harvest_image_path
-             , harvest_original_name
-          from tbl_harvest_images
-         where harvest_id = #{harvestId}
+               feed_image_id
+             , feed_image_path
+             , feed_original_name
+          from tbl_feed_images
+         where feed_id = #{feedId}
     </select>
 
-    <select id="countHoney" resultMap="HarvestHoneyResultMap">
+    <select id="countHoney" resultMap="honeyResultMap">
         select
-               count(harvest_id)
+               count(feed_id)
           from tbl_honey
-         where harvest_id = ${harvestId}
+         where feed_id = ${feedId}
     </select>
 
 </mapper>

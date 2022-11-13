@@ -9,6 +9,20 @@ import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * <pre>
+ * Class : RangeableRepositoryImpl
+ * Comment: : 스프링 데이터 JPA의 기본 구현체를 확장. RangeableRepository 인터페이스의 구현을 제공.
+ * History
+ * ================================================================
+ * DATE             AUTHOR           NOTE
+ * ----------------------------------------------------------------
+ * 2022-11-04       부시연           최초 생성
+ * </pre>
+ *
+ * @author 부시연(최초 작성자)
+ * @version 1(클래스 버전)
+ */
 public class RangeableRepositoryImpl<T, ID extends Serializable>
         extends SimpleJpaRepository<T, ID>
         implements RangeableRepository<T, ID> {
