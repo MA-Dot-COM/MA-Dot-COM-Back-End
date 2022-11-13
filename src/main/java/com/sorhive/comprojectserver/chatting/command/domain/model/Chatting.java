@@ -1,15 +1,14 @@
 package com.sorhive.comprojectserver.chatting.command.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * <pre>
  * Class : Chatting
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 채팅 도메인 모델
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -22,21 +21,34 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_chatting")
+@Getter
 public class Chatting {
 
-    @EmbeddedId
-    private ChattingId id;
+    @Id
+    @Column(name="chatting_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "chatting_group_id")
-    private Long groupId;
+    @Column(name = "chatting_room_id")
+    private Long roomId;
 
     @Column(name = "chatting_no")
-    private Long no;
+    private String chattingNo;
 
-    @Column(name = "chatting_content")
-    private String content;
+    @Column(name = "chatting_member_code")
+    private Long memberCode;
 
-    @Column(name = "chatting_time")
-    private Timestamp time;
+    @Column(name = "chatting_upload_time")
+    private Timestamp uploadTime;
 
+    protected Chatting() { }
+
+    public Chatting(Long roomId, String chattingNo, Long memberCode) {
+
+        this.roomId = roomId;
+        this.chattingNo = chattingNo;
+        this.memberCode = memberCode;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+
+    }
 }
