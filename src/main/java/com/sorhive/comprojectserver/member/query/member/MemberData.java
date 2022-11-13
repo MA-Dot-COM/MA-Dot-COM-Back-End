@@ -43,6 +43,18 @@ public class MemberData {
     @ColumnDefault("''")
     private String memberRoomImage;
 
+    @Column(name = "member_avatar_image")
+    @ColumnDefault("''")
+    private String avatarImagePath;
+
+    @Column(name = "member_lifing_no")
+    @ColumnDefault("0")
+    private Long lifingNo;
+
+    @Column(name = "member_lifing_yn")
+    @ColumnDefault("'N'")
+    private Character lifingYn;
+
     protected MemberData() {
     }
 

@@ -1,6 +1,5 @@
 package com.sorhive.comprojectserver.config.service;
 
-import com.sorhive.comprojectserver.member.command.application.service.AuthService;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;

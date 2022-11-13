@@ -1,7 +1,7 @@
 package com.sorhive.comprojectserver.room.command.infra;
 
-import com.sorhive.comprojectserver.file.S3MemberFile;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.file.S3MemberFile;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;

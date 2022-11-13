@@ -23,7 +23,9 @@ import java.util.List;
  */
 @Mapper
 public interface MemberMapper {
-    List<MemberSummary> findAllByMemberCode(Long memberCode, Long offset);
+    MemberSummary findAllByMemberCode(Long memberCode);
 
     int findMaxMemberCode();
+
+    List<MemberSummary> findAllFollowerByMemberCode(Long memberCode, long offset);
 }

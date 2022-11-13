@@ -79,6 +79,10 @@ public class Member implements UserDetails {
     @ColumnDefault("0")
     private Long lifingNo;
 
+    @Column(name = "member_lifing_yn")
+    @ColumnDefault("'N'")
+    private Character lifingYn;
+
     protected Member() { }
 
     public Member(MemberId memberId, String memberName, String password) {
@@ -141,6 +145,8 @@ public class Member implements UserDetails {
 
     public Long getLifingNo() { return lifingNo; }
 
+    public Character getLifingYn() { return lifingYn; }
+
     public void setRoomImagePath(String roomImagePath) {
 
         this.roomImagePath = roomImagePath;
@@ -154,6 +160,7 @@ public class Member implements UserDetails {
 
     public void setLifingNo(Long lifingNo) {
         this.lifingNo = lifingNo;
+        this.lifingYn = 'Y';
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
