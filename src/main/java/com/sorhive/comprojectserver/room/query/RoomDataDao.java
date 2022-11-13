@@ -20,4 +20,5 @@ import org.springframework.data.repository.Repository;
 public interface RoomDataDao extends Repository<RoomData, Long> {
 
     RoomData findById(Long roomId);
+
 }

@@ -1,24 +1,25 @@
 package com.sorhive.comprojectserver.room.command.domain.repository;
 
-import com.sorhive.comprojectserver.room.command.domain.room.Room;
+import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import org.springframework.data.repository.Repository;
-
-import java.util.Optional;
 
 /**
  * <pre>
- * Class : RoomRepository
+ * Class : RoomVisitRepository
  * Comment: 클래스에 대한 간단 설명
  * History
+ * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-03       부시연           RoomRepository 최초 생성
+ * 2022-11-13       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
+ * @see (참고할 class 또는 외부 url)
  */
-public interface RoomRepository extends Repository<Room, Long> {
-    void save(Room room);
-    Optional<Room> findById(Long roomId);
+public interface RoomVisitRepository extends Repository<RoomVisit, Long> {
+
+    void save(RoomVisit roomVisit);
+
 }

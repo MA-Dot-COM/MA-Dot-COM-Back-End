@@ -5,7 +5,9 @@ import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,9 +42,23 @@ public class RoomData {
     @Column(name="room_no")
     private String roomNo;
 
+    @Column(name = "room_count")
+    private Long roomCount;
+
+    @Column(name = "room_create_time")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
+
+    @Column(name = "room_upload_time")
+    private Timestamp uploadTime;
+
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<GuestBook> guestBooks = new ArrayList<GuestBook>();
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
+
+    public void setRoomCount(Long roomCount) {
+        this.roomCount = roomCount;
+    }
 }
