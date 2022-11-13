@@ -45,6 +45,7 @@
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
          where b.follower_id = #{ memberCode }
+         order by member_lifing_yn desc
          limit 30 offset #{ offset }
     </select>
 

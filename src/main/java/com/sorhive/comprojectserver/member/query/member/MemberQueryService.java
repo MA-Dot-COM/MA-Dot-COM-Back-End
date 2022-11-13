@@ -98,24 +98,29 @@ public class MemberQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
+        /* 자신 조회하기 */
         MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
 
         List<MemberSummary> memberSummaryList = new ArrayList<>();
 
+        /* 응답 전송 객체 만들기 */
         FindAllMemberResponseDto findAllMemberResponseDto = new FindAllMemberResponseDto();
 
         if (memberSummary == null) {
-            throw new NoMemberException();
+            throw new NoMemberException("해당 회원은 존재 하지 않습니다.");
         }
 
+        /* 응답 전송 객체에 담기 위해 리스트에 자신의 정보 넣기 */
         memberSummaryList.add(memberSummary);
 
+        /* 자신이 팔로우 하고 있는 인원들의 목록 */
         List<MemberSummary> tempMemberSummaryList = memberMapper.findAllFollowerByMemberCode(memberCode, offset * 30);
 
         if(!tempMemberSummaryList.isEmpty()) {
 
             for (int i = 0; i < tempMemberSummaryList.size(); i++) {
 
+                /* 응답 전송 객체에 담기 위해 리스트에 팔로우 하고 있는 인원들 정보 넣기 */
                 memberSummaryList.add(tempMemberSummaryList.get(i));
 
             }
