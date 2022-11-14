@@ -22,6 +22,6 @@ import lombok.Setter;
 @Setter
 public class ResponseLifingImageAiDto {
 
-    private Long lifing;
+    private Long lifingCategoryNo;
 
 }

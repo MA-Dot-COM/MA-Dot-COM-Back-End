@@ -39,6 +39,8 @@
                a.lifing_id
              , a.lifing_content
              , a.lifing_image_path
+             , a.lifing_no
+             , a.lifing_category_no
              , a.lifing_writer_code
              , a.lifing_writer_id
              , a.lifing_writer_name

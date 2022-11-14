@@ -114,7 +114,7 @@ public class LifingInfraService {
                 LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
 
                 /* 분석된 결과값 Long에 담기 */
-                Long analyzedLifingNo = res.getBody().getLifing();
+                Long analyzedLifingNo = res.getBody().getLifingCategoryNo();
 
                 /* 라이핑 이미지에 값 넣어주기 */
                 LifingImage lifingImage = new LifingImage(

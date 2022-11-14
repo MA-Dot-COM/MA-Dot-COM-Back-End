@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.query.member;
 
+import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,8 @@ import java.util.List;
 @Getter
 @Setter
 public class FindRoomInMemberResponseDto {
+
+    private AvatarData ownAvatarData;
 
     private List<MemberData> memberDtoList;
 

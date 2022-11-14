@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
+import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
+import com.sorhive.comprojectserver.member.query.avatar.AvatarDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -38,11 +40,13 @@ public class MemberQueryService {
     private static final Logger log = LoggerFactory.getLogger(MemberQueryService.class);
     private MemberDataDao memberDataDao;
     private MemberMapper memberMapper;
+    private AvatarDataDao avatarDataDao;
     private final TokenProvider tokenProvider;
 
-    public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, TokenProvider tokenProvider) {
+    public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, AvatarDataDao avatarDataDao, TokenProvider tokenProvider) {
         this.memberDataDao = memberDataDao;
         this.memberMapper = memberMapper;
+        this.avatarDataDao = avatarDataDao;
         this.tokenProvider = tokenProvider;
     }
     
@@ -160,7 +164,6 @@ public class MemberQueryService {
 
         while(true) {
 
-
                 int memberSize[] = new int[maxMemberCode];
 
                 Random randomNo = new Random();
@@ -176,8 +179,6 @@ public class MemberQueryService {
                     }
                 }
 
-                int count2 = 0;
-
                 for (int k = 0; k < maxMemberCode; k++) {
 
                     MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNot((long) memberSize[k], memberCode);
@@ -190,10 +191,15 @@ public class MemberQueryService {
                             break;
                         }
                     }
-
                 }
-
                 break;
+        }
+
+        /* 자신의 아바타 정보 불러오기 */
+        if(avatarDataDao.findByAvatarId(memberCode) != null) {
+
+            AvatarData ownAvatarData = avatarDataDao.findByAvatarId(memberCode);
+            findRandomMemberResponseDto.setOwnAvatarData(ownAvatarData);
 
         }
 
@@ -266,8 +272,6 @@ public class MemberQueryService {
                 }
             }
 
-            int count2 = 0;
-
             /* 멤버코드의 최대값만큼 반복을 시킨다. */
             for (int k = 0; k < maxMemberCode; k++) {
 
@@ -288,6 +292,14 @@ public class MemberQueryService {
             }
 
             break;
+
+        }
+        
+        /* 자신의 아바타 정보 불러오기 */
+        if(avatarDataDao.findByAvatarId(memberCode) != null) {
+
+            AvatarData ownAvatarData = avatarDataDao.findByAvatarId(memberCode);
+            findRoomInMemberResponseDto.setOwnAvatarData(ownAvatarData);
 
         }
 
