@@ -45,6 +45,7 @@
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
          where b.follower_id = #{ memberCode }
+           and a.member_delete_yn = 'N'
          order by member_lifing_yn desc
          limit 30 offset #{ offset }
     </select>
@@ -61,6 +62,7 @@
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
          where b.follower_id = #{ memberCode }
+           and a.member_delete_yn = 'N'
          limit 6
     </select>
 
@@ -78,32 +80,37 @@
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
          where a.member_code = #{ memberCode }
+           and a.member_delete_yn = 'N'
     </select>
 
     <select id="findMaxMemberCode" resultType="int">
         select
                max(member_code)
-          from tbl_members;
+          from tbl_members
+         where member_delete_yn = 'N'
     </select>
 
     <select id="countFeed" resultType="int">
         select
                count(feed_writer_code)
           from tbl_feeds
-         where feed_writer_code = #{memberCode};
+         where feed_writer_code = #{memberCode}
+           and feed_delete_yn = 'N'
     </select>
 
     <select id="countFollower" resultType="int">
         select
                count(follower_id)
           from tbl_follows
-         where following_id = #{memberCode};
+         where following_id = #{memberCode}
+           and follow_delete_yn = 'N'
     </select>
 
     <select id="countFollowing" resultType="int">
         select
                count(following_id)
           from tbl_follows
-         where follower_id = #{memberCode};
+         where follower_id = #{memberCode}
+           and follow_delete_yn = 'N'
     </select>
 </mapper>

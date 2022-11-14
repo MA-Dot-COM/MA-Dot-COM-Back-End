@@ -52,6 +52,7 @@
           from tbl_feeds a
           left join tbl_feed_images b on(a.feed_id = b.feed_id)
          where feed_writer_code = #{memberCode}
+           and a.feed_delete_yn = 'N'
          order by feed_id desc
          limit 5 offset #{ pageNo }
     </select>
@@ -67,6 +68,7 @@
              , feed_delete_yn
           from tbl_feeds
          where feed_id = #{feedId};
+           and a.feed_delete_yn = 'N'
     </select>
 
     <select id="selectAllFeedComments" resultMap="feedCommentResultMap">
@@ -79,6 +81,7 @@
              , feed_comment_delete_yn
           from tbl_feed_comments
          where feed_id = #{feedId}
+           and a.feed_delete_yn = 'N'
          order by feed_comment_id desc
     </select>
     <select id="selectAllFeedImages" resultMap="feedImageResultMap">
@@ -88,6 +91,7 @@
              , feed_original_name
           from tbl_feed_images
          where feed_id = #{feedId}
+           and a.feed_delete_yn = 'N'
     </select>
 
     <select id="countHoney" resultMap="honeyResultMap">
@@ -95,6 +99,7 @@
                count(feed_id)
           from tbl_honey
          where feed_id = ${feedId}
+           and a.feed_delete_yn = 'N'
     </select>
 
     <select id="selectFeedCount" resultType="_int">
@@ -102,6 +107,7 @@
                count(feed_writer_code) as feedCount
           from tbl_feeds
          where feed_writer_code = #{memberCode}
+           and a.feed_delete_yn = 'N'
     </select>
 
 </mapper>

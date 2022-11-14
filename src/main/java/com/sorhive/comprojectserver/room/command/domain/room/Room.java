@@ -22,6 +22,7 @@ import java.util.List;
  * ----------------------------------------------------------------
  * 2022-11-08       부시연           최초 생성
  * 2022-11-09       부시연           몽고 DB 도메인으로 변경
+ * 2022-11-15       부시연           방 조회수 문제 해결
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -67,7 +68,14 @@ public class Room {
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
+    /** 방 조회수 세기 */
     public void setRoomCount(Long roomCount) {
+
+        /* 만약 방 조회수가 null일 경우면 0으로 초기화 한다. */
+        if(this.roomCount == null) {
+            this.roomCount = 0L;
+        }
+
         this.roomCount += roomCount;
     }
 
