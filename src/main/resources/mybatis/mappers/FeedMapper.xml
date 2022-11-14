@@ -44,7 +44,7 @@
                a.feed_id
              , a.feed_content
              , a.feed_writer_name
-             , feed_writer_id
+             , a.feed_writer_id
              , a.feed_create_time
              , a.feed_delete_yn
              , a.honey_count
@@ -62,7 +62,7 @@
              , feed_content
              , feed_writer_name
              , feed_writer_id
-             , a.honey_count
+             , honey_count
              , feed_create_time
              , feed_delete_yn
           from tbl_feeds
@@ -95,6 +95,13 @@
                count(feed_id)
           from tbl_honey
          where feed_id = ${feedId}
+    </select>
+
+    <select id="selectFeedCount" resultType="_int">
+        select
+               count(feed_writer_code) as feedCount
+          from tbl_feeds
+         where feed_writer_code = #{memberCode}
     </select>
 
 </mapper>

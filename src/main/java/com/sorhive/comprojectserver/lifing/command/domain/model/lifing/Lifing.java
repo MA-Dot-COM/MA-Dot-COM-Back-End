@@ -1,10 +1,13 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -53,6 +56,9 @@ public class Lifing {
     @Column(name = "lifing_delete_yn")
     @ColumnDefault(value = "'N'")
     private Character deleteYn;
+
+    @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
+    private List<LifingVisit> lifingVisitList = new ArrayList<LifingVisit>();
 
     protected Lifing() { }
 

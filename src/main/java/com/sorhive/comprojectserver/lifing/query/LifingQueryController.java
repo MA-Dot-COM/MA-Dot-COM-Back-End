@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <pre>
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
  * 2022-11-12       부시연           회원 번호로 회원의 모든 라이핑 조회
+ * 2022-11-12       부시연           라이핑 번호로 상세 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -43,6 +41,18 @@ public class LifingQueryController {
         log.info("[QueryLifingController] lifingRequestDto : " + lifingRequestDto);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 조회 성공", lifingQueryService.findAllLifingByMemberCode(lifingRequestDto)));
+    }
+
+    /** 라이핑 상세 조회 */
+    @GetMapping("lifing/{lifingId}")
+    public ResponseEntity<ResponseDto> findLifingByLifingId(@RequestHeader String Authorization, @PathVariable Long lifingId) {
+
+        log.info("[QueryLifingController] findLifingByLifingId Start ==========");
+        log.info("[QueryLifingController] lifingId : " + lifingId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 상세 조회 성공", lifingQueryService.findLifingByLifingId(accessToken, lifingId)));
     }
 
 }

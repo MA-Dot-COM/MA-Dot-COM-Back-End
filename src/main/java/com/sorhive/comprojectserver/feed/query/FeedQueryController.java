@@ -34,7 +34,7 @@ public class FeedQueryController {
         this.feedQueryService = feedQueryService;
     }
 
-    /* 피드 목록 조회 */
+    /** 피드 목록 조회 */
     @GetMapping("feed")
     public ResponseEntity<ResponseDto> selectAllFeed(@RequestBody FeedRequestDto feedRequestDto) {
 
@@ -45,6 +45,7 @@ public class FeedQueryController {
 
     }
 
+    /** 피드 상세 목록 조회 */
     @GetMapping("feed/{feedId}")
     public ResponseEntity<ResponseDto> selectFeedDetail(@PathVariable Long feedId) {
 

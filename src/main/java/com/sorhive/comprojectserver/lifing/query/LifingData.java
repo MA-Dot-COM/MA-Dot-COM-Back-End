@@ -1,9 +1,13 @@
 package com.sorhive.comprojectserver.lifing.query;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -53,6 +57,11 @@ public class LifingData {
 
     @Column(name = "lifing_delete_yn")
     private Character deleteYn;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
+    private List<LifingVisit> lifingVisitList = new ArrayList<LifingVisit>();
+
 
     protected LifingData() {}
 

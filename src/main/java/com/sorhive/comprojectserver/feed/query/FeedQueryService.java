@@ -1,10 +1,7 @@
 package com.sorhive.comprojectserver.feed.query;
 
 import com.sorhive.comprojectserver.feed.command.application.exception.NoFeedException;
-import com.sorhive.comprojectserver.feed.query.dto.FeedCommentSummary;
-import com.sorhive.comprojectserver.feed.query.dto.FeedImageSummary;
-import com.sorhive.comprojectserver.feed.query.dto.FeedRequestDto;
-import com.sorhive.comprojectserver.feed.query.dto.FeedResponseDto;
+import com.sorhive.comprojectserver.feed.query.dto.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +18,7 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-04       부시연           최초 생성
+ * 2022-11-14       부시연           피드 전체 조회에 총 피드 수 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -33,8 +31,8 @@ public class FeedQueryService {
     private FeedMapper feedMapper;
     private static final Logger log = LoggerFactory.getLogger(FeedQueryService.class);
 
-    /* 피드 전체 조회 */
-    public Object selectAllFeed(FeedRequestDto feedRequestDto) {
+    /** 피드 전체 조회 */
+    public SelectAllFeedResponseDto selectAllFeed(FeedRequestDto feedRequestDto) {
 
         log.info("[FeedQueryService] selectAllFeed Start ===============");
         log.info("[FeedQueryService] feedRequestDto : " + feedRequestDto);
@@ -47,10 +45,25 @@ public class FeedQueryService {
             throw new NoFeedException();
         }
 
-        return feedMapper.selectAllFeed(memberCode, pageNo);
+        /* 전체 피드 응답용 전송 객체 만들기 */
+        SelectAllFeedResponseDto selectAllFeedResponseDto = new SelectAllFeedResponseDto();
+
+        /* 피드 목록 조회하기 */
+        List<FeedSummary> feedSummaries = feedMapper.selectAllFeed(memberCode, pageNo);
+
+        /* 응답 객체에 피드 목록 담기 */
+        selectAllFeedResponseDto.setFeedSummary(feedSummaries);
+
+        /* 해당 회원이 작성한 총 피드 목록 수 조회하기 */
+        int feedCount = feedMapper.selectFeedCount(memberCode);
+
+        /* 응답 객체에 총 피드 수 담기 */
+        selectAllFeedResponseDto.setFeedCount(feedCount);
+
+        return selectAllFeedResponseDto;
     }
 
-    /* 피드 상세 조회 */
+    /** 피드 상세 조회 */
     public Object selectFeedDetail(Long feedId) {
 
         log.info("[FeedQueryService] selectFeedDetail Start ===============");

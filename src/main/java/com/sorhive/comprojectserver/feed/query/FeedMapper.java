@@ -31,4 +31,6 @@ public interface FeedMapper {
     List<FeedCommentSummary> selectAllFeedComments(Long feedId);
 
     FeedSummary selectFeedByFeedId(Long feedId);
+
+    int selectFeedCount(Long memberCode);
 }
