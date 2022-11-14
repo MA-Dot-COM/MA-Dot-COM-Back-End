@@ -1,10 +1,10 @@
-package com.sorhive.comprojectserver.lifing.command.application.dto;
+package com.sorhive.comprojectserver.member.query.avatar;
 
-import lombok.Getter;
+import org.springframework.data.repository.Repository;
 
 /**
  * <pre>
- * Class : LifingImageDto
+ * Class : AvatarDataDao
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -17,11 +17,7 @@ import lombok.Getter;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-@Getter
-public class LifingImageDto {
+public interface AvatarDataDao extends Repository<AvatarData, Long> {
 
-    byte[] lifingImage;
-    String lifingImageName;
-    String lifingContent;
-
+    AvatarData findByAvatarId(Long memberCode);
 }

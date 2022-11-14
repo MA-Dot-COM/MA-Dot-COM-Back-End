@@ -84,7 +84,7 @@ public class MemberQueryController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 랜덤 조회 성공", memberQueryService.findRoomInMember(accessToken, roomId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "룸인 회원 조회 성공", memberQueryService.findRoomInMember(accessToken, roomId)));
     }
 
     /** 벌집 타기 할 때 랜덤 회원 조회 */
