@@ -48,8 +48,12 @@ public class MemberData {
     private String avatarImagePath;
 
     @Column(name = "member_lifing_no")
-    @ColumnDefault("0")
+    @ColumnDefault("-1")
     private Long lifingNo;
+
+    @Column(name = "member_lifing_category_no")
+    @ColumnDefault("-1")
+    private Long lifingCategoryNo;
 
     @Column(name = "member_lifing_yn")
     @ColumnDefault("'N'")

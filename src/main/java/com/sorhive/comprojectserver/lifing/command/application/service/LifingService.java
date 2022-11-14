@@ -77,10 +77,16 @@ public class LifingService {
             throw new NoLifingNoException("라이핑 번호가 없습니다.");
         }
 
+        /* 라이핑 카테고리 번호가 없을 경우 예외처리 */
+        if(lifingCreateDto.getLifingCategoryNo() == null) {
+            throw new NoLifingNoException("라이핑 카테고리 번호가 없습니다.");
+        }
+
         /* 라이핑 작성자 만들기 */
         LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
 
         Long lifingNo = lifingCreateDto.getLifingNo();
+        Long lifingCategoryNo = lifingCreateDto.getLifingCategoryNo();
         String lifingConetent = lifingCreateDto.getLifingContent();
 
         LifingImagePath lifingImagePath = lifingMapper.findLifingImageByMemberCode(memberCode);
@@ -89,6 +95,7 @@ public class LifingService {
         Lifing lifing = new Lifing(
                 lifingWriter,
                 lifingNo,
+                lifingCategoryNo,
                 lifingConetent,
                 lifingImagePath.getLifingPath()
         );
@@ -99,7 +106,7 @@ public class LifingService {
         /* 라이핑 번호를 저장하기 위해 멤버 데이터 조회하기 */
         Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
         Member member = memberData.get();
-        member.setLifingNo(lifingNo);
+        member.setLifingNo(lifingNo, lifingCategoryNo);
 
         /* 멤버에 라이핑번호 정보 저장하기 */
         memberRepository.save(member);
@@ -111,6 +118,7 @@ public class LifingService {
         responseLifingDto.setLifingContent(lifing.getLifingConetent());
         responseLifingDto.setLifingImagePath(lifing.getLifingImagePath());
         responseLifingDto.setLifingNo(lifing.getLifingNo());
+        responseLifingDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
         responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
         responseLifingDto.setLifingWriter(lifing.getLifingWriter());
 

@@ -85,7 +85,7 @@ public class FollowService {
         log.info("[FollowService] deleteFollow Start ===============");
         log.info("[FollowService] followId : " + followId);
 
-        if(followRepository.findByFollowIdAndDeleteYnEquals(followId, 'N') != null) {
+        if(followRepository.findByFollowIdAndDeleteYnEquals(followId, 'N') == null) {
             throw new NoFollowException("해당 팔로우 번호가 존재하지 않습니다.");
         }
 

@@ -40,17 +40,21 @@ public class LifingData {
     @Column(name = "lifing_no")
     private Long lifingNo;
 
+    @Column(name = "lifing_category_no")
+    private Long lifingCategoryNo;
+
+
     @Column(name = "lifing_image_path")
     private String lifingImagePath;
 
     @Column(name = "lifing_writer_code")
-    private Long memberCode;
+    private Long lifingWriterCode;
 
     @Column(name = "lifing_writer_id")
     private String lifingWriterId;
 
     @Column(name = "lifing_writer_name")
-    private String name;
+    private String lifingWriterName;
 
     @Column(name = "lifing_upload_time")
     private Timestamp uploadTime;
