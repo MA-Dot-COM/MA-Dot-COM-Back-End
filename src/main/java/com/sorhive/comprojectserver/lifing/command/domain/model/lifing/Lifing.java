@@ -39,6 +39,9 @@ public class Lifing {
     @Column(name = "lifing_no")
     private Long lifingNo;
 
+    @Column(name = "lifing_category_no")
+    private Long lifingCategoryNo;
+
     @Column(name = "lifing_image_path")
     private String lifingImagePath;
 
@@ -62,10 +65,11 @@ public class Lifing {
 
     protected Lifing() { }
 
-    public Lifing(LifingWriter lifingWriter, Long lifingNo, String lifingConetent, String lifingImagePath) {
+    public Lifing(LifingWriter lifingWriter, Long lifingNo, Long lifingCategoryNo, String lifingConetent, String lifingImagePath) {
         this.lifingWriter = lifingWriter;
         this.lifingNo = lifingNo;
         this.lifingConetent = lifingConetent;
+        this.lifingCategoryNo = lifingCategoryNo;
         this.lifingImagePath = lifingImagePath;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());

@@ -28,6 +28,7 @@ public class ResponseLifingDto {
     private String lifingContent;
     private String lifingImagePath;
     private Long lifingNo;
+    private Long lifingCategoryNo;
     private Timestamp lifingCreateTime;
     private LifingWriter lifingWriter;
 

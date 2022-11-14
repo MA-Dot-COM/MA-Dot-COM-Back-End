@@ -82,6 +82,10 @@ public class Member implements UserDetails {
     @ColumnDefault("-1")
     private Long lifingNo;
 
+    @Column(name = "member_lifing_category_no")
+    @ColumnDefault("-1")
+    private Long lifingCategoryNo;
+
     @Column(name = "member_lifing_yn")
     @ColumnDefault("'N'")
     private Character lifingYn;
@@ -146,6 +150,8 @@ public class Member implements UserDetails {
 
     public String getAvatarImagePath() { return avatarImagePath; }
 
+    public Long getLifingCategoryNo() { return lifingCategoryNo; }
+
     public Long getLifingNo() { return lifingNo; }
 
     public Character getLifingYn() { return lifingYn; }
@@ -161,8 +167,9 @@ public class Member implements UserDetails {
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
-    public void setLifingNo(Long lifingNo) {
+    public void setLifingNo(Long lifingNo, Long lifingCategoryNo) {
         this.lifingNo = lifingNo;
+        this.lifingCategoryNo = lifingCategoryNo;
         this.lifingYn = 'Y';
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }

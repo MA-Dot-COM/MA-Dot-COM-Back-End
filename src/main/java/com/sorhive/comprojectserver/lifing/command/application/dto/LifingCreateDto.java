@@ -21,6 +21,7 @@ import lombok.Getter;
 public class LifingCreateDto {
 
     private Long lifingNo;
+    private Long lifingCategoryNo;
     private String lifingContent;
 
 }

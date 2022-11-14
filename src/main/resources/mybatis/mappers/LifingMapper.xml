@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sorhive.comprojectserver.lifing.query.LifingImageMapper">
+<mapper namespace="com.sorhive.comprojectserver.lifing.query.LifingMapper">
 
     <resultMap id="lifingPathResultMap" type="com.sorhive.comprojectserver.lifing.query.LifingImagePath">
         <id property="id" column="lifing_image_id"/>
@@ -14,10 +14,11 @@
         <id property="lifingId" column="lifing_id"/>
         <result property="lifingConetent" column="lifing_content"/>
         <result property="lifingNo" column="lifing_no"/>
+        <result property="lifingCategoryNo" column="lifing_category_no"/>
         <result property="lifingImagePath" column="lifing_image_path"/>
-        <result property="memberCode" column="lifing_writer_code"/>
-        <result property="memberId" column="lifing_writer_id"/>
-        <result property="name" column="lifing_writer_name"/>
+        <result property="lifingWriterCode" column="lifing_writer_code"/>
+        <result property="lifingWriterId" column="lifing_writer_id"/>
+        <result property="lifingWriterName" column="lifing_writer_name"/>
         <result property="uploadTime" column="lifing_upload_time"/>
         <result property="deleteYn" column="lifing_delete_yn"/>
     </resultMap>
