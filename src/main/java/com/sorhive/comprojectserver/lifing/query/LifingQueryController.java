@@ -45,12 +45,14 @@ public class LifingQueryController {
 
     /** 라이핑 상세 조회 */
     @GetMapping("lifing/{lifingId}")
-    public ResponseEntity<ResponseDto> findLifingByLifingId(@PathVariable Long lifingId) {
+    public ResponseEntity<ResponseDto> findLifingByLifingId(@RequestHeader String Authorization, @PathVariable Long lifingId) {
 
         log.info("[QueryLifingController] findLifingByLifingId Start ==========");
         log.info("[QueryLifingController] lifingId : " + lifingId);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 상세 조회 성공", lifingQueryService.findLifingByLifingId(lifingId)));
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "라이핑 상세 조회 성공", lifingQueryService.findLifingByLifingId(accessToken, lifingId)));
     }
 
 }

@@ -20,4 +20,6 @@ import org.springframework.data.repository.Repository;
 public interface LifingRepository extends Repository<Lifing, Long> {
 
     void save(Lifing lifing);
+
+    Lifing findByLifingId(Long lifingId);
 }

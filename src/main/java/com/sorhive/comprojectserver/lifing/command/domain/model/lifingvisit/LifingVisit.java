@@ -30,16 +30,12 @@ import java.sql.Timestamp;
 public class LifingVisit {
 
     @Id
-    @Column(name="lifing_visit_id", unique = true)
+    @Column(name="lifing_visit_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long LifingVisitId;
 
     @Column(name = "lifing_visit_time")
-    private Timestamp time;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_lifing_id")
-    private Lifing lifing;
+    private Timestamp LifingVisitTime;
 
     @AttributeOverrides(
             @AttributeOverride(name = "value", column = @Column(name = "lifing_visitor_code"))
@@ -48,18 +44,26 @@ public class LifingVisit {
     private MemberCode memberCode;
 
     @Embedded
+    @AttributeOverride(name = "memberCode", column = @Column(name = "lifing_writer_code"))
+    @AttributeOverride(name = "name", column = @Column(name = "lifing_writer_name"))
+    @AttributeOverride(name = "id", column = @Column(name = "lifing_writer_id"))
     private LifingWriter lifingWriter;
 
     @Column(name = "lifing_visit_yn")
-    @ColumnDefault("N")
+    @ColumnDefault("'N'")
     private Character lifingVisitYn;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_lifing_id")
+    private Lifing lifing;
 
     protected LifingVisit() {}
 
-    public LifingVisit(MemberCode memberCode, LifingWriter lifingWriter) {
+    public LifingVisit(MemberCode memberCode, LifingWriter lifingWriter, Lifing lifing) {
         this.memberCode = memberCode;
         this.lifingWriter = lifingWriter;
-        this.time = new Timestamp(System.currentTimeMillis());
+        this.lifing = lifing;
+        this.LifingVisitTime = new Timestamp(System.currentTimeMillis());
         this.lifingVisitYn = 'Y';
     }
 

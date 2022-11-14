@@ -1,11 +1,11 @@
-package com.sorhive.comprojectserver.lifing.command.domain.repository;
+package com.sorhive.comprojectserver.lifing.query;
 
-import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
-import org.springframework.data.repository.Repository;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <pre>
- * Class : LifingVisitRepository
+ * Class : FindLifingResponseDto
  * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
@@ -18,6 +18,10 @@ import org.springframework.data.repository.Repository;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface LifingVisitRepository extends Repository<LifingVisit, Long> {
-    void save(LifingVisit lifingVisit);
+@Getter
+@Setter
+public class FindLifingResponseDto {
+
+    private LifingData lifingData;
+
 }
