@@ -85,4 +85,25 @@
                max(member_code)
           from tbl_members;
     </select>
+
+    <select id="countFeed" resultType="int">
+        select
+               count(feed_writer_code)
+          from tbl_feeds
+         where feed_writer_code = #{memberCode};
+    </select>
+
+    <select id="countFollower" resultType="int">
+        select
+               count(follower_id)
+          from tbl_follows
+         where following_id = #{memberCode};
+    </select>
+
+    <select id="countFollowing" resultType="int">
+        select
+               count(following_id)
+          from tbl_follows
+         where follower_id = #{memberCode};
+    </select>
 </mapper>
