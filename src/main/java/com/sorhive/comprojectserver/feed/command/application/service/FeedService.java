@@ -107,7 +107,7 @@ public class FeedService {
         Optional<Feed> feedData = feedRepository.findByFeedIdAndDeleteYnEquals(feedId, 'N');
 
         if(feedData == null) {
-            throw new NoFeedException("해당 하베스트가 존재하지 않습니다.");
+            throw new NoFeedException("해당 피드가 존재하지 않습니다.");
         }
 
         if(!honeyRepository.findByMemberCodeAndFeedIdAndDeleteYnEquals(new MemberCode(memberCode), new FeedId(feedId), 'N').isEmpty() ) {
@@ -115,7 +115,7 @@ public class FeedService {
         }
 
         Feed feed = feedData.get();
-        feed.setHoneyCount(1L);
+        feed.setHoneyCount(1);
         feedRepository.save(feed);
 
         Honey honey = new Honey(
@@ -151,7 +151,7 @@ public class FeedService {
         }
 
         Feed feed = feedData.get();
-        feed.setHoneyCount(-1L);
+        feed.setHoneyCount(-1);
         feedRepository.save(feed);
 
         Optional<Honey> honeyData = honeyRepository.findByMemberCodeAndFeedIdAndDeleteYnEquals(new MemberCode(memberCode), new FeedId(feedId), 'N');

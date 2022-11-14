@@ -5,7 +5,6 @@ import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCrea
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateDto;
 import com.sorhive.comprojectserver.feed.command.application.service.FeedService;
 import com.sorhive.comprojectserver.feed.command.infra.FeedInfraService;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,13 +32,16 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("api/v1")
-@AllArgsConstructor
 public class FeedController {
 
     private static final Logger log = LoggerFactory.getLogger(FeedController.class);
     private final FeedInfraService feedInfraService;
-
     private final FeedService feedService;
+
+    public FeedController(FeedInfraService feedInfraService, FeedService feedService) {
+        this.feedInfraService = feedInfraService;
+        this.feedService = feedService;
+    }
 
     /* 피드 작성 */
     @PostMapping("feed")
@@ -50,7 +52,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "하베스트 생성 성공", feedInfraService.createFeed(accessToken, feedCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 생성 성공", feedInfraService.createFeed(accessToken, feedCreateDto)));
 
     }
 
@@ -63,7 +65,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "하베스트 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateDto)));
 
     }
 
