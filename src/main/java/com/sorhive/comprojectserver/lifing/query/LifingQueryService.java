@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.lifing.query;
 
+import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,10 @@ public class LifingQueryService {
 
     private static final Logger log = LoggerFactory.getLogger(LifingQueryService.class);
     private final LifingMapper lifngMapper;
+    private final LifingDataDao lifingDataDao;
 
     /** 회원 번호로 회원의 모든 라이핑 조회*/
-    public Object findAllLifingByMemberCode(LifingRequestDto lifingRequestDto) {
+    public List<LifingData> findAllLifingByMemberCode(LifingRequestDto lifingRequestDto) {
 
         log.info("[LifingQueryService] findAllLifingByMemberCode Start ============");
 
@@ -42,5 +44,16 @@ public class LifingQueryService {
         List<LifingData> lifingData = lifngMapper.findAllLifingByMemberCode(pageNo, memberCode.intValue());
 
         return lifingData;
+    }
+
+    /** 라이핑 번호로 라이핑 상세 조회 */
+    public LifingData findLifingByLifingId(Long lifingId) {
+
+        log.info("[LifingQueryService] findLifingByLifingId Start ===================================");
+
+        LifingData lifingData = lifingDataDao.findLifingDataByLifingIdAndDeleteYnEquals(lifingId, 'N');
+
+        return lifingData;
+
     }
 }

@@ -1,23 +1,22 @@
-package com.sorhive.comprojectserver.lifing.query;
+package com.sorhive.comprojectserver.lifing.command.domain.repository;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import org.springframework.data.repository.Repository;
 
 /**
  * <pre>
- * Class : LifingDataDao
- * Comment: 라이핑 데이터 레포지토리
+ * Class : LifingVisitRepository
+ * Comment: 클래스에 대한 간단 설명
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-12       부시연           최초 생성
+ * 2022-11-14       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface LifingDataDao extends Repository<LifingData, Long> {
-
-    LifingData findLifingDataByLifingIdAndDeleteYnEquals(Long lifingId, char n);
+public interface LifingVisitRepository extends Repository<LifingVisit, Long> {
 }
