@@ -48,6 +48,7 @@
              , a.lifing_delete_yn
           from tbl_lifings a
          where lifing_writer_code = #{ memberCode }
+           and a.lifing_delete_yn = 'N'
          order by a.lifing_upload_time desc
          limit 3 offset #{pageNo}
     </select>
