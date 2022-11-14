@@ -2,7 +2,6 @@ package com.sorhive.comprojectserver.lifing.query;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
-import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingVisitRepository;
@@ -67,7 +66,7 @@ public class LifingQueryService {
         LifingData lifingData = lifingDataDao.findLifingDataByLifingIdAndDeleteYnEquals(lifingId, 'N');
 
         /* 만약 조회하려는 라이핑 멤버 번호와 라이핑을 방문하는 멤버 번호가 다르다면  */
-        if(lifingData.getMemberCode() != visitorCode) {
+        if(lifingData.getLifingWriterCode() != visitorCode) {
 
             Lifing lifing = lifingRepository.findByLifingId(lifingId);
 
