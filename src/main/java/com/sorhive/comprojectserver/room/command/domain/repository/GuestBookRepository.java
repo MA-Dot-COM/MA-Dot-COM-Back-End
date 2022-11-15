@@ -3,6 +3,8 @@ package com.sorhive.comprojectserver.room.command.domain.repository;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import org.springframework.data.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * <pre>
  * Class : GuestBookRepository
@@ -12,6 +14,9 @@ import org.springframework.data.repository.Repository;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-13       부시연           최초 생성
+ * 2022-11-13       부시연           save 추가
+ * 2022-11-16       부시연           findById 추가
+ * 2022-11-16       부시연           findByIdAndDeleteYnEquals 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,4 +27,6 @@ public interface GuestBookRepository extends Repository<GuestBook, Long> {
 
     void save(GuestBook guestBook);
 
+    GuestBook findById(Long guestBookId);
+    Optional<GuestBook> findByIdAndDeleteYnEquals(Long guestBookId, char n);
 }

@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.room.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.room.command.application.dto.GuestBookCreateRequestDto;
+import com.sorhive.comprojectserver.room.command.application.dto.GuestBookUpdateRequestDto;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
 import com.sorhive.comprojectserver.room.command.application.service.RoomService;
 import com.sorhive.comprojectserver.room.command.infra.RoomInfraService;
@@ -25,7 +26,8 @@ import javax.validation.Valid;
  * 2022-11-09       부시연           방 생성 추가
  * 2022-11-10       부시연           접속용 방이미지 생성 추가
  * 2022-11-13       부시연           방명록 생성 추가
- * 2022-11-13       부시연           서비스 분리
+ * 2022-11-13       부시연           서비스, 인프라 서비스 분리
+ * 2022-11-16       부시연           방명록 수정 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -66,5 +68,17 @@ public class RoomController {
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방명록 생성 성공", roomService.createGuestBook(accessToken, guestBookCreateRequestDto)));
+    }
+
+    /** 방명록 수정 */
+    @PutMapping(value = "guestbook")
+    public ResponseEntity<ResponseDto> updateGuestBook(@RequestHeader String Authorization, @Valid @RequestBody GuestBookUpdateRequestDto guestBookUpdateRequestDto) {
+
+        log.info("[RoomController] updateGuestBook Start ===================");
+        log.info("[RoomController] guestBookRequestDto : " + guestBookUpdateRequestDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방명록 수정 성공", roomService.updateGuestBook(accessToken, guestBookUpdateRequestDto)));
     }
 }

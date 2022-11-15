@@ -1,33 +1,33 @@
-package com.sorhive.comprojectserver.room.query;
+package com.sorhive.comprojectserver.room.execption;
 /**
  * <pre>
- * Class : NoRoomException
- * Comment: 방이 없을 때 예외처리
+ * Class : NoGuestBookException
+ * Comment: 방명록이 없을 때 예외처리
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-12       부시연           최초 생성
+ * 2022-11-16       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public class NoRoomException extends RuntimeException {
-    public NoRoomException() {
+public class NoGuestBookException extends RuntimeException {
+    public NoGuestBookException() {
         super();
     }
 
-    public NoRoomException(String message) {
+    public NoGuestBookException(String message) {
         super(message);
     }
 
-    public NoRoomException(String message, Throwable cause) {
+    public NoGuestBookException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public NoRoomException(Throwable cause) {
+    public NoGuestBookException(Throwable cause) {
         super(cause);
     }
 
