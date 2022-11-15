@@ -108,4 +108,13 @@ public class MemberQueryController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "마이페이지 조회 성공", memberQueryService.selectMypage(accessToken)));
     }
+
+    /** 회원 상세 조회 */
+    @GetMapping("member/{memberCode}")
+    public ResponseEntity<ResponseDto> selectMemberByMemberCode(@PathVariable Long memberCode) {
+
+        log.info("[MemberQueryController] selectMypage Start =================");
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 상세 조회 성공", memberQueryService.selectMemberByMemberCode(memberCode)));
+    }
 }
