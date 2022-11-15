@@ -24,6 +24,7 @@ import java.util.Random;
  * 2022-11-10       부시연           방이미지 추가
  * 2022-11-10       부시연           아바타 이미지 추가
  * 2022-11-12       부시연           라이핑 번호 추가
+ * 2022-11-15       부시연           라이핑 번호 로직 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -157,7 +158,6 @@ public class Member implements UserDetails {
     public Character getLifingYn() { return lifingYn; }
 
     public void setRoomImagePath(String roomImagePath) {
-
         this.roomImagePath = roomImagePath;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
@@ -167,10 +167,19 @@ public class Member implements UserDetails {
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
-    public void setLifingNo(Long lifingNo, Long lifingCategoryNo) {
+    /** AI가 분석한 사진이 존재 하는 라이핑 생성 */
+    public void changeLifingWithAI(Long lifingNo, Long lifingCategoryNo) {
         this.lifingNo = lifingNo;
         this.lifingCategoryNo = lifingCategoryNo;
         this.lifingYn = 'Y';
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    /** 그냥 사진만 올리는 라이핑 생성 */
+    public void changeLifingWithoutAI() {
+        this.lifingNo = -1L;
+        this.lifingCategoryNo = -1L;
+        this.lifingYn = 'N';
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 

@@ -124,7 +124,7 @@ public class LifingService {
         /* 라이핑 번호를 저장하기 위해 멤버 데이터 조회하기 */
         Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
         Member member = memberData.get();
-        member.setLifingNo(lifingNo, lifingCategoryNo);
+        member.changeLifingWithAI(lifingNo, lifingCategoryNo);
 
         /* 멤버에 라이핑번호 정보 저장하기 */
         memberRepository.save(member);
