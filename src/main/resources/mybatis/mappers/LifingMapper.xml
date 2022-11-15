@@ -5,8 +5,9 @@
 <mapper namespace="com.sorhive.comprojectserver.lifing.query.LifingMapper">
 
     <resultMap id="lifingPathResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingImagePath">
-        <id property="id" column="lifing_image_id"/>
-        <result property="lifingPath" column="lifing_image_path"/>
+        <id property="lifingImageId" column="lifing_image_id"/>
+        <result property="lifingImagePath" column="lifing_image_path"/>
+        <result property="lifingId" column="lifing_id"/>
         <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
     </resultMap>
 
@@ -15,13 +16,14 @@
         <result property="lifingConetent" column="lifing_content"/>
         <result property="lifingNo" column="lifing_no"/>
         <result property="lifingCategoryNo" column="lifing_category_no"/>
-        <result property="lifingImagePath" column="lifing_image_path"/>
+        <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
         <result property="lifingWriterCode" column="lifing_writer_code"/>
         <result property="lifingWriterId" column="lifing_writer_id"/>
         <result property="lifingWriterName" column="lifing_writer_name"/>
         <result property="uploadTime" column="lifing_upload_time"/>
         <result property="deleteYn" column="lifing_delete_yn"/>
         <association property="lifingCommentData" resultMap="lifingCommentResultMap"></association>
+        <association property="lifingImages" resultMap="lifingPathResultMap"></association>
     </resultMap>
 
     <resultMap id="honeyResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.HoneyData">
@@ -49,15 +51,13 @@
              , anaylzed_lifing_no
              , max(lifing_upload_time)
           from tbl_lifing_image
-         where lifing_writer_code = #{memberCode}
-         group by lifing_writer_code;
+         where lifing_id = #{lifing_id}
     </select>
 
     <select id="findAllLifingByMemberCode" resultMap="lifingResultMap">
         select
                a.lifing_id
              , a.lifing_content
-             , a.lifing_image_path
              , a.lifing_no
              , a.lifing_category_no
              , a.lifing_writer_code
@@ -65,8 +65,11 @@
              , a.lifing_writer_name
              , a.lifing_upload_time
              , a.lifing_delete_yn
+             , b.lifing_image_id
+             , b.lifing_image_path
           from tbl_lifings a
-         where lifing_writer_code = #{ memberCode }
+          join tbl_lifing_image b on (a.lifing_id = b.lifing_id)
+         where a.lifing_writer_code = #{ memberCode }
            and a.lifing_delete_yn = 'N'
          order by a.lifing_upload_time desc
          limit 3 offset #{pageNo}
@@ -93,5 +96,13 @@
          where fk_lifing_id = #{lifingId}
            and lifing_comment_delete_yn = 'N'
          order by lifing_comment_id desc
+    </select>
+
+    <select id="selectAllLifingImages" resultMap="lifingPathResultMap">
+        select
+               lifing_image_id
+             , lifing_image_path
+          from tbl_lifing_image
+         where lifing_id = #{ lifingId }
     </select>
 </mapper>

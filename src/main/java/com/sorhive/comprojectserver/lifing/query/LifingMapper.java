@@ -16,6 +16,11 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-12       부시연           라이핑 이미지 회원 번호로 최신 이미지 찾기 추가
+ * 2022-11-14       부시연           라이핑 전체 조회 추가
+ * 2022-11-15       부시연           라이핑 댓글 목록 조회 추가
+ * 2022-11-16       부시연           라이핑 이미지 목록 조회 추가
+ * 2022-11-16       부시연           라이핑 이미지 회원 번호로 최신 이미지 찾기 제거
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -25,9 +30,9 @@ import java.util.List;
 @Mapper
 public interface LifingMapper {
 
-    LifingImagePath findLifingImageByMemberCode(Long memberCode);
-
     List<LifingData> findAllLifingByMemberCode(int pageNo, int memberCode);
 
     List<LifingCommentData> selectAllLifingComments(Long lifingId);
+
+    List<LifingImagePath> selectAllLifingImages(Long lifingId);
 }

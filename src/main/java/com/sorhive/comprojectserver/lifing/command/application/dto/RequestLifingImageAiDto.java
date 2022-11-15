@@ -1,8 +1,9 @@
 package com.sorhive.comprojectserver.lifing.command.application.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -13,6 +14,7 @@ import lombok.Setter;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-11       부시연           최초 생성
+ * 2022-11-16       부시연           라이핑 URL 리스트로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -21,8 +23,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 public class RequestLifingImageAiDto {
-    private String url;
+    private List<String> url;
 
 }

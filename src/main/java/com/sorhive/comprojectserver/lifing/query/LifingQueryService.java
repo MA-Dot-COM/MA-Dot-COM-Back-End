@@ -5,10 +5,7 @@ import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingVisitRepository;
-import com.sorhive.comprojectserver.lifing.query.dto.FindLifingResponseDto;
-import com.sorhive.comprojectserver.lifing.query.dto.LifingCommentData;
-import com.sorhive.comprojectserver.lifing.query.dto.LifingData;
-import com.sorhive.comprojectserver.lifing.query.dto.LifingRequestDto;
+import com.sorhive.comprojectserver.lifing.query.dto.*;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -29,6 +26,7 @@ import java.util.List;
  * 2022-11-12       부시연           회원 번호로 회원의 모든 라이핑 조회
  * 2022-11-12       부시연           회원 번호로 회원의 모든 라이핑 조회 시 조회수 추가
  * 2022-11-15       부시연           라이핑 상세 조회 시 댓글 조회 기능 추가
+ * 2022-11-16       부시연           라이핑 상세 조회 시 이미지 조회 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -96,6 +94,14 @@ public class LifingQueryService {
             List<LifingCommentData> lifingCommentDataList = lifingMapper.selectAllLifingComments(lifingId);
 
             findLifingResponseDto.setLifingCommentDataList(lifingCommentDataList);
+        }
+
+        /* 라이핑에 이미지가 있는지 확인 */
+        if(lifingMapper.selectAllLifingImages(lifingId) != null) {
+
+            List<LifingImagePath> lifingImagePaths = lifingMapper.selectAllLifingImages(lifingId);
+
+            findLifingResponseDto.setLifingImagePathList(lifingImagePaths);
         }
 
 

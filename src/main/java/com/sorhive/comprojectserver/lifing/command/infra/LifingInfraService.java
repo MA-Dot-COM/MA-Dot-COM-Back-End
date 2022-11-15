@@ -3,10 +3,7 @@ package com.sorhive.comprojectserver.lifing.command.infra;
 import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.file.S3LifingImageFile;
-import com.sorhive.comprojectserver.lifing.command.application.dto.LifingAIImageDto;
-import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
-import com.sorhive.comprojectserver.lifing.command.application.dto.ResponseLifingDto;
-import com.sorhive.comprojectserver.lifing.command.application.dto.ResponseLifingImageAiDto;
+import com.sorhive.comprojectserver.lifing.command.application.dto.*;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriterService;
@@ -28,9 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * <pre>
@@ -43,6 +38,7 @@ import java.util.Optional;
  * 2022-11-11       부시연           최초 생성
  * 2022-11-11       부시연           라이핑 이미지 생성 추가
  * 2022-11-14       부시연           라이핑 AI 분석 없는 이미지 생성 추가
+ * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -74,15 +70,56 @@ public class LifingInfraService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        String changeName = lifingAIImageDto.getLifingImageName() + "lifing_" + memberCode + ".png";
+        /* 라이핑 작성자 생성하기(미리 라이핑 작성자를 생성해서 라이핑 번호를 만든다.) */
+        LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
+
+        /* 라이핑 생성 */
+        Lifing lifing = new Lifing(
+                lifingWriter
+        );
+
+        lifingRepository.save(lifing);
+
+        ResponseLifingImageAiDto responseLifingImageAiDto = new ResponseLifingImageAiDto();
+
+        responseLifingImageAiDto.setLifingId(lifing.getLifingId());
 
         try {
 
             /* 라이핑 이미지가 존재 한다면 */
-            if (lifingAIImageDto.getLifingImage() != null) {
+            if (lifingAIImageDto.getLifingImages() != null) {
 
-                /* 라이핑 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
-                String lifingPath = s3LifingImageFile.upload(lifingAIImageDto.getLifingImage(), changeName, "images");
+                List<String> lifingImagePathList = new ArrayList<>();
+
+                /* 이미지들 하나씩 꺼내오기 */
+                for (int i = 0; i < lifingAIImageDto.getLifingImages().size(); i++) {
+
+                    byte[] lifingByteImage = lifingAIImageDto.getLifingImages().get(i).getLifingImage();
+                    String originalName = lifingAIImageDto.getLifingImages().get(i).getLifingImageName();
+                    String changeName = UUID.randomUUID() + " - lifing_" + memberCode + ".png";
+
+                    /* 라이핑 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
+                    String lifingImagePath = s3LifingImageFile.upload(lifingByteImage, changeName, "images");
+
+                    /* 라이핑 이미지 생성 */
+                    LifingImage lifingImage = new LifingImage(
+
+                            lifingImagePath,
+                            originalName,
+                            changeName,
+                            lifing
+
+                    );
+
+                    lifingImageRepository.save(lifingImage);
+                    
+                    /* 라이핑 이미지 경로 저장 */
+                    lifingImagePathList.add(lifingImagePath);
+
+                }
+
+                RequestLifingImageAiDto requestLifingImageAiDto = new RequestLifingImageAiDto();
+                requestLifingImageAiDto.setUrl(lifingImagePathList);
 
                 /* AI서버에 전송하기 위해 차셋 등 헤더 설정하기 */
                 HttpHeaders headers = new HttpHeaders();
@@ -92,7 +129,9 @@ public class LifingInfraService {
 
                 /* 바디에 넣기 위한 값을 MAP에 넣어주기 */
                 Map<String, Object> map = new HashMap<>();
-                map.put("url", lifingPath);
+                for (int i = 0; i < requestLifingImageAiDto.getUrl().size(); i++) {
+                    map.put("url", requestLifingImageAiDto.getUrl().get(i));
+                }
 
                 /* JSON으로 파싱하기 */
                 JSONObject params = new JSONObject(map);
@@ -108,23 +147,16 @@ public class LifingInfraService {
                 /* 응답받기 위한 값 설정하기  */
                 ResponseEntity<ResponseLifingImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseLifingImageAiDto.class);
 
-                /* 라이핑 작성자 생성 */
-                LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
-
                 /* 분석된 결과값 Long에 담기 */
                 Long analyzedLifingNo = res.getBody().getLifingCategoryNo();
 
                 /* 라이핑 이미지에 값 넣어주기 */
-                LifingImage lifingImage = new LifingImage(
-                        lifingPath,
-                        lifingAIImageDto.getLifingImageName(),
-                        changeName,
-                        analyzedLifingNo,
-                        lifingWriter
-                );
-                
+                Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifing.getLifingId(), 'N');
+                lifing = lifingData.get();
+                lifing.createAnalyzedLifingNo(analyzedLifingNo);
+
                 /* 라이핑 이미지 저장하기 */
-                lifingImageRepository.save(lifingImage);
+                lifingRepository.save(lifing);
 
                 log.info("[LifingImageService] insertImage End ===============");
 
@@ -147,74 +179,81 @@ public class LifingInfraService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 라이핑 이미지가 없을 경우 예외처리 */
-        if(lifingImageDto.getLifingImage() == null) {
+        if(lifingImageDto.getLifingImages() == null) {
             throw new NoContentException("라이핑에 이미지가 없습니다.");
         }
 
+        /* 라이핑 생성 반환 전송 객체 만들기 */
+        ResponseLifingDto responseLifingDto = new ResponseLifingDto();
+
         try {
+            /* 라이핑 이미지가 존재 한다면 */
+            if (lifingImageDto.getLifingImages() != null) {
 
-            String changeName = lifingImageDto.getLifingImageName() + "lifing_" + memberCode + ".png";
+                String lifingConetent = lifingImageDto.getLifingContent();
 
-            /* 라이핑 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
-            String lifingPath = s3LifingImageFile.upload(lifingImageDto.getLifingImage(), changeName, "images");
+                /* 라이핑 작성자 생성 */
+                LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
 
-            /* 라이핑 작성자 생성 */
-            LifingWriter lifingWriter = lifingWriterService.createLifingWriter(new MemberCode(memberCode));
+                /* 라이핑 생성하기 */
+                Lifing lifing = new Lifing(
+                        lifingWriter,
+                        lifingConetent
+                );
 
-            Long lifingNo = -1L;
-            Long lifingCategoryNo = -1L;
+                /* 라이핑 저장하기 */
+                lifingRepository.save(lifing);
 
-            /* 라이핑 이미지에 값 넣어주기 */
-            LifingImage lifingImage = new LifingImage(
-                    lifingPath,
-                    lifingImageDto.getLifingImageName(),
-                    changeName,
-                    lifingNo,
-                    lifingWriter
-            );
+                List<String> lifingImagePathList = new ArrayList<>();
 
-            /* 라이핑 이미지 저장하기 */
-            lifingImageRepository.save(lifingImage);
+                /* 이미지들 하나씩 꺼내오기 */
+                for (int i = 0; i < lifingImageDto.getLifingImages().size(); i++) {
 
-            String lifingConetent = lifingImageDto.getLifingContent();
+                    byte[] lifingByteImage = lifingImageDto.getLifingImages().get(i).getLifingImage();
+                    String originalName = lifingImageDto.getLifingImages().get(i).getLifingImageName();
+                    String changeName = UUID.randomUUID() + " - lifing_" + memberCode + ".png";
 
-            /* 라이핑 생성하기 */
-            Lifing lifing = new Lifing(
-                    lifingWriter,
-                    lifingNo,
-                    lifingCategoryNo,
-                    lifingConetent,
-                    lifingPath
-            );
+                    /* 라이핑 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
+                    String lifingImagePath = s3LifingImageFile.upload(lifingByteImage, changeName, "images");
 
-            /* 라이핑 저장하기 */
-            lifingRepository.save(lifing);
+                    /* 라이핑 이미지 생성 */
+                    LifingImage lifingImage = new LifingImage(
+                            lifingImagePath,
+                            originalName,
+                            changeName,
+                            lifing
+                    );
 
-            log.info("[LifingImageService] insertLifingImage End ===============");
+                    lifingImageRepository.save(lifingImage);
 
-            /* 라이핑 번호를 저장하기 위해 멤버 데이터 조회하기 */
-            Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
-            Member member = memberData.get();
-            member.changeLifingWithoutAI();
+                    /* 라이핑 이미지 경로 저장 */
+                    lifingImagePathList.add(lifingImagePath);
 
-            /* 멤버에 라이핑번호 정보 저장하기 */
-            memberRepository.save(member);
+                }
 
-            /* 라이핑 생성 반환 전송 객체 만들기 */
-            ResponseLifingDto responseLifingDto = new ResponseLifingDto();
+                /* 라이핑 번호를 저장하기 위해 멤버 데이터 조회하기 */
+                Optional<Member> memberData = memberRepository.findByMemberCode(memberCode);
+                Member member = memberData.get();
+                member.changeLifingWithoutAI();
 
-            responseLifingDto.setLifingId(lifing.getLifingId());
-            responseLifingDto.setLifingContent(lifing.getLifingConetent());
-            responseLifingDto.setLifingImagePath(lifing.getLifingImagePath());
-            responseLifingDto.setLifingNo(lifing.getLifingNo());
-            responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
-            responseLifingDto.setLifingWriter(lifing.getLifingWriter());
+                /* 멤버에 라이핑번호 정보 저장하기 */
+                memberRepository.save(member);
 
-            return responseLifingDto;
+                responseLifingDto.setLifingId(lifing.getLifingId());
+                responseLifingDto.setLifingContent(lifing.getLifingConetent());
+                responseLifingDto.setLifingNo(lifing.getLifingNo());
+                responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
+                responseLifingDto.setLifingWriter(lifing.getLifingWriter());
+
+                return responseLifingDto;
+
+            }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        return responseLifingDto;
     }
+
 }

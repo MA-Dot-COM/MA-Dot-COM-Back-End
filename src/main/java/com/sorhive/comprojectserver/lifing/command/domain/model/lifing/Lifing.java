@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingcomment.LifingComment;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -21,6 +23,7 @@ import java.util.List;
  * 2022-11-02       부시연           최초 생성
  * 2022-11-12       부시연           총 허니 개수 추가
  * 2022-11-15       부시연           총 허니 개수 null 값 대응
+ * 2022-11-16       부시연           분석된 라이핑 이미지 컬럼 추가 && 라이핑 이미지 연관관계 매핑
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -45,8 +48,10 @@ public class Lifing {
     @Column(name = "lifing_category_no")
     private Long lifingCategoryNo;
 
-    @Column(name = "lifing_image_path")
-    private String lifingImagePath;
+    @JsonIgnore
+    @Column(name = "anaylzed_lifing_no")
+    @ColumnDefault("-1")
+    private Long analyzedLifingNo;
 
     private LifingWriter lifingWriter;
 
@@ -73,17 +78,43 @@ public class Lifing {
     @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
     private List<LifingComment> lifingComments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
+    private List<LifingImage> lifingImages = new ArrayList<>();
+
     protected Lifing() { }
 
-    public Lifing(LifingWriter lifingWriter, Long lifingNo, Long lifingCategoryNo, String lifingConetent, String lifingImagePath) {
+    public Lifing(LifingWriter lifingWriter, Long lifingNo, Long lifingCategoryNo, String lifingConetent) {
         this.lifingWriter = lifingWriter;
         this.lifingNo = lifingNo;
         this.lifingConetent = lifingConetent;
         this.lifingCategoryNo = lifingCategoryNo;
-        this.lifingImagePath = lifingImagePath;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = 'N';
+    }
+
+    public Lifing(LifingWriter lifingWriter, String lifingConetent) {
+        this.lifingWriter = lifingWriter;
+        this.lifingConetent = lifingConetent;
+        this.lifingNo = -1L;
+        this.lifingCategoryNo = -1L;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+    }
+    /* 라이핑 AI 분석된 라이핑 번호 설정하기 */
+    public void createAnalyzedLifingNo(Long analyzedLifingNo) {
+
+        this.analyzedLifingNo = analyzedLifingNo;
+        
+    }
+    
+    public Lifing(LifingWriter lifingWriter) {
+        this.lifingWriter = lifingWriter;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+
     }
 
     /** 허니 총 수 계산 */
@@ -95,4 +126,5 @@ public class Lifing {
         }
         this.honeyCount += honeyCount;
     }
+
 }
