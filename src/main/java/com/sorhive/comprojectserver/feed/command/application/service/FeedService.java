@@ -3,26 +3,19 @@ package com.sorhive.comprojectserver.feed.command.application.service;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedCommentDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.ResponseHoneyCreateDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.ResponseHoneyDeleteDto;
-import com.sorhive.comprojectserver.feed.command.application.exception.AlreadyHoneyException;
 import com.sorhive.comprojectserver.feed.command.application.exception.NoFeedException;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
-import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedId;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedcomment.FeedComment;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedcomment.FeedCommentWriter;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedcomment.FeedCommentWriterService;
-import com.sorhive.comprojectserver.feed.command.domain.model.honey.Honey;
 import com.sorhive.comprojectserver.feed.command.domain.repository.FeedCommentRepository;
 import com.sorhive.comprojectserver.feed.command.domain.repository.FeedRepository;
-import com.sorhive.comprojectserver.feed.command.domain.repository.HoneyRepository;
+import com.sorhive.comprojectserver.lifing.command.domain.repository.HoneyRepository;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 /**
  * <pre>
@@ -95,78 +88,4 @@ public class FeedService {
 
     }
 
-    /* 허니 추가 */
-    @Transactional
-    public ResponseHoneyCreateDto createHoney(String accessToken, Long feedId) {
-
-        log.info("[FeedService] createHoney Start =========================================================");
-        log.info("[FeedService] feedId : " + feedId);
-
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-        Optional<Feed> feedData = feedRepository.findByFeedIdAndDeleteYnEquals(feedId, 'N');
-
-        if(feedData == null) {
-            throw new NoFeedException("해당 피드가 존재하지 않습니다.");
-        }
-
-        if(!honeyRepository.findByMemberCodeAndFeedIdAndDeleteYnEquals(new MemberCode(memberCode), new FeedId(feedId), 'N').isEmpty() ) {
-            throw new AlreadyHoneyException("이미 허니를 했습니다.");
-        }
-
-        Feed feed = feedData.get();
-        feed.setHoneyCount(1);
-        feedRepository.save(feed);
-
-        Honey honey = new Honey(
-                new MemberCode(memberCode),
-                new FeedId(feedId)
-        );
-
-        honeyRepository.save(honey);
-
-        ResponseHoneyCreateDto responseHoneyCreateDto = new ResponseHoneyCreateDto();
-        responseHoneyCreateDto.setHoneyId(honey.getId());
-        responseHoneyCreateDto.setFeedId(honey.getFeedId().getValue());
-        responseHoneyCreateDto.setMemberCode(honey.getMemberCode().getValue());
-        responseHoneyCreateDto.setCreateTime(honey.getCreateTime());
-
-        return responseHoneyCreateDto;
-
-    }
-    
-    /* 허니 취소 */
-    @Transactional
-    public ResponseHoneyDeleteDto deleteHoney(String accessToken, Long feedId) {
-
-        log.info("[FeedService] deleteHoney Start =========================================================");
-        log.info("[FeedService] feedId : " + feedId);
-
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-        Optional<Feed> feedData = feedRepository.findByFeedIdAndDeleteYnEquals(feedId, 'N');
-
-        if(feedData == null) {
-            throw new NoFeedException();
-        }
-
-        Feed feed = feedData.get();
-        feed.setHoneyCount(-1);
-        feedRepository.save(feed);
-
-        Optional<Honey> honeyData = honeyRepository.findByMemberCodeAndFeedIdAndDeleteYnEquals(new MemberCode(memberCode), new FeedId(feedId), 'N');
-
-        Honey honey = honeyData.get();
-        honey.setDeleteYn('Y');
-        honeyRepository.save(honey);
-
-        ResponseHoneyDeleteDto responseHoneyDeleteDto = new ResponseHoneyDeleteDto();
-        responseHoneyDeleteDto.setHoneyId(honey.getId());
-        responseHoneyDeleteDto.setFeedId(honey.getFeedId().getValue());
-        responseHoneyDeleteDto.setMemberCode(honey.getMemberCode().getValue());
-        responseHoneyDeleteDto.setDeleteTime(honey.getDeleteTime());
-
-        return responseHoneyDeleteDto;
-
-    }
 }

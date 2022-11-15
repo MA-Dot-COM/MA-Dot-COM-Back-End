@@ -19,8 +19,6 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
- * 2022-11-12       부시연           총 허니 개수 추가
- * 2022-11-15       부시연           총 허니 개수 null 값 대응
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -54,10 +52,6 @@ public class Feed {
     @ColumnDefault(value = "'N'")
     private Character deleteYn;
 
-    @Column(name = "honey_count")
-    @ColumnDefault("0")
-    private Integer honeyCount;
-
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     protected List<FeedComment> feedComments = new ArrayList<>();
 
@@ -76,13 +70,4 @@ public class Feed {
 
     }
 
-    /** 허니 총 수 계산 */
-    public void setHoneyCount(Integer honeyCount) {
-        
-        /* 허니 총 수가 null 일 경우 0으로 초기화 */
-        if(this.honeyCount == null) {
-            this.honeyCount = 0;
-        }
-        this.honeyCount += honeyCount;
-    }
 }

@@ -1,9 +1,11 @@
-package com.sorhive.comprojectserver.feed.query.dto;
+package com.sorhive.comprojectserver.lifing.query.dto;
+
+import lombok.Getter;
 
 /**
  * <pre>
- * Class : HoneyDto
- * Comment: 허니 전송 객체
+ * Class : LifingImageData
+ * Comment: 라이핑 이미지 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -15,5 +17,11 @@ package com.sorhive.comprojectserver.feed.query.dto;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public class HoneyDto {
+@Getter
+public class LifingImagePath {
+
+    private Long id;
+    private String lifingPath;
+    private Long analyzedLifingNo;
+
 }

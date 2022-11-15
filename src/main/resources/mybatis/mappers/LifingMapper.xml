@@ -4,13 +4,13 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sorhive.comprojectserver.lifing.query.LifingMapper">
 
-    <resultMap id="lifingPathResultMap" type="com.sorhive.comprojectserver.lifing.query.LifingImagePath">
+    <resultMap id="lifingPathResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingImagePath">
         <id property="id" column="lifing_image_id"/>
         <result property="lifingPath" column="lifing_image_path"/>
         <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
     </resultMap>
 
-    <resultMap id="lifingResultMap" type="com.sorhive.comprojectserver.lifing.query.LifingData">
+    <resultMap id="lifingResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingData">
         <id property="lifingId" column="lifing_id"/>
         <result property="lifingConetent" column="lifing_content"/>
         <result property="lifingNo" column="lifing_no"/>
@@ -21,6 +21,24 @@
         <result property="lifingWriterName" column="lifing_writer_name"/>
         <result property="uploadTime" column="lifing_upload_time"/>
         <result property="deleteYn" column="lifing_delete_yn"/>
+        <association property="lifingCommentData" resultMap="lifingCommentResultMap"></association>
+    </resultMap>
+
+    <resultMap id="honeyResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.HoneyData">
+        <id property="honeyId" column="honey_id"/>
+        <result property="honeyCreateTime" column="honey_create_time"/>
+        <result property="honeyDeleteYn" column="honey_delete_yn"/>
+        <result property="lifingId" column="lifing_id"/>
+        <result property="memberCode" column="member_code"/>
+    </resultMap>
+
+    <resultMap id="lifingCommentResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingCommentData">
+        <id property="lifingCommentId" column="lifing_comment_id"/>
+        <result property="lifingCommentContent" column="lifing_comment_content"/>
+        <result property="lifingCommentWriterName" column="lifing_comment_writer_name"/>
+        <result property="lifingCommentWriterId" column="lifing_comment_writer_id"/>
+        <result property="lifingCommentCreateTime" column="lifing_comment_create_time"/>
+        <result property="lifingCommentDeleteYn" column="lifing_comment_delete_yn"/>
     </resultMap>
 
     <select id="findLifingImageByMemberCode" resultMap="lifingPathResultMap">
@@ -51,5 +69,27 @@
            and a.lifing_delete_yn = 'N'
          order by a.lifing_upload_time desc
          limit 3 offset #{pageNo}
+    </select>
+
+    <select id="countHoney" resultMap="honeyResultMap">
+        select
+               count(lifing_id)
+          from tbl_honey
+         where lifing_id = ${lifingId}
+           and a.lifing_delete_yn = 'N'
+    </select>
+
+    <select id="selectAllLifingComments" resultMap="lifingCommentResultMap">
+        select
+               lifing_comment_id
+             , lifing_comment_content
+             , lifing_comment_writer_name
+             , lifing_comment_writer_id
+             , lifing_comment_create_time
+             , lifing_comment_delete_yn
+          from tbl_lifing_comments
+         where fk_lifing_id = #{lifingId}
+           and lifing_comment_delete_yn = 'N'
+         order by lifing_comment_id desc
     </select>
 </mapper>

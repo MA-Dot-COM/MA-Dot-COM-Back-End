@@ -13,7 +13,6 @@ import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWri
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingImageRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
-import com.sorhive.comprojectserver.lifing.query.LifingMapper;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
@@ -61,7 +60,6 @@ public class LifingInfraService {
 
     private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
-    private final LifingMapper lifingMapper;
     private final MemberRepository memberRepository;
 
     @Value("${url.lifing}")

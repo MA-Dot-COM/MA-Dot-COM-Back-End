@@ -1,7 +1,7 @@
-package com.sorhive.comprojectserver.feed.command.domain.repository;
+package com.sorhive.comprojectserver.lifing.command.domain.repository;
 
-import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedId;
-import com.sorhive.comprojectserver.feed.command.domain.model.honey.Honey;
+import com.sorhive.comprojectserver.lifing.command.domain.model.honey.Honey;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingId;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import org.springframework.data.repository.Repository;
 
@@ -25,5 +25,6 @@ import java.util.Optional;
 public interface HoneyRepository extends Repository<Honey, Long> {
     
     void save(Honey honey);
-    Optional<Honey> findByMemberCodeAndFeedIdAndDeleteYnEquals(MemberCode memberCode, FeedId feedId, char n);
+    Optional<Honey> findByMemberCodeAndLifingIdAndDeleteYnEquals(MemberCode memberCode, LifingId lifingId, char n);
+
 }

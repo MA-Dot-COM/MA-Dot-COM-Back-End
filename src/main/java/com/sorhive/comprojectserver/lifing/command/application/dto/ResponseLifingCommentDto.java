@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.feed.command.application.dto;
+package com.sorhive.comprojectserver.lifing.command.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,13 +7,13 @@ import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : ResponseHoneyDto
- * Comment: 허니 생성 응답 객체
+ * Class : ResponseLifingCommentDto
+ * Comment: 라이핑 댓글 응답 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-12       부시연           최초 생성
+ * 2022-11-15       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,11 +22,10 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-public class ResponseHoneyCreateDto {
+public class ResponseLifingCommentDto {
 
-    private Long honeyId;
-    private Long memberCode;
-    private Long feedId;
-    private Timestamp createTime;
+    private Long lifingCommentId;
+    private String lifingCommentcontent;
+    private Timestamp lifingCommentCreateTime;
 
 }

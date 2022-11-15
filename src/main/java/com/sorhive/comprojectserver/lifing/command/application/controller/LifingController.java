@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.lifing.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingAIImageDto;
+import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCommentCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingCreateDto;
 import com.sorhive.comprojectserver.lifing.command.application.dto.LifingImageDto;
 import com.sorhive.comprojectserver.lifing.command.application.service.LifingService;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-11       부시연           최초 생성
  * 2022-11-11       부시연           라이핑 이미지 생성 추가
  * 2022-11-12       부시연           라이핑 생성 추가
+ * 2022-11-15       부시연           허니 추가
+ * 2022-11-15       부시연           허니 제거
+ * 2022-11-15       부시연           라이핑 댓글 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -80,4 +84,44 @@ public class LifingController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 생성 성공", lifingService.createLifing(accessToken, lifingCreateDto)));
 
     }
+    
+    /** 허니 생성 */
+    @PostMapping("honey/{lifingId}")
+    public ResponseEntity<ResponseDto> createHoney(@RequestHeader String Authorization, @PathVariable Long lifingId) {
+
+        log.info("[LifingController] createHoney Start ============================");
+        log.info("[lifingId] " + lifingId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "허니 추가 성공", lifingService.createHoney(accessToken, lifingId)));
+
+    }
+
+    /** 허니 제거 */
+    @DeleteMapping("honey/{lifingId}")
+    public ResponseEntity<ResponseDto> deleteHoney(@RequestHeader String Authorization, @PathVariable Long lifingId) {
+
+        log.info("[LifingController] deleteHoney Start ============================");
+        log.info("[lifingId] " + lifingId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "허니 삭제 성공", lifingService.deleteHoney(accessToken, lifingId)));
+
+    }
+
+    /** 라이핑 댓글 작성 */
+    @PostMapping("lifing/comment/{lifingId}")
+    public ResponseEntity<ResponseDto> createLifingComment(@RequestHeader String Authorization, @PathVariable Long lifingId, @RequestBody LifingCommentCreateDto lifingCommentCreateDto) {
+
+        log.info("[LifingController] createLifingComment Start ============================");
+        log.info("[lifingId] " + lifingId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 댓글 추가 성공", lifingService.createLifingComment(accessToken, lifingId, lifingCommentCreateDto)));
+
+    }
+    
 }

@@ -3,6 +3,8 @@ package com.sorhive.comprojectserver.lifing.command.domain.repository;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import org.springframework.data.repository.Repository;
 
+import java.util.Optional;
+
 /**
  * <pre>
  * Class : LifingRepository
@@ -22,4 +24,6 @@ public interface LifingRepository extends Repository<Lifing, Long> {
     void save(Lifing lifing);
 
     Lifing findByLifingId(Long lifingId);
+
+    Optional<Lifing> findByLifingIdAndDeleteYnEquals(Long lifingId, char n);
 }

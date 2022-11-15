@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.lifing.query;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.lifing.query.dto.LifingRequestDto;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
