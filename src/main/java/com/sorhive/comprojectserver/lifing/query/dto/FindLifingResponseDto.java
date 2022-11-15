@@ -14,6 +14,8 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-14       부시연           최초 생성
+ * 2022-11-15       부시연           라이핑 댓글 목록 추가
+ * 2022-11-16       부시연           라이핑 이미지 목록 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -27,5 +29,7 @@ public class FindLifingResponseDto {
     private LifingData lifingData;
 
     private List<LifingCommentData> lifingCommentDataList;
+
+    private List<LifingImagePath> lifingImagePathList;
 
 }

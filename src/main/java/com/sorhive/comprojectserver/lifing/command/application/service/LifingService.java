@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,6 +43,7 @@ import java.util.Optional;
  * 2022-11-15       부시연           허니 추가
  * 2022-11-15       부시연           허니 제거
  * 2022-11-15       부시연           라이핑 댓글 저장
+ * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -107,15 +109,12 @@ public class LifingService {
         Long lifingCategoryNo = lifingCreateDto.getLifingCategoryNo();
         String lifingConetent = lifingCreateDto.getLifingContent();
 
-        LifingImagePath lifingImagePath = lifingMapper.findLifingImageByMemberCode(memberCode);
-
         /* 라이핑 생성하기 */
         Lifing lifing = new Lifing(
                 lifingWriter,
                 lifingNo,
                 lifingCategoryNo,
-                lifingConetent,
-                lifingImagePath.getLifingPath()
+                lifingConetent
         );
 
         /* 라이핑 저장하기 */
@@ -134,7 +133,6 @@ public class LifingService {
 
         responseLifingDto.setLifingId(lifing.getLifingId());
         responseLifingDto.setLifingContent(lifing.getLifingConetent());
-        responseLifingDto.setLifingImagePath(lifing.getLifingImagePath());
         responseLifingDto.setLifingNo(lifing.getLifingNo());
         responseLifingDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
         responseLifingDto.setLifingCreateTime(lifing.getCreateTime());

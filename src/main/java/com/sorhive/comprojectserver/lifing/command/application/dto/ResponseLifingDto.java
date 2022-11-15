@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <pre>
@@ -15,6 +16,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
  * </pre>
  * @version 1(클래스 버전)
  * @author 부시연(최초 작성자)
@@ -26,10 +28,10 @@ public class ResponseLifingDto {
 
     private Long lifingId;
     private String lifingContent;
-    private String lifingImagePath;
     private Long lifingNo;
     private Long lifingCategoryNo;
     private Timestamp lifingCreateTime;
     private LifingWriter lifingWriter;
+    private List<String> lifingImagePath;
 
 }

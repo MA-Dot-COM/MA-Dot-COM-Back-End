@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage;
 
-import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -17,6 +17,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
+ * 2022-11-15       부시연           분석된 라이핑 이미지 컬럼 제거 && 라이핑 컬럼 연관관계 매핑
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -43,23 +44,21 @@ public class LifingImage {
     @Column(name = "lifing_saved_name")
     private String savedName;
 
-    @Column(name = "anaylzed_lifing_no")
-    private Long analyzedLifingNo;
-
     @Column(name = "lifing_upload_time")
     private Timestamp uploadTime;
 
-    private LifingWriter lifingWriter;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lifing_id")
+    private Lifing lifing;
 
     protected LifingImage() { }
-    public LifingImage(String path, String orginalName, String savedName, Long analyzedLifingNo, LifingWriter lifingWriter) {
+    public LifingImage(String path, String orginalName, String savedName, Lifing lifingId) {
 
         this.path = path;
         this.orginalName = orginalName;
         this.savedName = savedName;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
-        this.analyzedLifingNo = analyzedLifingNo;
-        this.lifingWriter = lifingWriter;
+        this.lifing = lifingId;
 
     }
 

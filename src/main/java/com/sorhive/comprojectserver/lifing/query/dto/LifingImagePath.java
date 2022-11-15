@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.lifing.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Getter;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-16       부시연           분석된 이미지 제거 && 변수명 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -20,8 +22,10 @@ import lombok.Getter;
 @Getter
 public class LifingImagePath {
 
-    private Long id;
-    private String lifingPath;
-    private Long analyzedLifingNo;
+    private Long lifingImageId;
+    private String lifingImagePath;
+
+    @JsonIgnore
+    private String lifingId;
 
 }
