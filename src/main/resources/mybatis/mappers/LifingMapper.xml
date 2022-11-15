@@ -35,6 +35,7 @@
     <resultMap id="lifingCommentResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingCommentData">
         <id property="lifingCommentId" column="lifing_comment_id"/>
         <result property="lifingCommentContent" column="lifing_comment_content"/>
+        <result property="lifingCommentWriterCode" column="lifing_comment_writer_code"/>
         <result property="lifingCommentWriterName" column="lifing_comment_writer_name"/>
         <result property="lifingCommentWriterId" column="lifing_comment_writer_id"/>
         <result property="lifingCommentCreateTime" column="lifing_comment_create_time"/>
@@ -83,6 +84,7 @@
         select
                lifing_comment_id
              , lifing_comment_content
+             , lifing_comment_writer_code
              , lifing_comment_writer_name
              , lifing_comment_writer_id
              , lifing_comment_create_time

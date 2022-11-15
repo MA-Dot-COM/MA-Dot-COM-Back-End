@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 /**
  * <pre>
  * Class : LifingCommentWriter
- * Comment: 피드 댓글 작성자 도메인
+ * Comment: 라이핑 댓글 작성자 도메인
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
