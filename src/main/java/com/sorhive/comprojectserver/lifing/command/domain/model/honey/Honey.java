@@ -1,6 +1,6 @@
-package com.sorhive.comprojectserver.feed.command.domain.model.honey;
+package com.sorhive.comprojectserver.lifing.command.domain.model.honey;
 
-import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedId;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingId;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -43,15 +43,15 @@ public class Honey {
     private Character deleteYn;
 
     @Embedded
-    private FeedId feedId;
+    private LifingId lifingId;
 
     @Embedded
     private MemberCode memberCode;
 
     protected Honey() {}
 
-    public Honey(MemberCode memberCode, FeedId feedId) {
-        this.feedId = feedId;
+    public Honey(MemberCode memberCode, LifingId lifingId) {
+        this.lifingId = lifingId;
         this.memberCode = memberCode;
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = 'N';

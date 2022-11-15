@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.lifing.query;
+package com.sorhive.comprojectserver.lifing.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
@@ -66,6 +66,9 @@ public class LifingData {
     @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
     private List<LifingVisit> lifingVisitList = new ArrayList<LifingVisit>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
+    private List<LifingCommentData> lifingCommentData = new ArrayList<>();
 
     protected LifingData() {}
 

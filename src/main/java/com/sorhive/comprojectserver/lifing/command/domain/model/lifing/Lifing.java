@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.lifing.command.domain.model.lifing;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifingcomment.LifingComment;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
@@ -18,6 +19,8 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
+ * 2022-11-12       부시연           총 허니 개수 추가
+ * 2022-11-15       부시연           총 허니 개수 null 값 대응
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -63,6 +66,13 @@ public class Lifing {
     @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
     private List<LifingVisit> lifingVisitList = new ArrayList<LifingVisit>();
 
+    @Column(name = "honey_count")
+    @ColumnDefault("0")
+    private Integer honeyCount;
+
+    @OneToMany(mappedBy = "lifing", cascade = CascadeType.ALL)
+    private List<LifingComment> lifingComments = new ArrayList<>();
+
     protected Lifing() { }
 
     public Lifing(LifingWriter lifingWriter, Long lifingNo, Long lifingCategoryNo, String lifingConetent, String lifingImagePath) {
@@ -74,5 +84,15 @@ public class Lifing {
         this.createTime = new Timestamp(System.currentTimeMillis());
         this.uploadTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = 'N';
+    }
+
+    /** 허니 총 수 계산 */
+    public void setHoneyCount(Integer honeyCount) {
+
+        /* 허니 총 수가 null 일 경우 0으로 초기화 */
+        if(this.honeyCount == null) {
+            this.honeyCount = 0;
+        }
+        this.honeyCount += honeyCount;
     }
 }

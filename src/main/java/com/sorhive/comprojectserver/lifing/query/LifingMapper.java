@@ -1,5 +1,8 @@
 package com.sorhive.comprojectserver.lifing.query;
 
+import com.sorhive.comprojectserver.lifing.query.dto.LifingCommentData;
+import com.sorhive.comprojectserver.lifing.query.dto.LifingData;
+import com.sorhive.comprojectserver.lifing.query.dto.LifingImagePath;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,4 +28,6 @@ public interface LifingMapper {
     LifingImagePath findLifingImageByMemberCode(Long memberCode);
 
     List<LifingData> findAllLifingByMemberCode(int pageNo, int memberCode);
+
+    List<LifingCommentData> selectAllLifingComments(Long lifingId);
 }

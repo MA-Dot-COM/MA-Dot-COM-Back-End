@@ -29,7 +29,6 @@ public class FeedSummary {
     private String feedWriterId;
     private String feedContent;
     private Timestamp feedCreateTime;
-    private Long honeyCount;
 
     private List<FeedCommentSummary> feedCommentSummary;
     private List<FeedImageSummary> feedImageSummary;

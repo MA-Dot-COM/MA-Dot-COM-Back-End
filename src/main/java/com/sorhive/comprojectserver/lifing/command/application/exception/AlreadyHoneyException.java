@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.feed.command.application.exception;
+package com.sorhive.comprojectserver.lifing.command.application.exception;
 /**
  * <pre>
  * Class : AlreadyHoneyException
@@ -8,6 +8,7 @@ package com.sorhive.comprojectserver.feed.command.application.exception;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
+ * 2022-11-15       부시연           라이핑으로 이동
  * </pre>
  *
  * @author 부시연(최초 작성자)

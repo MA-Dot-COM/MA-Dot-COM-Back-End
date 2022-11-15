@@ -1,7 +1,9 @@
-package com.sorhive.comprojectserver.lifing.query;
+package com.sorhive.comprojectserver.lifing.query.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -23,5 +25,7 @@ import lombok.Setter;
 public class FindLifingResponseDto {
 
     private LifingData lifingData;
+
+    private List<LifingCommentData> lifingCommentDataList;
 
 }

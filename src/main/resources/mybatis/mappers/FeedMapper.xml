@@ -31,14 +31,6 @@
         <result property="feedCommentDeleteYn" column="feed_comment_delete_yn"/>
     </resultMap>
 
-    <resultMap id="honeyResultMap" type="com.sorhive.comprojectserver.feed.query.dto.HoneyDto">
-        <id property="honeyId" column="honey_id"/>
-        <result property="honeyCreateTime" column="honey_create_time"/>
-        <result property="honeyDeleteYn" column="honey_delete_yn"/>
-        <result property="feedId" column="feed_id"/>
-        <result property="memberCode" column="member_code"/>
-    </resultMap>
-
     <select id="selectAllFeed" resultMap="feedResultMap">
         select
                a.feed_id
@@ -47,7 +39,6 @@
              , a.feed_writer_id
              , a.feed_create_time
              , a.feed_delete_yn
-             , a.honey_count
              , b.feed_image_path
           from tbl_feeds a
           left join tbl_feed_images b on(a.feed_id = b.feed_id)
@@ -63,7 +54,6 @@
              , feed_content
              , feed_writer_name
              , feed_writer_id
-             , honey_count
              , feed_create_time
              , feed_delete_yn
           from tbl_feeds
@@ -84,6 +74,7 @@
            and a.feed_delete_yn = 'N'
          order by feed_comment_id desc
     </select>
+
     <select id="selectAllFeedImages" resultMap="feedImageResultMap">
         select
                feed_image_id
@@ -91,14 +82,6 @@
              , feed_original_name
           from tbl_feed_images
          where feed_id = #{feedId}
-           and a.feed_delete_yn = 'N'
-    </select>
-
-    <select id="countHoney" resultMap="honeyResultMap">
-        select
-               count(feed_id)
-          from tbl_honey
-         where feed_id = ${feedId}
            and a.feed_delete_yn = 'N'
     </select>
 

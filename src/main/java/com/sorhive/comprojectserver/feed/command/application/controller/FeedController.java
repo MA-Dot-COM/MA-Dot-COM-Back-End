@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-12       부시연           최초 생성
  * 2022-11-12       부시연           피드 생성 추가
  * 2022-11-12       부시연           피드 댓글 생성 추가
- * 2022-11-12       부시연           허니 생성 추가
- * 2022-11-12       부시연           허니 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -69,29 +67,4 @@ public class FeedController {
 
     }
 
-    /* 허니 생성 */
-    @PostMapping("honey/{feedId}")
-    public ResponseEntity<ResponseDto> createHoney(@RequestHeader String Authorization, @PathVariable Long feedId) {
-
-        log.info("[FeedController] createHoney Start ============================");
-        log.info("[feedId] " + feedId);
-
-        String accessToken = Authorization.substring(7);
-
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "허니 추가 성공", feedService.createHoney(accessToken, feedId)));
-
-    }
-
-    /* 허니 제거 */
-    @DeleteMapping("honey/{feedId}")
-    public ResponseEntity<ResponseDto> deleteHoney(@RequestHeader String Authorization, @PathVariable Long feedId) {
-
-        log.info("[FeedController] deleteHoney Start ============================");
-        log.info("[feedId] " + feedId);
-
-        String accessToken = Authorization.substring(7);
-
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "허니 삭제 성공", feedService.deleteHoney(accessToken, feedId)));
-
-    }
 }
