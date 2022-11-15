@@ -3,7 +3,7 @@ package com.sorhive.comprojectserver.lifing.query.dto;
 /**
  * <pre>
  * Class : HoneyData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 허니 반환 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

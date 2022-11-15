@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : FindLifingResponseDto
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 라이핑 상세 조회 반환 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

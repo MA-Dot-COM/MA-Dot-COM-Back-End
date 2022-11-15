@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : LifingCommentSummary
- * Comment: 피드 댓글 전송 객체
+ * Comment: 라이핑 댓글 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -35,6 +35,8 @@ public class LifingCommentData {
     @Column(name = "lifing_comment_content")
     private String lifingCommentContent;
 
+    @Column(name = "lifing_comment_writer_code")
+    private Long lifingCommentWriterCode;
 
     @Column(name = "lifing_comment_writer_name")
     private String lifingCommentWriterName;
@@ -44,6 +46,7 @@ public class LifingCommentData {
 
     @Column(name = "lifing_comment_delete_yn")
     private Character lifingCommentDeleteYn;
+
     @Column(name = "lifing_comment_create_time")
     private Timestamp lifingCommentCreateTime;
 
