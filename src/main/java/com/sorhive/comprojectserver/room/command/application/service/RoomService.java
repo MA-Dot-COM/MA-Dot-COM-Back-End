@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.room.command.application.service;
 
+import com.sorhive.comprojectserver.common.exception.AlreadyDeleteException;
 import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
@@ -32,6 +33,7 @@ import java.util.Optional;
  * 2022-11-13       부시연           최초 생성
  * 2022-11-13       부시연           방명록 생성 추가
  * 2022-11-16       부시연           방명록 수정 추가
+ * 2022-11-16       부시연           방명록 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -116,14 +118,18 @@ public class RoomService {
         String guestBookContent = guestBookUpdateRequestDto.getContent();
         Long guestBookId = guestBookUpdateRequestDto.getGuestBookId();
 
+        if(guestBookRepository.findById(guestBookId) == null) {
+            throw new NoGuestBookException("해당 방명록은 존재하지 않습니다.");
+        }
+
+        GuestBook guestBookFind = guestBookRepository.findById(guestBookId);
+        if(guestBookFind.getDeleteYn() == 'Y') {
+            throw new AlreadyDeleteException("해당 방명록은 이미 삭제 됐습니다.");
+        }
+
         /* 방번호에 맞는 방 찾기 */
         Optional<GuestBook> guestBookData = guestBookRepository.findByIdAndDeleteYnEquals(guestBookId, 'N');
         GuestBook guestBook = guestBookData.get();
-
-
-        if(guestBook == null) {
-            throw new NoGuestBookException("해당 방명록은 존재하지 않습니다.");
-        }
 
         if(guestBook.getGuestBookWriter().getMemberCode().getValue() != memberCode) {
             throw new NotSameWriterException("방명록 작성자와 요청자가 다릅니다");
@@ -150,5 +156,35 @@ public class RoomService {
         log.info("[RoomService] updateGuestBook End ===================================");
 
         return guestBookResponseDto;
+    }
+
+    public Object deleteGuestBook(String accessToken, Long guestBookId) {
+
+        log.info("[RoomService] deleteGuestBook Start ===================================");
+        log.info("[RoomService] guestBookId ", guestBookId);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(guestBookRepository.findById(guestBookId) == null) {
+            throw new NoGuestBookException("해당 방명록은 존재하지 않습니다.");
+        }
+
+        GuestBook guestBookFind = guestBookRepository.findById(guestBookId);
+        if(guestBookFind.getDeleteYn() == 'Y') {
+            throw new AlreadyDeleteException("해당 방명록은 이미 삭제 됐습니다.");
+        }
+
+        Optional<GuestBook> guestBookData = guestBookRepository.findByIdAndDeleteYnEquals(guestBookId, 'N');
+        GuestBook guestBook = guestBookData.get();
+
+        if(guestBook.getGuestBookWriter().getMemberCode().getValue() != memberCode) {
+            throw new NotSameWriterException("방명록 작성자와 요청자가 다릅니다");
+        }
+
+        guestBook.deleteGuestBook('Y');
+        guestBookRepository.save(guestBook);
+
+        return guestBook.getId();
+
     }
 }
