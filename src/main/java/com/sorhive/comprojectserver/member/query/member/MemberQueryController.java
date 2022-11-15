@@ -113,7 +113,7 @@ public class MemberQueryController {
     @GetMapping("member/{memberCode}")
     public ResponseEntity<ResponseDto> selectMemberByMemberCode(@PathVariable Long memberCode) {
 
-        log.info("[MemberQueryController] selectMypage Start =================");
+        log.info("[MemberQueryController] selectMemberByMemberCode Start =================");
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 상세 조회 성공", memberQueryService.selectMemberByMemberCode(memberCode)));
     }

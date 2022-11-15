@@ -14,6 +14,7 @@ import java.util.Date;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-13       부시연           최초 생성
+ * 2022-11-16       부시연           방명록에 생성, 수정에 대한 응답 전송 객체로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,7 +23,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class GuestBookCreateResponseDto {
+public class GuestBookResponseDto {
 
     private Long guestBookId;
     private String guestBookContent;

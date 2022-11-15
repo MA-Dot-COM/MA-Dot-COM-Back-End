@@ -9,6 +9,7 @@ import com.sorhive.comprojectserver.room.command.domain.room.MongoRoom;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomId;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
+import com.sorhive.comprojectserver.room.execption.NoRoomException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
