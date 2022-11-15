@@ -19,7 +19,8 @@ import java.util.Date;
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
  * 2022-11-13       부시연           @CreationTimestamp 를 이용하여 기본 생성 시간 추가
- * 2022-11-16       부시연           updateGuestBook 추가
+ * 2022-11-16       부시연           updateGuestBook 방명록 수정 추가
+ * 2022-11-16       부시연           deleteGuestBook 방명록 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -78,5 +79,10 @@ public class GuestBook {
         this.content = guestBookContent;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
 
+    }
+
+    public void deleteGuestBook(char deleteYn) {
+        this.deleteTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = deleteYn;
     }
 }

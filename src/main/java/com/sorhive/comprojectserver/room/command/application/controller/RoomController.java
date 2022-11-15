@@ -28,6 +28,7 @@ import javax.validation.Valid;
  * 2022-11-13       부시연           방명록 생성 추가
  * 2022-11-13       부시연           서비스, 인프라 서비스 분리
  * 2022-11-16       부시연           방명록 수정 추가
+ * 2022-11-16       부시연           방명록 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -80,5 +81,16 @@ public class RoomController {
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방명록 수정 성공", roomService.updateGuestBook(accessToken, guestBookUpdateRequestDto)));
+    }
+
+    /** 방명록 삭제 */
+    @DeleteMapping(value = "guestbook/{guestbookId}")
+    public ResponseEntity<ResponseDto> deleteGuestBook(@RequestHeader String Authorization, @PathVariable("guestbookId") Long guestBookId) {
+
+        log.info("[RoomController] deleteGuestBook Start ===================");
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "방명록 삭제 성공", roomService.deleteGuestBook(accessToken, guestBookId)));
     }
 }
