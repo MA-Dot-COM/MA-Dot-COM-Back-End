@@ -351,4 +351,28 @@ public class MemberQueryService {
 
         return mypageDto;
     }
+
+
+    /** 회원 상세 조회 */
+    public MypageDto selectMemberByMemberCode(Long memberCode) {
+
+        log.info("[MemberQueryService] selectMypage Start ================");
+
+        /* 회원 상세 정보 불러오기 */
+        MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
+
+        /* 회원 상세 정보 응답 전송 객체 만들기*/
+        MypageDto mypageDto = new MypageDto();
+
+        /* 마이페이지 응답 전송객체에 값 넣어주기 */
+        mypageDto.setMemberId(memberSummary.getMemberId());
+        mypageDto.setMemberCode(memberSummary.getMemberCode());
+        mypageDto.setMemberName(memberSummary.getMemberName());
+        mypageDto.setMemberRoomImage(memberSummary.getRoomImage());
+        mypageDto.setFeedCount(memberMapper.countFeed(memberCode));
+        mypageDto.setFollowerCount(memberMapper.countFollower(memberCode));
+        mypageDto.setFollowingCount(memberMapper.countFollowing(memberCode));
+
+        return mypageDto;
+    }
 }
