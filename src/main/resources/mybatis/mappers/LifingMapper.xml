@@ -26,10 +26,10 @@
         <association property="lifingImages" resultMap="lifingPathResultMap"></association>
     </resultMap>
 
-    <resultMap id="honeyResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.HoneyData">
-        <id property="honeyId" column="honey_id"/>
-        <result property="honeyCreateTime" column="honey_create_time"/>
-        <result property="honeyDeleteYn" column="honey_delete_yn"/>
+    <resultMap id="lifingHoneyResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingHoneyData">
+        <id property="lifingHoneyId" column="lifing_honey_id"/>
+        <result property="lifingHoneyCreateTime" column="lifing_honey_create_time"/>
+        <result property="lifingHoneyDeleteYn" column="lifing_honey_delete_yn"/>
         <result property="lifingId" column="lifing_id"/>
         <result property="memberCode" column="member_code"/>
     </resultMap>
@@ -75,10 +75,10 @@
          limit 3 offset #{pageNo}
     </select>
 
-    <select id="countHoney" resultMap="honeyResultMap">
+    <select id="countLifingHoney" resultMap="lifingHoneyResultMap">
         select
                count(lifing_id)
-          from tbl_honey
+          from tbl_lifing_honey
          where lifing_id = ${lifingId}
            and a.lifing_delete_yn = 'N'
     </select>

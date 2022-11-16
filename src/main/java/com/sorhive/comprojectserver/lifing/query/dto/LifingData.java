@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage.LifingImage;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingvisit.LifingVisit;
 import lombok.Getter;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

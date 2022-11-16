@@ -118,7 +118,7 @@ public class Lifing {
     }
 
     /** 허니 총 수 계산 */
-    public void setHoneyCount(Integer honeyCount) {
+    public void countingHoney(Integer honeyCount) {
 
         /* 허니 총 수가 null 일 경우 0으로 초기화 */
         if(this.honeyCount == null) {

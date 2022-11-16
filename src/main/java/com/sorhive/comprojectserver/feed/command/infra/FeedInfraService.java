@@ -71,7 +71,7 @@ public class FeedInfraService {
 
         /* 응답 객체에 값 넣어주기 */
         responseFeedDto.setFeedId(feed.getFeedId());
-        responseFeedDto.setFeedCreateTime(feed.getCreateTime());
+        responseFeedDto.setFeedCreateTime(feed.getFeedCreateTime());
         responseFeedDto.setFeedContent(feed.getFeedContent());
 
         try {
