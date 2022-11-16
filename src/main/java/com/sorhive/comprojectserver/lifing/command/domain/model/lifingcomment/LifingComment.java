@@ -16,6 +16,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-15       부시연           최초 생성
+ * 2022-11-15       부시연           라이핑 댓글 삭제
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -62,5 +63,10 @@ public class LifingComment {
         this.lifingCommentUploadTime = new Timestamp(System.currentTimeMillis());
         this.lifingCommentDeleteYn = 'N';
         this.lifing = lifing;
+    }
+
+    public void deleteComment(char deleteYn) {
+        this.lifingCommentDeleteTime = new Timestamp(System.currentTimeMillis());
+        this.lifingCommentDeleteYn = deleteYn;
     }
 }

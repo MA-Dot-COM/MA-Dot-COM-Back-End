@@ -25,7 +25,7 @@ import java.util.List;
 @Setter
 public class RequestLifingImageAiDto {
 
-    private int imageCount;
+    private int imgNum;
     private List<String> url;
 
 }

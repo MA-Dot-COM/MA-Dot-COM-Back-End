@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.lifing.command.application.service;
 
 import com.sorhive.comprojectserver.common.exception.AlreadyDeleteException;
 import com.sorhive.comprojectserver.common.exception.NoContentException;
+import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.lifing.command.application.dto.*;
 import com.sorhive.comprojectserver.lifing.command.application.exception.AlreadyHoneyException;
@@ -18,6 +19,7 @@ import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingComme
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingHoneyRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
 import com.sorhive.comprojectserver.lifing.command.infra.NoLifingNoException;
+import com.sorhive.comprojectserver.lifing.exception.NoLifingCommentException;
 import com.sorhive.comprojectserver.lifing.query.LifingMapper;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
@@ -43,6 +45,7 @@ import java.util.Optional;
  * 2022-11-15       부시연           허니 제거
  * 2022-11-15       부시연           라이핑 댓글 저장
  * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
+ * 2022-11-16       부시연           라이핑 댓글 삭제
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -259,4 +262,33 @@ public class LifingService {
 
     }
 
+    /** 라이핑 댓글 삭제 */
+    public Object deleteLifingComment(String accessToken, Long lifingCommentId) {
+
+        log.info("[LifingService] deleteLifingComment Start =========================================================");
+        log.info("[LifingService] lifingCommentId : " + lifingCommentId);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(lifingCommentRepository.findByLifingCommentId(lifingCommentId) == null) {
+            throw new NoLifingCommentException("해당 댓글은 존재 하지 않습니다");
+        }
+
+        if(lifingCommentRepository.findByLifingCommentIdAndLifingCommentDeleteYnEquals(lifingCommentId, 'Y') != null) {
+            throw new NoLifingCommentException("해당 댓글은 이미 삭제가 되었습니다.");
+        }
+
+        Optional<LifingComment> lifingCommentData = Optional.ofNullable(lifingCommentRepository.findByLifingCommentIdAndLifingCommentDeleteYnEquals(lifingCommentId, 'N'));
+        LifingComment lifingComment = lifingCommentData.get() ;
+
+        if(lifingComment.getLifingCommentWriter().getLifingCommentWriterCode().getValue() != memberCode) {
+            throw new NotSameWriterException("해당 댓글 작성자와 요청자가 다릅니다.");
+        }
+
+        lifingComment.deleteComment('Y');
+        lifingCommentRepository.save(lifingComment);
+
+        return lifingComment.getLifingCommentId();
+
+    }
 }

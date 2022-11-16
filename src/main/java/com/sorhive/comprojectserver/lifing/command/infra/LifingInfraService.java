@@ -120,7 +120,7 @@ public class LifingInfraService {
 
                 RequestLifingImageAiDto requestLifingImageAiDto = new RequestLifingImageAiDto();
 
-                requestLifingImageAiDto.setImageCount(lifingImagePathList.size());
+                requestLifingImageAiDto.setImgNum(lifingImagePathList.size());
                 requestLifingImageAiDto.setUrl(lifingImagePathList);
 
                 /* AI서버에 전송하기 위해 차셋 등 헤더 설정하기 */
