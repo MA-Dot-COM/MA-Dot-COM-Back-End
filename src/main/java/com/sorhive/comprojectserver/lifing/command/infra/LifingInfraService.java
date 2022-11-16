@@ -242,8 +242,10 @@ public class LifingInfraService {
                 responseLifingDto.setLifingId(lifing.getLifingId());
                 responseLifingDto.setLifingContent(lifing.getLifingConetent());
                 responseLifingDto.setLifingNo(lifing.getLifingNo());
+                responseLifingDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
                 responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
                 responseLifingDto.setLifingWriter(lifing.getLifingWriter());
+                responseLifingDto.setLifingImagePath(lifingImagePathList);
 
                 return responseLifingDto;
 

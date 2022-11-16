@@ -8,10 +8,9 @@
         <id property="lifingImageId" column="lifing_image_id"/>
         <result property="lifingImagePath" column="lifing_image_path"/>
         <result property="lifingId" column="lifing_id"/>
-        <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
     </resultMap>
 
-    <resultMap id="lifingResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingData">
+    <resultMap id="lifingResultMap" type="com.sorhive.comprojectserver.lifing.query.dto.LifingSummary">
         <id property="lifingId" column="lifing_id"/>
         <result property="lifingConetent" column="lifing_content"/>
         <result property="lifingNo" column="lifing_no"/>
