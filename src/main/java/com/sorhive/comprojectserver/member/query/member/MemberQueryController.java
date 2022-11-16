@@ -60,7 +60,7 @@ public class MemberQueryController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 ID 검색 성공", memberQueryService.findAllMember(accessToken)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "전체 회원 조회 성공", memberQueryService.findAllMember(accessToken)));
     }
 
     /** 자신이 팔로우 한 회원 목록 조회 */
