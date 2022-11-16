@@ -1,11 +1,11 @@
 package com.sorhive.comprojectserver.lifing.command.application.service;
 
+import com.sorhive.comprojectserver.common.exception.AlreadyDeleteException;
 import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.lifing.command.application.dto.*;
 import com.sorhive.comprojectserver.lifing.command.application.exception.AlreadyHoneyException;
 import com.sorhive.comprojectserver.lifing.command.application.exception.NoLifingException;
-import com.sorhive.comprojectserver.lifing.command.domain.model.honey.Honey;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingId;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
@@ -13,12 +13,12 @@ import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWri
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingcomment.LifingComment;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingcomment.LifingCommentWriter;
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifingcomment.LifingCommentWriterService;
-import com.sorhive.comprojectserver.lifing.command.domain.repository.HoneyRepository;
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifinghoney.LifingHoney;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingCommentRepository;
+import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingHoneyRepository;
 import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepository;
 import com.sorhive.comprojectserver.lifing.command.infra.NoLifingNoException;
 import com.sorhive.comprojectserver.lifing.query.LifingMapper;
-import com.sorhive.comprojectserver.lifing.query.dto.LifingImagePath;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -60,18 +59,18 @@ public class LifingService {
     private final TokenProvider tokenProvider;
     private final LifingMapper lifingMapper;
     private final MemberRepository memberRepository;
-    private final HoneyRepository honeyRepository;
+    private final LifingHoneyRepository lifingHoneyRepository;
     private final LifingCommentWriterService lifingCommentWriterService;
     private final LifingCommentRepository lifingCommentRepository;
 
-    public LifingService(LifingRepository lifingRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, LifingMapper lifingMapper, MemberRepository memberRepository, HoneyRepository honeyRepository, LifingCommentWriterService lifingCommentWriterService, LifingCommentRepository lifingCommentRepository) {
+    public LifingService(LifingRepository lifingRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, LifingMapper lifingMapper, MemberRepository memberRepository, LifingHoneyRepository lifingHoneyRepository, LifingCommentWriterService lifingCommentWriterService, LifingCommentRepository lifingCommentRepository) {
 
         this.lifingRepository = lifingRepository;
         this.lifingWriterService = lifingWriterService;
         this.tokenProvider = tokenProvider;
         this.lifingMapper = lifingMapper;
         this.memberRepository = memberRepository;
-        this.honeyRepository = honeyRepository;
+        this.lifingHoneyRepository = lifingHoneyRepository;
 
         this.lifingCommentWriterService = lifingCommentWriterService;
         this.lifingCommentRepository = lifingCommentRepository;
@@ -144,78 +143,82 @@ public class LifingService {
 
     /** 허니 추가 */
     @Transactional
-    public ResponseHoneyCreateDto createHoney(String accessToken, Long lifingId) {
+    public ResponseLifingHoneyCreateDto createLifingHoney(String accessToken, Long lifingId) {
 
-        log.info("[LifingService] createHoney Start =========================================================");
+        log.info("[LifingService] createLifingHoney Start =========================================================");
         log.info("[LifingService] lifingId : " + lifingId);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifingId, 'N');
-
-        if(lifingData == null) {
+        if(lifingRepository.findByLifingId(lifingId) == null) {
             throw new NoLifingException("해당 라이핑이 존재하지 않습니다.");
         }
 
-        if(!honeyRepository.findByMemberCodeAndLifingIdAndDeleteYnEquals(new MemberCode(memberCode), new LifingId(lifingId), 'N').isEmpty() ) {
+        Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifingId, 'N');
+
+        if(!lifingHoneyRepository.findByMemberCodeAndLifingIdAndDeleteYnEquals(new MemberCode(memberCode), new LifingId(lifingId), 'N').isEmpty() ) {
             throw new AlreadyHoneyException("이미 허니를 했습니다.");
         }
 
         Lifing lifing = lifingData.get();
-        lifing.setHoneyCount(1);
+        lifing.countingHoney(1);
         lifingRepository.save(lifing);
 
-        Honey honey = new Honey(
+        LifingHoney lifingHoney = new LifingHoney(
                 new MemberCode(memberCode),
                 new LifingId(lifingId)
         );
 
-        honeyRepository.save(honey);
+        lifingHoneyRepository.save(lifingHoney);
 
-        ResponseHoneyCreateDto responseHoneyCreateDto = new ResponseHoneyCreateDto();
+        ResponseLifingHoneyCreateDto responseLifingHoneyCreateDto = new ResponseLifingHoneyCreateDto();
 
-        responseHoneyCreateDto.setHoneyId(honey.getId());
-        responseHoneyCreateDto.setLifingId(honey.getLifingId().getValue());
-        responseHoneyCreateDto.setMemberCode(honey.getMemberCode().getValue());
-        responseHoneyCreateDto.setCreateTime(honey.getCreateTime());
+        responseLifingHoneyCreateDto.setLifingHoneyId(lifingHoney.getId());
+        responseLifingHoneyCreateDto.setLifingId(lifingHoney.getLifingId().getValue());
+        responseLifingHoneyCreateDto.setMemberCode(lifingHoney.getMemberCode().getValue());
+        responseLifingHoneyCreateDto.setCreateTime(lifingHoney.getCreateTime());
 
-        return responseHoneyCreateDto;
+        return responseLifingHoneyCreateDto;
 
     }
 
     /** 허니 취소 */
     @Transactional
-    public ResponseHoneyDeleteDto deleteHoney(String accessToken, Long lifingId) {
+    public ResponseLifingHoneyDeleteDto deleteLifingHoney(String accessToken, Long lifingId) {
 
-        log.info("[LifingService] deleteHoney Start =========================================================");
+        log.info("[LifingService] deleteLifingHoney Start =========================================================");
         log.info("[LifingService] lifingId : " + lifingId);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifingId, 'N');
-
-        if(lifingData == null) {
+        if(lifingRepository.findByLifingId(lifingId) == null) {
             throw new NoLifingException("해당 라이핑이 존재하지 않습니다.");
         }
 
+        Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifingId, 'N');
+
         Lifing lifing = lifingData.get();
-        lifing.setHoneyCount(-1);
+        lifing.countingHoney(-1);
         lifingRepository.save(lifing);
 
-        Optional<Honey> honeyData = honeyRepository.findByMemberCodeAndLifingIdAndDeleteYnEquals(new MemberCode(memberCode), new LifingId(lifingId), 'N');
+        if(lifingHoneyRepository.findByMemberCodeAndLifingIdAndDeleteYnEquals(new MemberCode(memberCode), new LifingId(lifingId), 'N').isEmpty()) {
+            throw new AlreadyDeleteException("이미 허니가 취소 되었습니다.");
+        }
 
-        Honey honey = honeyData.get();
-        honey.setDeleteYn('Y');
-        honeyRepository.save(honey);
+        Optional<LifingHoney> honeyData = lifingHoneyRepository.findByMemberCodeAndLifingIdAndDeleteYnEquals(new MemberCode(memberCode), new LifingId(lifingId), 'N');
 
-        ResponseHoneyDeleteDto responseHoneyDeleteDto = new ResponseHoneyDeleteDto();
+        LifingHoney lifingHoney = honeyData.get();
+        lifingHoney.setDeleteYn('Y');
+        lifingHoneyRepository.save(lifingHoney);
 
-        responseHoneyDeleteDto.setHoneyId(honey.getId());
-        responseHoneyDeleteDto.setLifingId(honey.getLifingId().getValue());
-        responseHoneyDeleteDto.setMemberCode(honey.getMemberCode().getValue());
-        responseHoneyDeleteDto.setDeleteTime(honey.getDeleteTime());
+        ResponseLifingHoneyDeleteDto responseLifingHoneyDeleteDto = new ResponseLifingHoneyDeleteDto();
 
-        return responseHoneyDeleteDto;
+        responseLifingHoneyDeleteDto.setLifingHoneyId(lifingHoney.getId());
+        responseLifingHoneyDeleteDto.setLifingId(lifingHoney.getLifingId().getValue());
+        responseLifingHoneyDeleteDto.setMemberCode(lifingHoney.getMemberCode().getValue());
+        responseLifingHoneyDeleteDto.setDeleteTime(lifingHoney.getDeleteTime());
+
+        return responseLifingHoneyDeleteDto;
 
     }
 

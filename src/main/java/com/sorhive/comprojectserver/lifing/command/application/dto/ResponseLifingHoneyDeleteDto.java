@@ -23,9 +23,9 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-public class ResponseHoneyDeleteDto {
+public class ResponseLifingHoneyDeleteDto {
 
-    private Long honeyId;
+    private Long lifingHoneyId;
     private Long memberCode;
     private Long lifingId;
     private Timestamp deleteTime;

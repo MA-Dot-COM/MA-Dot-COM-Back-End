@@ -25,5 +25,6 @@ public interface FeedRepository extends Repository<Feed, Long> {
 
     void save(Feed feed);
 
-    Optional<Feed> findByFeedIdAndDeleteYnEquals(Long feedId, char n);
+    Optional<Feed> findByFeedIdAndFeedDeleteYnEquals(Long feedId, char n);
+
 }
