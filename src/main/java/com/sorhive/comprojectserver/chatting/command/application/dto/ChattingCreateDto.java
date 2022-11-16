@@ -26,6 +26,7 @@ import java.util.Map;
 public class ChattingCreateDto {
 
     private final Long roomId;
-    private List<Map<String,Object>> chatting;
+    private final Long memberCode;
+    private final List<Map<String,Object>> chatting;
 
 }
