@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-15       부시연           라이핑 댓글 추가
  * 2022-11-16       부시연           허니 구분을 위해 라이핑 허니로 명칭 변경
  * 2022-11-16       부시연           라이핑 댓글 삭제
+ * 2022-11-17       부시연           라이핑 삭제
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -86,6 +87,19 @@ public class LifingController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 생성 성공", lifingService.createLifing(accessToken, lifingCreateDto)));
 
     }
+
+    /** 라이핑 삭제 */
+    @DeleteMapping("lifing/{lifingId}")
+    public ResponseEntity<ResponseDto> deleteLifing(@RequestHeader String Authorization, @PathVariable Long lifingId) {
+
+        log.info("[LifingController] deleteLifing Start ============================");
+        log.info("[lifingId] " + lifingId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "라이핑 삭제 성공", lifingInfraService.deleteLifing(accessToken, lifingId)));
+
+    }
     
     /** 라이핑 허니 생성 */
     @PostMapping("lifing/honey/{lifingId}")
@@ -135,7 +149,7 @@ public class LifingController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "라이핑 댓글 삭제 성공", lifingService.deleteLifingComment(accessToken, lifingCommentId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "라이핑 댓글 삭제 성공", lifingService.deleteLifingComment(accessToken, lifingCommentId)));
 
     }
     
