@@ -48,7 +48,7 @@ public class LifingController {
     }
 
     /** 라이핑 이미지 생성 */
-    @PostMapping("lifing/image/ai")
+    @PostMapping("lifing/image")
     public ResponseEntity<ResponseDto> lifingImage(@RequestHeader String Authorization, @RequestBody LifingImageDto lifingImageDto) {
 
         log.info("[LifingController] lifingImage Start ===================");
@@ -61,7 +61,7 @@ public class LifingController {
     }
 
     /** 라이핑 AI 분석 이미지 생성 */
-    @PostMapping("lifing/image")
+    @PostMapping("lifing/image/ai")
     public ResponseEntity<ResponseDto> lifingAiImage(@RequestHeader String Authorization, @RequestBody LifingAIImageDto lifingAIImageDto) {
 
         log.info("[LifingController] lifingAiImage Start ===================");

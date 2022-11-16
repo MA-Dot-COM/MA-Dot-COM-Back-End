@@ -41,7 +41,7 @@ public class MemberQueryController {
     }
 
     /** 회원 아이디 검색 */
-    @GetMapping("member/id/{memberId}")
+    @GetMapping("member/search/{memberId}")
     public ResponseEntity<ResponseDto> findMemberByMemberId(@RequestHeader String Authorization, @PathVariable String memberId) {
 
         log.info("[MemberQueryController] findMemberByMemberId Start =================");
