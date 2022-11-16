@@ -39,6 +39,7 @@
              , a.member_avatar_image
              , a.member_room_image
              , a.member_lifing_no
+             , a.member_lifing_category_no
              , a.member_lifing_yn
              , b.follow_id
              , b.follower_id
@@ -58,6 +59,7 @@
              , a.member_avatar_image
              , a.member_room_image
              , a.member_lifing_no
+             , a.member_lifing_category_no
              , a.member_lifing_yn
           from tbl_members a
           left join tbl_follows b on a.member_code = b.following_id
@@ -74,6 +76,7 @@
              , a.member_avatar_image
              , a.member_room_image
              , a.member_lifing_no
+             , a.member_lifing_category_no
              , a.member_lifing_yn
              , b.follow_id
              , b.follower_id

@@ -28,6 +28,7 @@ public class MemberSummary {
     private String avatarImage;
     private String roomImage;
     private Long lifingNo;
+    private Long lifingCategoryNo;
     private Character lifingYn;
     private FollowSummary followSummary;
 
