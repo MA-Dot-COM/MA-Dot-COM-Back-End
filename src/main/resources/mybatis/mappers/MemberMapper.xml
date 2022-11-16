@@ -11,6 +11,7 @@
         <result property="avatarImage" column="member_avatar_image"/>
         <result property="roomImage" column="member_room_image"/>
         <result property="lifingNo" column="member_lifing_no"/>
+        <result property="lifingCategoryNo" column="member_lifing_category_no"/>
         <result property="lifingYn" column="member_lifing_yn"/>
         <association property="followSummary" resultMap="followResultMap"/>
     </resultMap>
@@ -22,6 +23,7 @@
         <result property="avatarImagePath" column="member_avatar_image"/>
         <result property="memberRoomImage" column="member_room_image"/>
         <result property="lifingNo" column="member_lifing_no"/>
+        <result property="lifingCategoryNo" column="member_lifing_category_no"/>
         <result property="lifingYn" column="member_lifing_yn"/>
     </resultMap>
 
