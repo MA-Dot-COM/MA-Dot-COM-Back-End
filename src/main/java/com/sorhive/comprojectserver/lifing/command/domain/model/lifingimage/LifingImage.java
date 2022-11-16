@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.lifing.command.domain.model.lifingimage;
 
 import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.Lifing;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -18,6 +19,7 @@ import java.sql.Timestamp;
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
  * 2022-11-15       부시연           분석된 라이핑 이미지 컬럼 제거 && 라이핑 컬럼 연관관계 매핑
+ * 2022-11-17       부시연           라이핑 이미지 삭제여부 및 삭제 시간 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -47,6 +49,13 @@ public class LifingImage {
     @Column(name = "lifing_upload_time")
     private Timestamp uploadTime;
 
+    @Column(name = "lifing_delete_time")
+    private Timestamp deleteTime;
+
+    @Column(name = "lifing_delete_yn")
+    @ColumnDefault("'N'")
+    private Character deleteYn;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lifing_id")
     private Lifing lifing;
@@ -62,4 +71,8 @@ public class LifingImage {
 
     }
 
+    public void deleteImage(char deleteYn) {
+        this.deleteYn = deleteYn;
+        this.deleteTime = new Timestamp(System.currentTimeMillis());
+    }
 }

@@ -24,6 +24,7 @@ import java.util.List;
  * 2022-11-12       부시연           총 허니 개수 추가
  * 2022-11-15       부시연           총 허니 개수 null 값 대응
  * 2022-11-16       부시연           분석된 라이핑 이미지 컬럼 추가 && 라이핑 이미지 연관관계 매핑
+ * 2022-11-17       부시연           라이핑 삭제 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -127,4 +128,9 @@ public class Lifing {
         this.honeyCount += honeyCount;
     }
 
+    /** 라이핑 삭제 */
+    public void delete(char deleteYn) {
+        this.deleteTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = deleteYn;
+    }
 }
