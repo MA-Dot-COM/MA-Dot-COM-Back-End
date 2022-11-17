@@ -10,7 +10,7 @@ server:
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://comproject.cobnraaxcbeh.ap-northeast-2.rds.amazonaws.com:3306/comproject?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: RDBMS_URL
     username: comproject
     password: comproject
     hikari:
@@ -27,24 +27,43 @@ spring:
       enabled: true
   data:
     mongodb:
-      uri: mongodb+srv://comproject:comproject@comproject.pldtw41.mongodb.net/?retryWrites=true&w=majority
+      uri: NOSQL_URI
       authentication-database: admin
       database: comproject
-  # jpa config
   jpa:
     generate-ddl: false
     show-sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-#      ddl-auto: 'create-drop'
-#    hibernate:
     properties:
       hibernate:
         format_sql: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    check-template-location: true
+    cache: false
+  mail:
+    default-encoding: UTF-8
+    host: smtp.naver.com #smtp 서버 주소
+    port: 465 # 메일 인증서버 포트
+    username: MAIL_USER_ID #네이버 아이디
+    password: MAIL_USER_PW #네이버 비밀번호
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+          timeout: 5000
+          ssl:
+            trust: smtp.naver.com
+            enable: true
 
 jwt:
-  secret: asdfjp298pafo1320efqw0udvnh0er0h412r08byfdq9dsvh02143908hfeqwn80fdqs0nfdqs0n412013rq0nqefn08dfas0das730732g86923
+  secret: JWT_SECRET
 
 logging:
   level:
@@ -57,7 +76,7 @@ logging:
 cloud:
   aws:
     s3:
-      bucket: combucket
+      bucket: AWS_S3_BUCKET
     region:
       static: ap-northeast-2
     stack:
@@ -66,8 +85,8 @@ cloud:
       instanceProfile: true
 
 url:
-  avatar: "http://3.34.44.128/test"
-  lifing: "http://43.201.67.97/test"
+  avatar: AI_AVATAR
+  lifing: AI_LIFING
 
 mybatis:
   mapper-locations: mybatis/**/*.xml

@@ -1,15 +1,18 @@
 package com.sorhive.comprojectserver.member.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.member.command.application.dto.EmailRequestDto;
 import com.sorhive.comprojectserver.member.command.application.dto.LoginDto;
 import com.sorhive.comprojectserver.member.command.application.dto.SignUpDto;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
+import com.sorhive.comprojectserver.member.command.infra.AuthInfraService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 /**
@@ -23,6 +26,7 @@ import javax.validation.Valid;
  * 2022-11-06       부시연           최초 생성
  * 2022-11-06       부시연           회원 가입
  * 2022-11-06       부시연           로그인
+ * 2022-11-18       부시연           이메일 인증 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -34,9 +38,11 @@ public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
+    private final AuthInfraService authInfraService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, AuthInfraService authInfraService) {
         this.authService = authService;
+        this.authInfraService = authInfraService;
     }
 
     /** 회원가입 */
@@ -58,5 +64,15 @@ public class AuthController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "로그인 성공", authService.login(loginDto)));
         
+    }
+
+    /** 이메일 인증 */
+    @PostMapping("email")
+    public ResponseEntity<ResponseDto> emailAuthentication(@Valid @RequestBody EmailRequestDto emailRequestDto) throws MessagingException {
+
+        log.info("[AuthQueryController] emailAuthentication Start =================");
+        log.info("[AuthQueryController] emailRequestDto " + emailRequestDto);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 이메일 중복 검사 및 인증", authInfraService.emailAuthentication(emailRequestDto)));
     }
 }
