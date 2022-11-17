@@ -8,13 +8,14 @@ import java.util.Map;
 
 /**
  * <pre>
- * Class : ChattingCreateDto
+ * Class : ChattingCreateRequestDto
  * Comment: 채팅 생성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-14       부시연           최초 생성
+ * 2022-11-17       부시연           요청 정보 일부 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -23,10 +24,10 @@ import java.util.Map;
  */
 @AllArgsConstructor
 @Getter
-public class ChattingCreateDto {
+public class ChattingCreateRequestDto {
 
-    private final Long roomId;
-    private final Long memberCode;
-    private final List<Map<String,Object>> chatting;
+    private final Long memberCode1;
+    private final Long memberCode2;
+    private final List<Map<String,Object>> messages;
 
 }

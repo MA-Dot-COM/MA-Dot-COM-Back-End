@@ -14,6 +14,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
+ * 2022-11-17       부시연           컬럼 일부 변경(회원 1, 회원 2로 구분)
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -25,29 +26,29 @@ import java.sql.Timestamp;
 public class Chatting {
 
     @Id
-    @Column(name="chatting_id")
+    @Column(name="chatting_no")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long chattingNo;
 
-    @Column(name = "chatting_room_id")
-    private Long roomId;
+    @Column(name = "chatting_member_1")
+    private Long memberCode1;
 
-    @Column(name = "chatting_no")
-    private String chattingNo;
+    @Column(name = "chatting_member_2")
+    private Long memberCode2;
 
-    @Column(name = "chatting_member_code")
-    private Long memberCode;
+    @Column(name = "chatting_id")
+    private String chattingId;
 
     @Column(name = "chatting_upload_time")
     private Timestamp uploadTime;
 
     protected Chatting() { }
 
-    public Chatting(Long roomId, String chattingNo, Long memberCode) {
+    public Chatting(Long memberCode1, Long memberCode2, String chattingId) {
 
-        this.roomId = roomId;
-        this.chattingNo = chattingNo;
-        this.memberCode = memberCode;
+        this.memberCode1 = memberCode1;
+        this.memberCode2 = memberCode2;
+        this.chattingId = chattingId;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
 
     }

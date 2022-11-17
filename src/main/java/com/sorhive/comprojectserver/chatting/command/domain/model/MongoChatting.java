@@ -1,10 +1,10 @@
 package com.sorhive.comprojectserver.chatting.command.domain.model;
 
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +17,7 @@ import java.util.Map;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-14       부시연           최초 생성
+ * 2022-11-17       부시연           컬럼 일부 변경(회원 1, 회원 2로 구분)
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -29,14 +30,18 @@ public class MongoChatting {
 
     @Id
     private String id;
-    private Long roomId;
-    private List<Map<String, Object>> chattings;
+    private Long memberCode1;
+    private Long memberCode2;
+    private List<Map<String, Object>> messages;
+    private Timestamp uploadTime;
 
     protected MongoChatting() {}
 
-    public MongoChatting(Long roomId, List<Map<String, Object>> chattings) {
-        this.chattings = chattings;
-        this.roomId = roomId;
+    public MongoChatting(Long memberCode1, Long memberCode2, List<Map<String, Object>> messages) {
+        this.messages = messages;
+        this.memberCode1 = memberCode1;
+        this.memberCode2 = memberCode2;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
 

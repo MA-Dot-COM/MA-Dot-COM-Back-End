@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.file;
+package com.sorhive.comprojectserver.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.chatting.infra;
 
-import com.sorhive.comprojectserver.chatting.command.application.dto.ChattingCreateDto;
+import com.sorhive.comprojectserver.chatting.command.application.dto.ChattingCreateRequestDto;
+import com.sorhive.comprojectserver.chatting.command.application.dto.ChattingCreateResponseDto;
 import com.sorhive.comprojectserver.chatting.command.domain.model.Chatting;
 import com.sorhive.comprojectserver.chatting.command.domain.model.MongoChatting;
 import com.sorhive.comprojectserver.chatting.command.domain.repository.ChattingRepository;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Service;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-14       부시연           최초 생성
+ * 2022-11-14       부시연           채팅 생성 기능 추가
+ * 2022-11-17       부시연           채팅 생성 기능 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -39,23 +42,24 @@ public class ChattingInfraService {
         this.tokenProvider = tokenProvider;
     }
 
-    public Object createChatting(String accessToken, ChattingCreateDto chattingCreateDto) {
+    /** 채팅 생성 */
+    public ChattingCreateResponseDto createChatting(String accessToken, ChattingCreateRequestDto chattingCreateRequestDto) {
 
         log.info("[ChattingInfraService] createChatting Start ===================");
-        log.info("[ChattingInfraService] chattingCreateDto " + chattingCreateDto );
+        log.info("[ChattingInfraService] chattingCreateDto " + chattingCreateRequestDto);
 
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-        if((chattingCreateDto.getChatting() ==null ) || (chattingCreateDto.getRoomId() == null)) {
+        if((chattingCreateRequestDto.getMessages() ==null ) || (chattingCreateRequestDto.getMemberCode1() == null) || (chattingCreateRequestDto.getMemberCode2() == null)) {
             throw new NoContentException("채팅 정보나 방번호가 존재하질 않습니다.");
         }
 
-        Long roomId = chattingCreateDto.getRoomId();
+        Long memberCode1 = chattingCreateRequestDto.getMemberCode1();
+        Long memberCode2 = chattingCreateRequestDto.getMemberCode2();
 
         /* 몽고 DB 채팅 생성 */
         MongoChatting mongoChatting = new MongoChatting(
-                roomId,
-                chattingCreateDto.getChatting()
+                memberCode1,
+                memberCode2,
+                chattingCreateRequestDto.getMessages()
         );
 
         /* 몽고 DB 채팅 저장하기 */
@@ -63,17 +67,25 @@ public class ChattingInfraService {
 
         /* 채팅 생성하기 */
         Chatting chatting = new Chatting(
-                roomId,
-                mongoChatting.getId(),
-                memberCode
+                memberCode1,
+                memberCode2,
+                mongoChatting.getId()
         );
 
         /* 채팅에 몽고 DB의 아이디 포함하여 저장하기 */
         chattingRepository.save(chatting);
-        
+
+        ChattingCreateResponseDto chattingCreateResponseDto = new ChattingCreateResponseDto(
+                chatting.getChattingNo(),
+                chatting.getMemberCode1(),
+                chatting.getMemberCode2(),
+                chatting.getChattingId(),
+                chatting.getUploadTime()
+        );
+
         log.info("[ChattingInfraService] createChatting End ====================");
         
-        return mongoChatting.getId();
+        return chattingCreateResponseDto;
 
     }
 }
