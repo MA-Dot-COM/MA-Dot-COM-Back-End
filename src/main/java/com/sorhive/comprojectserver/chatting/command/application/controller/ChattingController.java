@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.chatting.command.application.controller;
 
-import com.sorhive.comprojectserver.chatting.command.application.dto.ChattingCreateDto;
+import com.sorhive.comprojectserver.chatting.command.application.dto.ChattingCreateRequestDto;
 import com.sorhive.comprojectserver.chatting.infra.ChattingInfraService;
 import com.sorhive.comprojectserver.common.ResponseDto;
 import org.slf4j.Logger;
@@ -38,14 +38,14 @@ public class ChattingController {
 
     /** 채팅 생성 */
     @PostMapping(value = "chatting")
-    public ResponseEntity<ResponseDto> createChatting(@RequestHeader String Authorization, @Valid @RequestBody ChattingCreateDto chattingCreateDto) {
+    public ResponseEntity<ResponseDto> createChatting(@RequestHeader String Authorization, @Valid @RequestBody ChattingCreateRequestDto chattingCreateRequestDto) {
 
         log.info("[ChattingController] createChatting Start ===================");
-        log.info("[ChattingController] chattingCreateDto : " + chattingCreateDto);
+        log.info("[ChattingController] chattingCreateDto : " + chattingCreateRequestDto);
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "채팅 생성 성공", chattingInfraService.createChatting(accessToken, chattingCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "채팅 생성 성공", chattingInfraService.createChatting(accessToken, chattingCreateRequestDto)));
     }
 
 }
