@@ -18,15 +18,17 @@ public class TokenDto {
     private String grantType;
 
     private String memberName;
+    private Long memberCode;
     private String accessToken;
     private Long accessTokenExpiresIn;
 
     public TokenDto() {
     }
 
-    public TokenDto(String grantType, String memberName, String accessToken, Long accessTokenExpiresIn) {
+    public TokenDto(String grantType, String memberName, Long memberCode, String accessToken, Long accessTokenExpiresIn) {
         this.grantType = grantType;
         this.memberName = memberName;
+        this.memberCode = memberCode;
         this.accessToken = accessToken;
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }
