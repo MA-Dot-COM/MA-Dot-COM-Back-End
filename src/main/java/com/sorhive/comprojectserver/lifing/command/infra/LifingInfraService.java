@@ -312,9 +312,6 @@ public class LifingInfraService {
             List<LifingImage> lifingImages = lifingImageRepository.findByLifing(lifing);
             for (int i = 0; i < lifingImages.size(); i++) {
 
-                /* 라이핑 이미지에 있는 저장 이름을 통해 S3에서 제거한다. */
-                s3LifingImageFile.delete(lifingImages.get(i).getSavedName());
-
                 /* 하나씩 꺼내서 삭제 여부를 Y로 바꾸어준다. */
                 lifingImages.get(i).deleteImage('Y');
                 lifingImageRepository.save(lifingImages.get(i));

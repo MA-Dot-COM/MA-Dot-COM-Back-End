@@ -46,6 +46,7 @@ import java.util.Optional;
  * 2022-11-15       부시연           라이핑 댓글 저장
  * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
  * 2022-11-16       부시연           라이핑 댓글 삭제
+ * 2022-11-17       부시연           라이핑 댓글 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -263,7 +264,7 @@ public class LifingService {
     }
 
     /** 라이핑 댓글 삭제 */
-    public Object deleteLifingComment(String accessToken, Long lifingCommentId) {
+    public Long deleteLifingComment(String accessToken, Long lifingCommentId) {
 
         log.info("[LifingService] deleteLifingComment Start =========================================================");
         log.info("[LifingService] lifingCommentId : " + lifingCommentId);
@@ -289,6 +290,51 @@ public class LifingService {
         lifingCommentRepository.save(lifingComment);
 
         return lifingComment.getLifingCommentId();
+
+    }
+
+    /** 라이핑 댓글 수정 */
+    public LifingCommentUpdateResponseDto updateLifingComment(String accessToken, LifingCommentUpdateRequestDto lifingCommentUpdateRequestDto) {
+
+        log.info("[LifingService] updateLifingComment Start =========================================================");
+        log.info("[LifingService] lifingCommentUpdateDto : " + lifingCommentUpdateRequestDto);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if((lifingCommentUpdateRequestDto.getLifingCommentId() == null) || (lifingCommentUpdateRequestDto.getLifingCommentContent() == null)) {
+            throw new NoContentException("해당 댓글 수정에 필요한 내용이 없습니다.");
+        }
+
+        String lifingCommentContent = lifingCommentUpdateRequestDto.getLifingCommentContent();
+        Long lifingCommentId = lifingCommentUpdateRequestDto.getLifingCommentId();
+
+        if(lifingCommentRepository.findByLifingCommentId(lifingCommentId) == null) {
+            throw new NoLifingCommentException("해당 댓글은 존재 하지 않습니다");
+        }
+
+        if(lifingCommentRepository.findByLifingCommentIdAndLifingCommentDeleteYnEquals(lifingCommentId, 'Y') != null) {
+            throw new NoLifingCommentException("해당 댓글은 이미 삭제가 되었습니다.");
+        }
+
+        Optional<LifingComment> lifingCommentData = Optional.ofNullable(lifingCommentRepository.findByLifingCommentIdAndLifingCommentDeleteYnEquals(lifingCommentId, 'N'));
+        LifingComment lifingComment = lifingCommentData.get() ;
+
+        if(lifingComment.getLifingCommentWriter().getLifingCommentWriterCode().getValue() != memberCode) {
+            throw new NotSameWriterException("해당 댓글 작성자와 요청자가 다릅니다.");
+        }
+
+        lifingComment.updateComment(lifingCommentContent);
+        lifingCommentRepository.save(lifingComment);
+
+        /* 라이핑 댓글 수정 응답 전송객체에 값을 답아서 반환한다. */
+        LifingCommentUpdateResponseDto lifingCommentUpdateResponseDto = new LifingCommentUpdateResponseDto();
+
+        lifingCommentUpdateResponseDto.setLifingCommentId(lifingComment.getLifingCommentId());
+        lifingCommentUpdateResponseDto.setLifingCommentContent(lifingComment.getLifingCommentContent());
+        lifingCommentUpdateResponseDto.setLifingCommentWriter(lifingComment.getLifingCommentWriter());
+        lifingCommentUpdateResponseDto.setLifingCommentUploadTime(lifingComment.getLifingCommentUploadTime());
+
+        return lifingCommentUpdateResponseDto;
 
     }
 }
