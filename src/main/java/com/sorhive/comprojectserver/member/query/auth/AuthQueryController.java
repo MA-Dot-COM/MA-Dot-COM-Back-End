@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-16       부시연           최초 생성
+ * 2022-11-16       부시연           아이디 중복 검사
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -47,4 +48,5 @@ public class AuthQueryController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 아이디 검사", authQueryService.idCheck(newMemberId)));
     }
+
 }

@@ -162,6 +162,12 @@
             <version>2.2.2</version>
         </dependency>
 
+        <!-- 메일 인증을 위한 라이브러리 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -15,6 +15,7 @@ import java.util.Optional;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-03       부시연           최초 생성
+ * 2022-11-18       부시연           이메일 개수 세기 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -28,4 +29,6 @@ public interface MemberRepository extends Repository<Member, Long> {
 
     Member findByMemberId(MemberId memberId);
 
+    int countByMemberEmail(String email);
+    
 }
