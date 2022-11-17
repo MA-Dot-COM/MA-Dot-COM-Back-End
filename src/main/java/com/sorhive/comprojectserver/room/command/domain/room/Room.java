@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.room.command.domain.room;
 
+import com.sorhive.comprojectserver.room.command.domain.furnitureimage.FurnitureImage;
 import com.sorhive.comprojectserver.room.command.domain.guestbook.GuestBook;
 import com.sorhive.comprojectserver.room.command.domain.roomvisit.RoomVisit;
 import lombok.Getter;
@@ -23,6 +24,7 @@ import java.util.List;
  * 2022-11-08       부시연           최초 생성
  * 2022-11-09       부시연           몽고 DB 도메인으로 변경
  * 2022-11-15       부시연           방 조회수 문제 해결
+ * 2022-11-17       부시연           가구 이미지 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -58,6 +60,9 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<RoomVisit> roomVisits = new ArrayList<RoomVisit>();
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<FurnitureImage> furnitureImages = new ArrayList<>();
 
     protected Room() { }
 

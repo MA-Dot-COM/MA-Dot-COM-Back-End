@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.room.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.room.command.application.dto.FurnitureImageCreateRequestDto;
 import com.sorhive.comprojectserver.room.command.application.dto.GuestBookCreateRequestDto;
 import com.sorhive.comprojectserver.room.command.application.dto.GuestBookUpdateRequestDto;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
@@ -29,6 +30,7 @@ import javax.validation.Valid;
  * 2022-11-13       부시연           서비스, 인프라 서비스 분리
  * 2022-11-16       부시연           방명록 수정 추가
  * 2022-11-16       부시연           방명록 삭제 추가
+ * 2022-11-17       부시연           가구 이미지 생성 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -57,6 +59,18 @@ public class RoomController {
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomInfraService.createRoom(accessToken, roomCreateDto)));
+    }
+
+    /** 가구 이미지 생성 */
+    @PostMapping(value = "room/image")
+    public ResponseEntity<ResponseDto> createFurnitureImage(@RequestHeader String Authorization, @Valid @RequestBody FurnitureImageCreateRequestDto furnitureImageCreateRequestDto) {
+
+        log.info("[RoomController] createFurnitureImage Start ===================");
+        log.info("[RoomController] furnitureImageCreateDto : " + furnitureImageCreateRequestDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "방 생성 성공", roomInfraService.createFurnitureImage(accessToken, furnitureImageCreateRequestDto)));
     }
 
     /** 방명록 생성 */

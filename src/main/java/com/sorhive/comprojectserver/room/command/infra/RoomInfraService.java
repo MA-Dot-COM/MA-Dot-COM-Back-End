@@ -1,13 +1,19 @@
 package com.sorhive.comprojectserver.room.command.infra;
 
 import com.sorhive.comprojectserver.common.exception.NoContentException;
+import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.file.S3FurnitureImageFile;
 import com.sorhive.comprojectserver.file.S3MemberFile;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
+import com.sorhive.comprojectserver.room.command.application.dto.FurnitureImageCreateRequestDto;
+import com.sorhive.comprojectserver.room.command.application.dto.FurnitureImageCreateResponseDto;
 import com.sorhive.comprojectserver.room.command.application.dto.RoomCreateDto;
+import com.sorhive.comprojectserver.room.command.domain.furnitureimage.FurnitureImage;
+import com.sorhive.comprojectserver.room.command.domain.repository.FurnitureImageRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.MongoRoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.repository.RoomRepository;
 import com.sorhive.comprojectserver.room.command.domain.room.MongoRoom;
@@ -20,7 +26,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * <pre>
@@ -33,6 +42,7 @@ import java.util.Optional;
  * 2022-11-07       부시연           최초 생성
  * 2022-11-09       부시연           방 생성 추가
  * 2022-11-10       부시연           방이미지 생성 추가
+ * 2022-11-17       부시연
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -46,16 +56,20 @@ public class RoomInfraService {
     private final RoomRepository roomRepository;
     private final RoomCreatorService roomCreatorService;
     private final MemberRepository memberRepository;
+    private final FurnitureImageRepository furnitureImageRepository;
     private final TokenProvider tokenProvider;
-    private S3MemberFile s3MemberFile;
+    private final S3FurnitureImageFile s3FurnitureImageFile;
+    private final S3MemberFile s3MemberFile;
 
 
-    public RoomInfraService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, TokenProvider tokenProvider, S3MemberFile s3MemberFile) {
+    public RoomInfraService(MongoRoomRepository mongoRoomRepository, RoomRepository roomRepository, RoomCreatorService roomCreatorService, MemberRepository memberRepository, FurnitureImageRepository furnitureImageRepository, TokenProvider tokenProvider, S3FurnitureImageFile s3FurnitureImageFile, S3MemberFile s3MemberFile) {
         this.mongoRoomRepository = mongoRoomRepository;
         this.roomRepository = roomRepository;
         this.roomCreatorService = roomCreatorService;
         this.memberRepository = memberRepository;
+        this.furnitureImageRepository = furnitureImageRepository;
         this.tokenProvider = tokenProvider;
+        this.s3FurnitureImageFile = s3FurnitureImageFile;
         this.s3MemberFile = s3MemberFile;
     }
 
@@ -116,4 +130,63 @@ public class RoomInfraService {
 
     }
 
+    /** 가구 이미지 생성 */
+    public FurnitureImageCreateResponseDto createFurnitureImage(String accessToken, FurnitureImageCreateRequestDto furnitureImageCreateRequestDto) {
+
+        log.info("[RoomInfraService] createFurnitureImage Start ===================================");
+        log.info("[RoomInfraService] furnitureImageCreateDto {}", furnitureImageCreateRequestDto);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(furnitureImageCreateRequestDto.getRoomId() != memberCode) {
+            throw new NotSameWriterException("해당 사람은 방 주인이 아닙니다.");
+        }
+
+        if(furnitureImageCreateRequestDto.getFurnitureImages().isEmpty()) {
+            throw new NoContentException("이미지 정보값이 없습니다.");
+        }
+
+        /* 가구 이미지 생성 응답 전송 객체 생성 */
+        FurnitureImageCreateResponseDto furnitureImageCreateResponseDto = new FurnitureImageCreateResponseDto();
+
+        try {
+
+            Room room = roomRepository.findById(furnitureImageCreateRequestDto.getRoomId());
+            List<String> furnitureImagePathList = new ArrayList<>();
+
+            for (int i = 0; i < furnitureImageCreateRequestDto.getFurnitureImages().size(); i++) {
+
+                byte[] furnitureByteImage = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImage();
+                String originalName = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImageName();
+                String changeName = UUID.randomUUID() + " - furniture_" + memberCode + ".png";
+                Integer imageNo = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImageNo();
+
+                /* 가구 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
+                String furnitureImagePath = s3FurnitureImageFile.upload(furnitureByteImage, changeName, "furnitures");
+
+                /* 가구 이미지 생성 */
+                FurnitureImage furnitureImage = new FurnitureImage(
+
+                        furnitureImagePath,
+                        originalName,
+                        changeName,
+                        imageNo,
+                        room
+
+                );
+
+                furnitureImageRepository.save(furnitureImage);
+                furnitureImagePathList.add(furnitureImagePath);
+
+            }
+
+            furnitureImageCreateResponseDto.setFurniturePath(furnitureImagePathList);
+            furnitureImageCreateResponseDto.setRoomId(room.getId());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return furnitureImageCreateResponseDto;
+    }
 }
