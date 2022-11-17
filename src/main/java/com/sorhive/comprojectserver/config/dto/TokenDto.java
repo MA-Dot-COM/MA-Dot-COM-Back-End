@@ -65,6 +65,10 @@ public class TokenDto {
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }
 
+    public Long getMemberCode() { return memberCode; }
+
+    public void setMemberCode(Long memberCode) { this.memberCode = memberCode; }
+
     @Override
     public String toString() {
         return "TokenDto{" +
