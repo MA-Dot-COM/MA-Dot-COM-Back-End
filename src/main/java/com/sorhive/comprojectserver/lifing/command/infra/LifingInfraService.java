@@ -64,7 +64,7 @@ public class LifingInfraService {
     private final MemberRepository memberRepository;
 
     @Value("${url.lifing}")
-    private String url;
+    private final String url;
 
     /** 라이핑 AI 이미지 저장 */
     @Transactional

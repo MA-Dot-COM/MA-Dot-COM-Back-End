@@ -47,7 +47,7 @@ public class AvatarImageInfraService {
     private final TokenProvider tokenProvider;
 
     @Value("${url.avatar}")
-    private String url;
+    private final String url;
 
     /** 아바타 이미지 생성 */
     @Transactional

@@ -30,6 +30,7 @@ public class MongoChatting {
 
     @Id
     private String id;
+    private Long counter;
     private Long memberCode1;
     private Long memberCode2;
     private List<Map<String, Object>> messages;
@@ -38,6 +39,10 @@ public class MongoChatting {
     protected MongoChatting() {}
 
     public MongoChatting(Long memberCode1, Long memberCode2, List<Map<String, Object>> messages) {
+        if(counter == null) {
+            counter = 0L;
+        }
+        this.counter += 1;
         this.messages = messages;
         this.memberCode1 = memberCode1;
         this.memberCode2 = memberCode2;
