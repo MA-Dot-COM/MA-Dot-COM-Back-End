@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <pre>
  * Class : ChattingInfraService
@@ -54,6 +57,13 @@ public class ChattingInfraService {
 
         Long memberCode1 = chattingCreateRequestDto.getMemberCode1();
         Long memberCode2 = chattingCreateRequestDto.getMemberCode2();
+
+//        MongoChatting oldMongoChatting = mongoChattingRepository.findFirstMemberCode1AndMemberCode2OrderByCounterDesc(memberCode1, memberCode2);
+//        for (int i = 0; i < oldMongoChatting.size(); i++) {
+//
+//        }
+//        chattingCreateRequestDto.getMessages().add(oldMongoChatting.getMessages());
+
 
         /* 몽고 DB 채팅 생성 */
         MongoChatting mongoChatting = new MongoChatting(
