@@ -54,20 +54,27 @@ public class AuthInfraService {
     /** 이메일 중복 검사 */
     public String emailAuthentication(EmailRequestDto emailRequestDto) throws MessagingException {
 
+        log.info("[AuthInfraService] emailAuthentication Start ============================");
+        log.info("[AuthInfraService] " + emailRequestDto);
+
         int countEmail = memberRepository.countByMemberEmail(emailRequestDto.getEmail());
 
         if(countEmail > 0) {
             throw new AlreadyExistEmailException("해당 이메일은 이미 존재합니다.");
         }
 
-        emailSend(emailRequestDto, certCode());
+        String certCode = emailSend(emailRequestDto, certCode());
+
+        log.info("[AuthInfraService] emailAuthentication End ============================");
         
-        return "이메일 전송에 성공하였습니다.";
+        return certCode;
 
     }
 
     /** 인증번호 생성 */
     public String certCode() {
+
+        log.info("[AuthInfraService] certCode Start ============================");
 
         Random random = new Random();
         int createNumber = 0;
@@ -82,11 +89,15 @@ public class AuthInfraService {
 
         }
 
+        log.info("[AuthInfraService] certCode End ============================");
+
         return certCode;
     }
 
     /** 이메일 보내기 */
-    public MimeMessage emailSend(EmailRequestDto emailRequestDto, String randomCode) throws MessagingException {
+    public String emailSend(EmailRequestDto emailRequestDto, String certCode) throws MessagingException {
+
+        log.info("[AuthInfraService] emailSend Start ============================");
 
         String setFrom = fromEmail;
         String toEmail = emailRequestDto.getEmail();
@@ -96,18 +107,26 @@ public class AuthInfraService {
         message.addRecipients(MimeMessage.RecipientType.TO, toEmail); //보낼 이메일 설정
         message.setSubject(title); //제목 설정
         message.setFrom(setFrom); //보내는 이메일
-        message.setText(setContext(randomCode), "utf-8", "html");
+        message.setText(setContext(certCode), "utf-8", "html");
 
         javaMailSender.send(message);
 
-        return message;
+        log.info("[AuthInfraService] emailSend End ============================");
+
+        return certCode;
 
     }
 
     /** 타임리프를 이용한 context 설정 */
     public String setContext(String code) {
+
+        log.info("[AuthInfraService] setContext Start ============================");
+
         Context context = new Context();
         context.setVariable("code", code);
+
+        log.info("[AuthInfraService] setContext End ============================");
+
         return springTemplateEngine.process("mail", context); //mail.html
     }
 }
