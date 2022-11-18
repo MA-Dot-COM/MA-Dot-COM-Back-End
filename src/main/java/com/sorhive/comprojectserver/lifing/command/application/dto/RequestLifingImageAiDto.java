@@ -3,8 +3,6 @@ package com.sorhive.comprojectserver.lifing.command.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : RequestLifingImageAiDto
@@ -15,6 +13,7 @@ import java.util.List;
  * ----------------------------------------------------------------
  * 2022-11-11       부시연           최초 생성
  * 2022-11-16       부시연           라이핑 URL 리스트로 변경
+ * 2022-11-19       부시연           라이핑 URL 문자열로 다시 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -24,8 +23,6 @@ import java.util.List;
 @Getter
 @Setter
 public class RequestLifingImageAiDto {
-
-    private int imgNum;
-    private List<String> url;
+    private String url;
 
 }
