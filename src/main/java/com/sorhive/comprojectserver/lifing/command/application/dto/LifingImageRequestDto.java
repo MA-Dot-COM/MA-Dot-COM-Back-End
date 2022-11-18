@@ -22,5 +22,6 @@ public class LifingImageRequestDto {
 
     byte[] lifingImage;
     String lifingImageName;
+    private String lifingContent;
     
 }
