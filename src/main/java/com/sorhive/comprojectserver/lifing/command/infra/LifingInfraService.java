@@ -17,7 +17,6 @@ import com.sorhive.comprojectserver.lifing.command.domain.repository.LifingRepos
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,6 @@ import java.util.*;
  * @see (참고할 class 또는 외부 url)
  */
 @Service
-@RequiredArgsConstructor
 public class LifingInfraService {
 
     private static final Logger log = LoggerFactory.getLogger(LifingInfraService.class);
@@ -62,9 +60,18 @@ public class LifingInfraService {
     private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
-
     @Value("${url.lifing}")
     private final String url;
+    public LifingInfraService(S3LifingImageFile s3LifingImageFile, LifingImageRepository lifingImageRepository, LifingRepository lifingRepository, LifingCommentRepository lifingCommentRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository, String url) {
+        this.s3LifingImageFile = s3LifingImageFile;
+        this.lifingImageRepository = lifingImageRepository;
+        this.lifingRepository = lifingRepository;
+        this.lifingCommentRepository = lifingCommentRepository;
+        this.lifingWriterService = lifingWriterService;
+        this.tokenProvider = tokenProvider;
+        this.memberRepository = memberRepository;
+        this.url = url;
+    }
 
     /** 라이핑 AI 이미지 저장 */
     @Transactional
