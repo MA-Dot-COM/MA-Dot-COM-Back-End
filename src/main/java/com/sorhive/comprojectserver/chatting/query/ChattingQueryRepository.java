@@ -2,8 +2,6 @@ package com.sorhive.comprojectserver.chatting.query;
 
 import org.springframework.data.repository.Repository;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : ChattingQueryRepository
@@ -20,7 +18,5 @@ import java.util.List;
  * @see (참고할 class 또는 외부 url)
  */
 public interface ChattingQueryRepository extends Repository<ChattingData, Long> {
-    List<ChattingData> findByMemberCode1OrderByUploadTimeDesc(Long memberCode);
-    List<ChattingData> findByMemberCode2OrderByUploadTimeDesc(Long memberCode);
 
 }

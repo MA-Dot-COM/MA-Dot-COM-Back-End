@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.chatting.query;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class : ChattingMapper
@@ -11,6 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-18       부시연           최초 생성
+ * 2022-11-19       부시연           채팅 목록 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -19,4 +22,5 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ChattingMapper {
+    List<ChattingData> findChattingList(Long memberCode1, Long memberCode2);
 }

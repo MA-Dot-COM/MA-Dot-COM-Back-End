@@ -4,5 +4,22 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sorhive.comprojectserver.chatting.query.ChattingMapper">
 
+    <resultMap id="chattingDataResultMap" type="com.sorhive.comprojectserver.chatting.query.ChattingData">
+        <id property="chattingNo" column="chatting_no"/>
+        <result property="memberCode1" column="chatting_member_1"/>
+        <result property="memberCode2" column="chatting_member_2"/>
+        <result property="chattingId" column="chatting_id"/>
+        <result property="uploadTime" column="chatting_upload_time"/>
+    </resultMap>
+
+    <select id="findChattingList" resultMap="chattingDataResultMap">
+        select
+               chatting_member_1
+             , chatting_member_2
+          from tbl_chatting
+         where chatting_member_1 = ${memberCode1}
+            or chatting_member_2 = ${memberCode2}
+         group by chatting_member_1
+    </select>
 
 </mapper>
