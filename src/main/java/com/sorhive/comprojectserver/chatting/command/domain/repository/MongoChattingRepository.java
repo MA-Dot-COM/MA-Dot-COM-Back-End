@@ -3,8 +3,6 @@ package com.sorhive.comprojectserver.chatting.command.domain.repository;
 import com.sorhive.comprojectserver.chatting.command.domain.model.MongoChatting;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : MongoChattingRepository
@@ -22,6 +20,6 @@ import java.util.List;
  */
 public interface MongoChattingRepository extends MongoRepository<MongoChatting, String> {
 
-    MongoChatting findFirstMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
-    List<MongoChatting> findByMemberCode1OrMemberCode2OrderByUploadTimeDesc(Long memberCode1, Long memberCode2);
+//    MongoChatting findFirstMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
+//    List<MongoChatting> findByMemberCode1OrMemberCode2OrderByUploadTimeDesc(Long memberCode1, Long memberCode2);
 }
