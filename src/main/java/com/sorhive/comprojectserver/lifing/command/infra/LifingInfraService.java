@@ -61,8 +61,8 @@ public class LifingInfraService {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     @Value("${url.lifing}")
-    private final String url;
-    public LifingInfraService(S3LifingImageFile s3LifingImageFile, LifingImageRepository lifingImageRepository, LifingRepository lifingRepository, LifingCommentRepository lifingCommentRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository, String url) {
+    private String lifingUrl;
+    public LifingInfraService(S3LifingImageFile s3LifingImageFile, LifingImageRepository lifingImageRepository, LifingRepository lifingRepository, LifingCommentRepository lifingCommentRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository) {
         this.s3LifingImageFile = s3LifingImageFile;
         this.lifingImageRepository = lifingImageRepository;
         this.lifingRepository = lifingRepository;
@@ -70,7 +70,6 @@ public class LifingInfraService {
         this.lifingWriterService = lifingWriterService;
         this.tokenProvider = tokenProvider;
         this.memberRepository = memberRepository;
-        this.url = url;
     }
 
     /** 라이핑 AI 이미지 저장 */
@@ -140,7 +139,7 @@ public class LifingInfraService {
                 Charset utf8 = Charset.forName("UTF-8");
                 MediaType mediaType = new MediaType("application", "json", utf8);
                 headers.setContentType(mediaType);
-
+                final String url = lifingUrl;
                 /* 바디에 넣기 위한 값을 MAP에 넣어주기 */
                 Map<String, Object> map = new HashMap<>();
                 for (int i = 0; i < requestLifingImageAiDto.getUrl().size(); i++) {

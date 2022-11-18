@@ -44,13 +44,12 @@ public class AvatarImageInfraService {
     private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
     @Value("${url.avatar}")
-    private final String url;
+    private String avatarUrl;
 
-    public AvatarImageInfraService(S3AvatarImageFile s3AvatarImageFile, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider, String url) {
+    public AvatarImageInfraService(S3AvatarImageFile s3AvatarImageFile, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider) {
         this.s3AvatarImageFile = s3AvatarImageFile;
         this.avatarImageRepository = avatarImageRepository;
         this.tokenProvider = tokenProvider;
-        this.url = url;
     }
 
     /** 아바타 이미지 생성 */
@@ -60,6 +59,7 @@ public class AvatarImageInfraService {
         log.info("[AvatarImageInfraService] insertAvatarImage Start ===============");
         log.info("[AvatarImageInfraService] avatarImageDto : " + avatarImageDto);
 
+        final String url = avatarUrl;
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 중복되지 않게 아바타 이미지 이름 생성 */
