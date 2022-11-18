@@ -18,8 +18,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-public interface MongoChattingRepository extends MongoRepository<MongoChatting, String> {
+public interface MongoChattingRepository extends MongoRepository<MongoChatting, Long> {
+    MongoChatting findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
 
-//    MongoChatting findFirstMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
-//    List<MongoChatting> findByMemberCode1OrMemberCode2OrderByUploadTimeDesc(Long memberCode1, Long memberCode2);
 }

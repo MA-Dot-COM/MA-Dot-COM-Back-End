@@ -55,19 +55,31 @@ public class ChattingInfraService {
         Long memberCode1 = chattingCreateRequestDto.getMemberCode1();
         Long memberCode2 = chattingCreateRequestDto.getMemberCode2();
 
-//        MongoChatting oldMongoChatting = mongoChattingRepository.findFirstMemberCode1AndMemberCode2OrderByCounterDesc(memberCode1, memberCode2);
-//        for (int i = 0; i < oldMongoChatting.size(); i++) {
-//
-//        }
-//        chattingCreateRequestDto.getMessages().add(oldMongoChatting.getMessages());
+        MongoChatting mongoChatting = null;
 
+        MongoChatting oldMongoChatting = mongoChattingRepository.findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(memberCode1, memberCode2);
 
-        /* 몽고 DB 채팅 생성 */
-        MongoChatting mongoChatting = new MongoChatting(
-                memberCode1,
-                memberCode2,
-                chattingCreateRequestDto.getMessages()
-        );
+        if(oldMongoChatting != null) {
+
+            for (int i = 0; i < chattingCreateRequestDto.getMessages().size(); i++) {
+                oldMongoChatting.getMessages().add(chattingCreateRequestDto.getMessages().get(i));
+            }
+
+            mongoChatting = new MongoChatting(
+                    memberCode1,
+                    memberCode2,
+                    oldMongoChatting.getMessages()
+            );
+
+        } else {
+
+            /* 몽고 DB 채팅 생성 */
+            mongoChatting = new MongoChatting(
+                    memberCode1,
+                    memberCode2,
+                    chattingCreateRequestDto.getMessages()
+            );
+        }
 
         /* 몽고 DB 채팅 저장하기 */
         mongoChattingRepository.save(mongoChatting);
