@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-18       부시연           최초 생성
+ * 2022-11-18       부시연           자신의 채팅 목록 불러오기
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -45,10 +47,23 @@ public class ChattingQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<MongoChattingData> chattingData = mongoChattingQueryRepository.findByMemberCode1OrMemberCode2OrderByUploadTimeDesc(memberCode, memberCode);
+        /** 회원이 있는 채팅 내역들을 불러온다. */
+        List<ChattingData> chattingData = chattingMapper.findChattingList(memberCode, memberCode);
+        List<MongoChattingData> mongoChattingData = new ArrayList<>();
 
+        /** 채팅 데이터에 있는
+         * chattingData.get(i).getMemberCode1() 회원 1
+         * chattingData.get(i).getMemberCode2() 회원 2
+         * 조회를 요청한 회원 값은 둘 중 하나에 들어있다.
+         *
+         * 회원1과 회원2를 통해 조회를 하는데 가장 최근에 저장된 1건들에 대해서 반복문을 돌려서 조회를 한다.
+         * */
+        for (int i = 0; i < chattingData.size(); i++) {
 
+            mongoChattingData.add(mongoChattingQueryRepository.findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(chattingData.get(i).getMemberCode1(), chattingData.get(i).getMemberCode2()));
 
-        return chattingData;
+        }
+
+        return mongoChattingData;
     }
 }

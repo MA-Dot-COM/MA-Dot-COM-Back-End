@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : ChattingData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 채팅 데이터 조회 엔티티
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE

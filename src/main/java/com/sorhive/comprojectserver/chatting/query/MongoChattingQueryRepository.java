@@ -2,8 +2,6 @@ package com.sorhive.comprojectserver.chatting.query;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : MongoChattingQueryRepository
@@ -20,5 +18,5 @@ import java.util.List;
  * @see (참고할 class 또는 외부 url)
  */
 public interface MongoChattingQueryRepository extends MongoRepository<MongoChattingData, String> {
-    List<MongoChattingData> findByMemberCode1OrMemberCode2OrderByUploadTimeDesc(Long memberCode, Long memberCode1);
+    MongoChattingData findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
 }
