@@ -6,7 +6,6 @@ import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDt
 import com.sorhive.comprojectserver.member.command.application.dto.ResponseAvatarImageAiDto;
 import com.sorhive.comprojectserver.member.command.domain.model.avatarimage.AvatarImage;
 import com.sorhive.comprojectserver.member.command.domain.repository.AvatarImageRepository;
-import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,16 +37,21 @@ import java.util.Optional;
  * @version 1(클래스 버전)
  */
 @Service
-@RequiredArgsConstructor
 public class AvatarImageInfraService {
 
     private static final Logger log = LoggerFactory.getLogger(AvatarImageInfraService.class);
     private final S3AvatarImageFile s3AvatarImageFile;
     private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
-
     @Value("${url.avatar}")
     private final String url;
+
+    public AvatarImageInfraService(S3AvatarImageFile s3AvatarImageFile, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider, String url) {
+        this.s3AvatarImageFile = s3AvatarImageFile;
+        this.avatarImageRepository = avatarImageRepository;
+        this.tokenProvider = tokenProvider;
+        this.url = url;
+    }
 
     /** 아바타 이미지 생성 */
     @Transactional
