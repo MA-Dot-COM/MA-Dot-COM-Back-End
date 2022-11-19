@@ -2,7 +2,6 @@ package com.sorhive.comprojectserver.feed.command.domain.repository;
 
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedcomment.FeedComment;
-import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;

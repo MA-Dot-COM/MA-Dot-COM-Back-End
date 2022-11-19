@@ -2,15 +2,17 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
 
+import java.util.List;
+
 /**
  * <pre>
- * Class : FeedImageResponseDto
- * Comment: 피드 이미지 작성 응답 객체
+ * Class : FeedModifyRequestDto
+ * Comment: 피드 수정 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-12       부시연           최초 생성
+ * 2022-11-20       부시연           최초 생성
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -18,10 +20,12 @@ import lombok.Getter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-public class FeedImageResponseDto {
+public class FeedModifyRequestDto {
 
-    private String feedImagePath;
-    
-    public FeedImageResponseDto() {
-    }
+    private Long feedId;
+    private String feedContent;
+    private List<Long> feedImageNos;
+    private byte[] feedImage;
+    private String feedImageName;
+
 }

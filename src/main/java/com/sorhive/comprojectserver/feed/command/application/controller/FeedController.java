@@ -4,6 +4,7 @@ import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateRequestDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentModifyRequestDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateRequestDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedModifyRequestDto;
 import com.sorhive.comprojectserver.feed.command.application.service.FeedService;
 import com.sorhive.comprojectserver.feed.command.infra.FeedInfraService;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-19       부시연           피드 댓글 제거 기능 추가
  * 2022-11-19       부시연           피드 댓글 수정 기능 추가
  * 2022-11-19       부시연           피드 삭제 기능 추가
+ * 2022-11-20       부시연           피드 수정 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -60,6 +62,19 @@ public class FeedController {
 
     }
 
+    /** 피드 수정 */
+    @PutMapping("feed")
+    public ResponseEntity<ResponseDto> modifyFeed(@RequestHeader String Authorization, @RequestBody FeedModifyRequestDto feedModifyRequestDto) {
+
+        log.info("[FeedController] modifyFeed Start ============================");
+        log.info("[feedModifyRequestDto] " + feedModifyRequestDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 수정 성공", feedInfraService.modifyFeed(accessToken, feedModifyRequestDto)));
+
+    }
+
     /** 피드 삭제 */
     @DeleteMapping("feed/{feedId}")
     public ResponseEntity<ResponseDto> deleteFeed(@RequestHeader String Authorization, @PathVariable Long feedId) {
@@ -69,7 +84,7 @@ public class FeedController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "피드 삭제 성공", feedService.deleteFeed(accessToken, feedId)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "피드 삭제 성공", feedInfraService.deleteFeed(accessToken, feedId)));
 
     }
 

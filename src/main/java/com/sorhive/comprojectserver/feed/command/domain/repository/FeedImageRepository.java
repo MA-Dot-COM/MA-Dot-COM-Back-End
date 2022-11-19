@@ -1,7 +1,10 @@
 package com.sorhive.comprojectserver.feed.command.domain.repository;
 
+import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedimage.FeedImage;
 import org.springframework.data.repository.Repository;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -13,6 +16,8 @@ import org.springframework.data.repository.Repository;
  * ----------------------------------------------------------------
  * 2022-11-19       부시연           최초 생성
  * 2022-11-19       부시연           이미지 저장
+ * 2022-11-20       부시연           피드로 피드 이미지 찾기
+ * 2022-11-20       부시연           이미지 번호로 피드 이미지 찾기
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,4 +27,9 @@ import org.springframework.data.repository.Repository;
 public interface FeedImageRepository extends Repository<FeedImage, Long> {
 
     void save(FeedImage feedImage);
+
+    List<FeedImage> findByFeed(Feed feed);
+
+    FeedImage findById(Long aLong);
+    
 }
