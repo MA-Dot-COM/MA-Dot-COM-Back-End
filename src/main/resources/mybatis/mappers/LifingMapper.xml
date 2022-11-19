@@ -47,10 +47,10 @@
         select
                lifing_image_id
              , lifing_image_path
-             , anaylzed_lifing_no
              , max(lifing_upload_time)
           from tbl_lifing_image
          where lifing_id = #{lifing_id}
+           and lifing_delete_yn = 'N'
     </select>
 
     <select id="findAllLifingByMemberCode" resultMap="lifingResultMap">
@@ -103,5 +103,6 @@
              , lifing_image_path
           from tbl_lifing_image
          where lifing_id = #{ lifingId }
+           and lifing_delete_yn = 'N'
     </select>
 </mapper>
