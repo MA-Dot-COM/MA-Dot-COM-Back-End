@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-12       부시연           피드 댓글 생성 추가
  * 2022-11-16       부시연           피드 허니 추가 기능 추가
  * 2022-11-16       부시연           피드 허니 제거 기능 추가
+ * 2022-11-19       부시연           피드 댓글 제거 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -43,7 +44,7 @@ public class FeedController {
         this.feedService = feedService;
     }
 
-    /* 피드 작성 */
+    /** 피드 작성 */
     @PostMapping("feed")
     public ResponseEntity<ResponseDto> createFeed(@RequestHeader String Authorization, @RequestBody FeedCreateDto feedCreateDto) {
 
@@ -56,7 +57,7 @@ public class FeedController {
 
     }
 
-    /* 피드 댓글 작성 */
+    /** 피드 댓글 작성 */
     @PostMapping("feed/comment/{feedId}")
     public ResponseEntity<ResponseDto> createFeedComment(@RequestHeader String Authorization, @PathVariable Long feedId, @RequestBody FeedCommentCreateDto feedCommentCreateDto) {
 
@@ -69,7 +70,20 @@ public class FeedController {
 
     }
 
-    /* 허니 생성 */
+    /** 피드 댓글 삭제 */
+    @DeleteMapping("feed/comment/{feedCommentId}")
+    public ResponseEntity<ResponseDto> deleteFeedComment(@RequestHeader String Authorization, @PathVariable Long feedCommentId) {
+
+        log.info("[FeedController] deleteFeedComment Start ============================");
+        log.info("[feedCommentId] " + feedCommentId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "피드 댓글 삭제 성공", feedService.deleteFeedComment(accessToken, feedCommentId)));
+
+    }
+
+    /** 허니 생성 */
     @PostMapping("feed/honey/{feedId}")
     public ResponseEntity<ResponseDto> createFeedHoney(@RequestHeader String Authorization, @PathVariable Long feedId) {
 
@@ -82,7 +96,7 @@ public class FeedController {
 
     }
 
-    /* 허니 제거 */
+    /** 허니 제거 */
     @DeleteMapping("feed/honey/{feedId}")
     public ResponseEntity<ResponseDto> deleteFeedHoney(@RequestHeader String Authorization, @PathVariable Long feedId) {
 
