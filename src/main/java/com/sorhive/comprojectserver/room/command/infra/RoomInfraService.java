@@ -114,6 +114,12 @@ public class RoomInfraService {
         /* 몽고 DB 방 저장 */
         mongoRoomRepository.save(mongoRoom);
 
+        /* 기존 몽고 DB 방이 있으면 찾아서 삭제하기 */
+        Room oldRoom = roomRepository.findById(memberCode);
+        if(oldRoom != null) {
+            mongoRoomRepository.deleteById(oldRoom.getRoomNo());
+        }
+
         /* 방 생성하기 */
         Room newRoom = new Room(
                 roomCreator.getMemberCode().getValue(),

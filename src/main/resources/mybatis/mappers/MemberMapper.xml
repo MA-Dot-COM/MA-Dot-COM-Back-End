@@ -49,6 +49,7 @@
           left join tbl_follows b on a.member_code = b.following_id
          where b.follower_id = #{ memberCode }
            and a.member_delete_yn = 'N'
+           and b.follow_delete_yn = 'N'
          order by member_lifing_yn desc
          limit 30 offset #{ offset }
     </select>
@@ -67,6 +68,7 @@
           left join tbl_follows b on a.member_code = b.following_id
          where b.follower_id = #{ memberCode }
            and a.member_delete_yn = 'N'
+           and b.follow_delete_yn = 'N'
          limit 6
     </select>
 
@@ -86,6 +88,7 @@
           left join tbl_follows b on a.member_code = b.following_id
          where a.member_code = #{ memberCode }
            and a.member_delete_yn = 'N'
+           and b.follow_delete_yn = 'N'
     </select>
 
     <select id="findMaxMemberCode" resultType="int">
