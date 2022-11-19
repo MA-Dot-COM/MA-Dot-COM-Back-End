@@ -61,6 +61,10 @@ public class ChattingInfraService {
 
         if(oldMongoChatting != null) {
 
+            /* 키값 중복때문에 기존에 있던 채팅 이력은 삭제한다. */
+            mongoChattingRepository.deleteById(oldMongoChatting.getId());
+
+            /* 이전 채팅에다가 새로운 채팅내역을 추가시킨다. */
             for (int i = 0; i < chattingCreateRequestDto.getMessages().size(); i++) {
                 oldMongoChatting.getMessages().add(chattingCreateRequestDto.getMessages().get(i));
             }
