@@ -1,6 +1,8 @@
 package com.sorhive.comprojectserver.chatting.query;
 
+import com.sorhive.comprojectserver.chatting.exception.NoMongoChattingException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import org.apache.commons.math3.exception.NoDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
  * ----------------------------------------------------------------
  * 2022-11-18       부시연           최초 생성
  * 2022-11-18       부시연           자신의 채팅 목록 불러오기
+ * 2022-11-19       부시연           자신과 채팅한 한 사람과의 내역 불러오기
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -41,7 +44,7 @@ public class ChattingQueryService {
     }
 
     /** 자신의 채팅 목록 불러오기 */
-    public Object findChattingList(String accessToken) {
+    public List<MongoChattingData> findChattingList(String accessToken) {
 
         log.info("[ChattingQueryService] Start ==============================");
 
@@ -65,5 +68,30 @@ public class ChattingQueryService {
         }
 
         return mongoChattingData;
+    }
+
+    /** 자신과 채팅한 한 사람과의 내역 불러오기 */
+    public MongoChattingData findChattingDetail(String accessToken, Long memberCode) {
+
+        log.info("[ChattingQueryService] Start ==============================");
+
+        Long memberCode2 = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        /* membercode1은 작은값 membercode 2는 큰값으로 맞춘다. */
+        if(memberCode > memberCode2) {
+            Long temp = 0L;
+            temp = memberCode;
+            memberCode = memberCode2;
+            memberCode2 = temp;
+        }
+
+        MongoChattingData mongoChattingData = mongoChattingQueryRepository.findFirstByMemberCode1AndMemberCode2(memberCode, memberCode2);
+
+        if (mongoChattingData == null) {
+            throw new NoMongoChattingException("해당 채팅은 존재 하지 않습니다.");
+        }
+
+        return mongoChattingData;
+        
     }
 }

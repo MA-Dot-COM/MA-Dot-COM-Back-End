@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-18       부시연           최초 생성
+ * 2022-11-19       부시연           회원 2명의 채팅 1건 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -19,4 +20,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface MongoChattingQueryRepository extends MongoRepository<MongoChattingData, String> {
     MongoChattingData findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
+
+    MongoChattingData findFirstByMemberCode1AndMemberCode2(Long memberCode, Long memberCode2);
 }
