@@ -1,12 +1,14 @@
 package com.sorhive.comprojectserver.feed.command.application.service;
 
 import com.sorhive.comprojectserver.common.exception.AlreadyDeleteException;
+import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedCommentDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedHoneyCreateDto;
 import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedHoneyDeleteDto;
-import com.sorhive.comprojectserver.feed.command.application.exception.NoFeedException;
+import com.sorhive.comprojectserver.feed.exception.NoFeedCommentException;
+import com.sorhive.comprojectserver.feed.exception.NoFeedException;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedId;
 import com.sorhive.comprojectserver.feed.command.domain.model.feedcomment.FeedComment;
@@ -28,15 +30,16 @@ import java.util.Optional;
 /**
  * <pre>
  * Class : FeedService
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 피드 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
- * 2022-11-12       부시연           피드 댓글 추가 기능 생성
+ * 2022-11-12       부시연           피드 댓글 추가 기능 추가
  * 2022-11-16       부시연           피드 허니 추가 기능 추가
  * 2022-11-16       부시연           피드 허니 제거 기능 추가
+ * 2022-11-19       부시연           피드 댓글 삭제 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -93,6 +96,48 @@ public class FeedService {
         responseFeedCommentDto.setFeedCommentCreateTime(feedComment.getCreateTime());
 
         return responseFeedCommentDto;
+
+    }
+
+    /** 피드 댓글 삭제 */
+    @Transactional
+    public Object deleteFeedComment(String accessToken, Long feedCommentId) {
+
+        log.info("[FeedService] deleteFeedComment Start =========================================================");
+        log.info("[FeedService] feedCommentId : " + feedCommentId);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(feedCommentRepository.findById(feedCommentId) == null) {
+
+            log.warn("[FeedService] NoFeedCommentExecption");
+            throw new NoFeedCommentException("해당 피드 댓글은 존재하지 않습니다.");
+
+        }
+
+        if(feedCommentRepository.findByIdAndDeleteYnEquals(feedCommentId, 'N').isEmpty()) {
+
+            log.warn("[FeedService] NoFeedCommentExecption");
+            throw new NoFeedCommentException("해당 피드 댓글은 이미 삭제 되었습니다.");
+
+        }
+
+        Optional<FeedComment> feedCommentData = feedCommentRepository.findByIdAndDeleteYnEquals(feedCommentId, 'N');
+
+        if(feedCommentData.get().getFeedCommentWriter().getMemberCode().getValue() != memberCode) {
+
+            log.warn("[FeedService] NotSameWriterException");
+            throw new NotSameWriterException("해당 피드 댓글의 작성자가 아닙니다.");
+
+        }
+
+        FeedComment feedComment = feedCommentData.get();
+
+        feedComment.deleteFeedComment(feedCommentId);
+
+        feedCommentRepository.save(feedComment);
+
+        return feedComment.getId();
 
     }
 

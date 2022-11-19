@@ -1,6 +1,6 @@
 package com.sorhive.comprojectserver.feed.query;
 
-import com.sorhive.comprojectserver.feed.command.application.exception.NoFeedException;
+import com.sorhive.comprojectserver.feed.exception.NoFeedException;
 import com.sorhive.comprojectserver.feed.query.dto.*;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

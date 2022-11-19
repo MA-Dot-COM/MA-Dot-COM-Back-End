@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.feed.command.application.exception;
+package com.sorhive.comprojectserver.feed.exception;
 /**
  * <pre>
  * Class : NoFeedException
