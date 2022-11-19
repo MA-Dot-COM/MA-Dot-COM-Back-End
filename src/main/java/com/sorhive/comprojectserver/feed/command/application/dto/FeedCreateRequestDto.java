@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
