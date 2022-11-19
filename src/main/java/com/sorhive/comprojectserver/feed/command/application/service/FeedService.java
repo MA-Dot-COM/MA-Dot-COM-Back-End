@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,6 +39,7 @@ import java.util.Optional;
  * 2022-11-16       부시연           피드 허니 제거 기능 추가
  * 2022-11-19       부시연           피드 댓글 삭제 기능 추가
  * 2022-11-19       부시연           피드 댓글 수정 기능 추가
+ * 2022-11-19       부시연           피드 삭제 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -61,7 +63,53 @@ public class FeedService {
         this.feedCommentWriterService = feedCommentWriterService;
     }
 
-    /* 피드 댓글 작성 */
+    /** 피드 삭제 */
+    @Transactional
+    public Object deleteFeed(String accessToken, Long feedId) {
+
+        log.info("[FeedService] deleteFeed Start =========================================================");
+        log.info("[FeedService] feedId : " + feedId);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(feedRepository.findByFeedId(feedId) == null) {
+            log.warn("[FeedService] NoFeedException");
+            throw new NoFeedException("해당 피드는 존재하지 않습니다.");
+        }
+
+        if(feedRepository.findByFeedIdAndFeedDeleteYnEquals(feedId, 'N').isEmpty()) {
+            log.warn("[FeedService] NoFeedException");
+            throw new AlreadyDeleteException("해당 피드는 이미 삭제되었습니다.");
+        }
+
+        Optional<Feed> feedData = feedRepository.findByFeedIdAndFeedDeleteYnEquals(feedId, 'N');
+        Feed feed = feedData.get();
+
+        if(feed.getFeedWriter().getMemberCode().getValue() != memberCode) {
+            log.warn("[FeedService] NotSameWriterException");
+            throw new NotSameWriterException("해당 피드 작성자와 삭제 요청자가 다릅니다.");
+        }
+
+        feed.delete();
+
+        /* 해당 피드에 대한 댓글이 있다면 */
+        if(!feedCommentRepository.findByFeed(feed).isEmpty()) {
+            List<FeedComment> feedCommentList = feedCommentRepository.findByFeed(feed);
+
+            for (int i = 0; i < feedCommentList.size(); i++) {
+                feedCommentList.get(i).delete();
+                feedCommentRepository.save(feedCommentList.get(i));
+            }
+        }
+
+        log.info("[FeedService] deleteFeed End =========================================================");
+        
+        return feed.getFeedId();
+
+    }
+
+
+    /** 피드 댓글 작성 */
     @Transactional
     public FeedCommentCreateResponseDto createFeedComment(String accessToken, Long feedId, FeedCommentCreateRequestDto feedCommentCreateRequestDto) {
 
@@ -189,7 +237,7 @@ public class FeedService {
 
     }
 
-    /* 허니 추가 */
+    /** 허니 추가 */
     @Transactional
     public FeedHoneyResponseCreateDto createFeedHoney(String accessToken, Long feedId) {
 
@@ -230,7 +278,7 @@ public class FeedService {
 
     }
 
-    /* 허니 취소 */
+    /** 허니 취소 */
     @Transactional
     public FeedHoneyResponseDeleteDto deleteFeedHoney(String accessToken, Long feedId) {
 

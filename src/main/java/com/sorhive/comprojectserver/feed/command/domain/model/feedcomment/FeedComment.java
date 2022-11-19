@@ -17,6 +17,8 @@ import java.sql.Timestamp;
  * ----------------------------------------------------------------
  * 2022-11-02       부시연           최초 생성
  * 2022-11-19       부시연           피드 댓글 삭제 추가
+ * 2022-11-19       부시연           피드 댓글 수정 추가
+ * 2022-11-19       부시연           피드로 댓글 삭제 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -79,5 +81,10 @@ public class FeedComment {
         this.content = feedCommentContent;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
 
+    }
+
+    public void delete() {
+        this.deleteYn = 'Y';
+        this.deleteTime = new Timestamp(System.currentTimeMillis());
     }
 }
