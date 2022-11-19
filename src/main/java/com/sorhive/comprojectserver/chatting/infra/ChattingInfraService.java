@@ -55,6 +55,14 @@ public class ChattingInfraService {
         Long memberCode1 = chattingCreateRequestDto.getMemberCode1();
         Long memberCode2 = chattingCreateRequestDto.getMemberCode2();
 
+        /* membercode1은 작은값 membercode 2는 큰값으로 맞춘다. */
+        if(memberCode1 > memberCode2) {
+            Long temp = 0L;
+            temp = memberCode1;
+            memberCode1 = memberCode2;
+            memberCode2 = temp;
+        }
+
         MongoChatting mongoChatting = null;
 
         MongoChatting oldMongoChatting = mongoChattingRepository.findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(memberCode1, memberCode2);
