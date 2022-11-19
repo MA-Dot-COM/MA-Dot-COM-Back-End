@@ -72,4 +72,12 @@ public class FeedComment {
         this.deleteTime = new Timestamp(System.currentTimeMillis());
 
     }
+
+    public void modifyFeedComment(Long feedCommentId, String feedCommentContent) {
+
+        this.id = feedCommentId;
+        this.content = feedCommentContent;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+
+    }
 }

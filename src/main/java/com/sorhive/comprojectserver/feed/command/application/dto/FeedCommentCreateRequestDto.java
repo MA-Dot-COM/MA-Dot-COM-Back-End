@@ -1,12 +1,11 @@
 package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * <pre>
- * Class : ResponseFeedImageDto
- * Comment: 피드 이미지 작성 응답 객체
+ * Class : FeedCommentCreateRequestDto
+ * Comment: 피드 댓글 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -19,11 +18,7 @@ import lombok.Setter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
-public class ResponseFeedImageDto {
+public class FeedCommentCreateRequestDto {
 
-    private String feedImagePath;
-    
-    public ResponseFeedImageDto() {
-    }
+    private String feedCommentContent;
 }

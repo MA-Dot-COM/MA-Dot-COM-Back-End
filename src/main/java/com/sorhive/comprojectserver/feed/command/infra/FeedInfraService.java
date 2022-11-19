@@ -1,8 +1,8 @@
 package com.sorhive.comprojectserver.feed.command.infra;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.ResponseFeedDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateRequestDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateResponseDto;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriter;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriterService;
@@ -46,16 +46,16 @@ public class FeedInfraService {
     private final S3FeedImageFile s3FeedImageFile;
 
     /* 피드 생성 */
-    public Object createFeed(String accessToken, FeedCreateDto feedCreateDto) {
+    public Object createFeed(String accessToken, FeedCreateRequestDto feedCreateRequestDto) {
 
         log.info("[FeedInfraService] Start =========================================================");
-        log.info("[FeedInfraService] feedCreateDto : " + feedCreateDto);
+        log.info("[FeedInfraService] feedCreateDto : " + feedCreateRequestDto);
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 피드 작성자 생성하기 */
         FeedWriter feedWriter = feedWriterService.createFeedWriter(new MemberCode(memberCode));
-        String feedContent = feedCreateDto.getFeedContent();
+        String feedContent = feedCreateRequestDto.getFeedContent();
 
         /* 피드 생성 */
         Feed feed = new Feed(
@@ -67,25 +67,24 @@ public class FeedInfraService {
         feedRepository.save(feed);
 
         /* 응답 객체 생성 */
-        ResponseFeedDto responseFeedDto = new ResponseFeedDto();
-
-        /* 응답 객체에 값 넣어주기 */
-        responseFeedDto.setFeedId(feed.getFeedId());
-        responseFeedDto.setFeedCreateTime(feed.getFeedCreateTime());
-        responseFeedDto.setFeedContent(feed.getFeedContent());
+        FeedCreateResponseDto feedCreateResponseDto = new FeedCreateResponseDto(
+                feed.getFeedId(),
+                feed.getFeedCreateTime(),
+                feed.getFeedContent()
+        );
 
         try {
 
             /* 피드에 이미지가 있다면 */
-            if(feedCreateDto.getFeedImage() != null) {
+            if(feedCreateRequestDto.getFeedImage() != null) {
 
                 List<String> feedImagePathList = new ArrayList<>();
 
                 /* 이미지들을 하나씩 꺼내오기 */
-                for (int i = 0; i < feedCreateDto.getFeedImage().size(); i++) {
+                for (int i = 0; i < feedCreateRequestDto.getFeedImage().size(); i++) {
 
-                    byte[] feedByteImage = feedCreateDto.getFeedImage().get(i).getFeedImage();
-                    String originalName = feedCreateDto.getFeedImage().get(i).getFeedImageName();
+                    byte[] feedByteImage = feedCreateRequestDto.getFeedImage().get(i).getFeedImage();
+                    String originalName = feedCreateRequestDto.getFeedImage().get(i).getFeedImageName();
                     String changeName = UUID.randomUUID() + "feed.png";
                     String feedImagePath = s3FeedImageFile.upload(feedByteImage, changeName, "images");
 
@@ -102,9 +101,9 @@ public class FeedInfraService {
 
                 }
 
-                responseFeedDto.setFeedImagePath(feedImagePathList);
+                feedCreateResponseDto.setFeedImagePath(feedImagePathList);
 
-                return responseFeedDto;
+                return feedCreateResponseDto;
 
             }
 
@@ -112,7 +111,7 @@ public class FeedInfraService {
             throw new RuntimeException(e);
         }
 
-        return responseFeedDto;
+        return feedCreateResponseDto;
     }
 
 }

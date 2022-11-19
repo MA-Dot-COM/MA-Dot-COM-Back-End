@@ -3,12 +3,12 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * <pre>
- * Class : ResponseFeedCommentDto
- * Comment: 피드 댓글 응답 전송 객체
+ * Class : FeedCreateRequestDto
+ * Comment: 피드 생성 요청 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -21,11 +21,8 @@ import java.sql.Timestamp;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
-public class ResponseFeedCommentDto {
+public class FeedCreateRequestDto {
 
-    private Long feedCommentId;
-    private String feedCommentcontent;
-    private Timestamp feedCommentCreateTime;
-
+    private String feedContent;
+    private List<FeedImageCreateDto> feedImage;
 }

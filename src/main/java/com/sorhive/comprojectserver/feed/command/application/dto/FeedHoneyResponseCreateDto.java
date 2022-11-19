@@ -1,13 +1,12 @@
 package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.sql.Timestamp;
 
 /**
  * <pre>
- * Class : ResponseFeedHoneyCreateDto
+ * Class : FeedHoneyResponseCreateDto
  * Comment: 허니 생성 응답 객체
  * History
  * ================================================================
@@ -22,12 +21,19 @@ import java.sql.Timestamp;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
-public class ResponseFeedHoneyCreateDto {
+public class FeedHoneyResponseCreateDto {
 
     private Long feedHoneyId;
     private Long memberCode;
     private Long feedId;
     private Timestamp createTime;
 
+    public FeedHoneyResponseCreateDto(Long id, Long feedId, Long memberCode, Timestamp createTime) {
+
+        this.feedHoneyId = id;
+        this.feedId = feedId;
+        this.memberCode = memberCode;
+        this.createTime = createTime;
+
+    }
 }

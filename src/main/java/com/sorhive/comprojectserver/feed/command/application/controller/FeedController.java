@@ -1,8 +1,9 @@
 package com.sorhive.comprojectserver.feed.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateRequestDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentModifyRequestDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateRequestDto;
 import com.sorhive.comprojectserver.feed.command.application.service.FeedService;
 import com.sorhive.comprojectserver.feed.command.infra.FeedInfraService;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-16       부시연           피드 허니 추가 기능 추가
  * 2022-11-16       부시연           피드 허니 제거 기능 추가
  * 2022-11-19       부시연           피드 댓글 제거 기능 추가
+ * 2022-11-19       부시연           피드 댓글 수정 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -46,27 +48,40 @@ public class FeedController {
 
     /** 피드 작성 */
     @PostMapping("feed")
-    public ResponseEntity<ResponseDto> createFeed(@RequestHeader String Authorization, @RequestBody FeedCreateDto feedCreateDto) {
+    public ResponseEntity<ResponseDto> createFeed(@RequestHeader String Authorization, @RequestBody FeedCreateRequestDto feedCreateRequestDto) {
 
         log.info("[FeedController] createFeed Start ============================");
-        log.info("[feedCreateDto] " + feedCreateDto);
+        log.info("[feedCreateDto] " + feedCreateRequestDto);
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 생성 성공", feedInfraService.createFeed(accessToken, feedCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 생성 성공", feedInfraService.createFeed(accessToken, feedCreateRequestDto)));
 
     }
 
     /** 피드 댓글 작성 */
     @PostMapping("feed/comment/{feedId}")
-    public ResponseEntity<ResponseDto> createFeedComment(@RequestHeader String Authorization, @PathVariable Long feedId, @RequestBody FeedCommentCreateDto feedCommentCreateDto) {
+    public ResponseEntity<ResponseDto> createFeedComment(@RequestHeader String Authorization, @PathVariable Long feedId, @RequestBody FeedCommentCreateRequestDto feedCommentCreateRequestDto) {
 
         log.info("[FeedController] createFeedComment Start ============================");
         log.info("[feedId] " + feedId);
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 댓글 추가 성공", feedService.createFeedComment(accessToken, feedId, feedCommentCreateRequestDto)));
+
+    }
+
+    /** 피드 댓글 수정 */
+    @PutMapping("feed/comment")
+    public ResponseEntity<ResponseDto> modifyFeedComment(@RequestHeader String Authorization, @PathVariable Long feedCommentId, @RequestBody FeedCommentModifyRequestDto feedCommentModifyRequestDto) {
+
+        log.info("[FeedController] modifyFeedComment Start ============================");
+        log.info("[feedCommentModifyRequestDto] " + feedCommentModifyRequestDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 댓글 수정 성공", feedService.modifyFeedComment(accessToken, feedCommentId, feedCommentModifyRequestDto)));
 
     }
 
