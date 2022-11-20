@@ -227,4 +227,8 @@ public class Member implements UserDetails {
         this.password = tempPassword;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
+
+    public void updateMember(String name) {
+        this.memberName = name;
+    }
 }
