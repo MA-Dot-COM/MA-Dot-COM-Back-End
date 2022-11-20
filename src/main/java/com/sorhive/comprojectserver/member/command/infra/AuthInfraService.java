@@ -135,7 +135,7 @@ public class AuthInfraService {
 
         String tempPassword = passwordEncoder.encode(code);
 
-        member.tempPassword(tempPassword);
+        member.changePassword(tempPassword);
         memberRepository.save(member);
 
         return emailSend(email,"SORHIVE 비밀번호 재설정", "resetpassword", code);
