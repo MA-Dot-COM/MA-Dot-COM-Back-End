@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-19       부시연           피드 삭제 기능 추가
  * 2022-11-20       부시연           피드 수정 기능 추가
  * 2022-11-20       부시연           피드 이미지 생성 기능 추가
+ * 2022-11-20       부시연           피드 이미지 삭제 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -98,6 +99,20 @@ public class FeedController {
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 이미지 생성 성공", feedInfraService.createFeedImage(accessToken, feedImageCreateRequestDto)));
 
     }
+
+    /** 피드 이미지 삭제 */
+    @DeleteMapping("feed/image/{feedImageId}")
+    public ResponseEntity<ResponseDto> deleteFeedImage(@RequestHeader String Authorization, @PathVariable Long feedImageId ) {
+
+        log.info("[FeedController] deleteFeedImage Start ============================");
+        log.info("[feedImageId] " + feedImageId);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 이미지 삭제 성공", feedInfraService.deleteFeedImage(accessToken, feedImageId)));
+
+    }
+
 
     /** 피드 댓글 작성 */
     @PostMapping("feed/comment/{feedId}")

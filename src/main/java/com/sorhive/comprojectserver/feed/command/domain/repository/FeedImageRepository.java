@@ -31,5 +31,6 @@ public interface FeedImageRepository extends Repository<FeedImage, Long> {
     List<FeedImage> findByFeed(Feed feed);
 
     FeedImage findById(Long aLong);
-    
+
+    FeedImage findByIdAndDeleteYnEquals(Long feedImageId, char n);
 }

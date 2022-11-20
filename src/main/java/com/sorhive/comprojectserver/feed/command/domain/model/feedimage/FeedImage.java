@@ -35,20 +35,20 @@ public class FeedImage {
     @Column(name = "feed_image_path")
     private String path;
 
-    @Column(name = "feed_original_name")
+    @Column(name = "feed_image_original_name")
     private String orginalName;
 
-    @Column(name = "feed_saved_name")
+    @Column(name = "feed_image_saved_name")
     private String savedName;
 
-    @Column(name = "feed_upload_time")
+    @Column(name = "feed_image_upload_time")
     private Timestamp uploadTime;
 
 
-    @Column(name = "feed_delete_time")
+    @Column(name = "feed_image_delete_time")
     private Timestamp deleteTime;
 
-    @Column(name = "feed_delete_yn")
+    @Column(name = "feed_image_delete_yn")
     @ColumnDefault("'N'")
     private Character deleteYn;
 
@@ -65,6 +65,7 @@ public class FeedImage {
         this.savedName = changeName;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
         this.feed = feedId;
+        this.deleteYn = 'N';
     }
 
     /** 이미지 삭제*/

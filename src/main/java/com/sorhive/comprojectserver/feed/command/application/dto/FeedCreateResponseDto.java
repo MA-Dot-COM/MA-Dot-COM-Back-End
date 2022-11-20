@@ -3,7 +3,6 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 import lombok.Getter;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 /**
  * <pre>
@@ -25,7 +24,6 @@ public class FeedCreateResponseDto {
 
     private Long feedId;
     private String feedContent;
-    private List<String> feedImagePath;
     private Timestamp feedCreateTime;
 
     public FeedCreateResponseDto(Long feedId, Timestamp feedCreateTime, String feedContent) {
@@ -36,7 +34,4 @@ public class FeedCreateResponseDto {
 
     }
 
-    public void setFeedImagePath(List<String> feedImagePath) {
-        this.feedImagePath = feedImagePath;
-    }
 }
