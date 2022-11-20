@@ -4,6 +4,7 @@ import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarDataDao;
+import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ import java.util.Random;
  * 2022-11-13       부시연           자신을 포함한 회원 목록 조회 추가
  * 2022-11-13       부시연           룸인 전용 팔로잉 회원 목록 + 랜덤 회원 총 7명 조회 추가
  * 2022-11-14       부시연           마이페이지 정보 조회 기능 추가
+ * 2022-11-14       부시연           회원 상세 조회 기능 추가
+ * 2022-11-20       부시연           회원 상세 조회 기능 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -337,41 +340,72 @@ public class MemberQueryService {
         /* 자기 자신 요약 정보 불러오기 */
         MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
 
-        /* 마이페이지 응답 전송 객체 만들기*/
-        MypageDto mypageDto = new MypageDto();
-
-        /* 마이페이지 응답 전송객체에 값 넣어주기 */
-        mypageDto.setMemberId(memberSummary.getMemberId());
-        mypageDto.setMemberCode(memberSummary.getMemberCode());
-        mypageDto.setMemberName(memberSummary.getMemberName());
-        mypageDto.setMemberRoomImage(memberSummary.getRoomImage());
-        mypageDto.setFeedCount(memberMapper.countFeed(memberCode));
-        mypageDto.setFollowerCount(memberMapper.countFollower(memberCode));
-        mypageDto.setFollowingCount(memberMapper.countFollowing(memberCode));
-
+        /* 회원 상세 정보 응답 전송 객체 만들고 값 넣어주기 */
+        MypageDto mypageDto = new MypageDto(
+                memberSummary.getMemberId(),
+                memberSummary.getMemberCode(),
+                memberSummary.getMemberName(),
+                memberSummary.getRoomImage(),
+                memberMapper.countFeed(memberCode),
+                memberMapper.countFollower(memberCode),
+                memberMapper.countFollowing(memberCode)
+        );
         return mypageDto;
     }
 
 
     /** 회원 상세 조회 */
-    public MypageDto selectMemberByMemberCode(Long memberCode) {
+    public Object selectMemberByMemberCode(String accessToken,Long memberCode) {
 
         log.info("[MemberQueryService] selectMypage Start ================");
+
+        Long ownMemberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        if(memberDataDao.findByMemberCode(memberCode) == null) {
+            log.warn("[selectMemberByMemberCode]");
+            log.warn("[NoMemberException]");
+            throw new NoMemberException("해당하는 회원이 없습니다.");
+        }
+
+        if(memberMapper.findAllByMemberCode(memberCode) == null) {
+
+            if(memberDataDao.findByMemberCode(memberCode) != null) {
+
+                MemberData memberSummary = memberDataDao.findByMemberCode(memberCode);
+
+                MypageDto mypageDto = new MypageDto(
+                        memberSummary.getId(),
+                        memberSummary.getMemberCode(),
+                        memberSummary.getName(),
+                        memberSummary.getMemberRoomImage(),
+                        memberMapper.countFeed(memberCode),
+                        memberMapper.countFollower(memberCode),
+                        memberMapper.countFollowing(memberCode)
+                );
+
+                return mypageDto;
+            }
+
+        }
 
         /* 회원 상세 정보 불러오기 */
         MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
 
-        /* 회원 상세 정보 응답 전송 객체 만들기*/
-        MypageDto mypageDto = new MypageDto();
+        /* 회원 상세 정보 응답 전송 객체 만들고 값 넣어주기 */
+        MypageDto mypageDto = new MypageDto(
+                memberSummary.getMemberId(),
+                memberSummary.getMemberCode(),
+                memberSummary.getMemberName(),
+                memberSummary.getRoomImage(),
+                memberMapper.countFeed(memberCode),
+                memberMapper.countFollower(memberCode),
+                memberMapper.countFollowing(memberCode)
+        );
 
-        /* 마이페이지 응답 전송객체에 값 넣어주기 */
-        mypageDto.setMemberId(memberSummary.getMemberId());
-        mypageDto.setMemberCode(memberSummary.getMemberCode());
-        mypageDto.setMemberName(memberSummary.getMemberName());
-        mypageDto.setMemberRoomImage(memberSummary.getRoomImage());
-        mypageDto.setFeedCount(memberMapper.countFeed(memberCode));
-        mypageDto.setFollowerCount(memberMapper.countFollower(memberCode));
-        mypageDto.setFollowingCount(memberMapper.countFollowing(memberCode));
+        if(memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode) != null){
+            FollowSummary followSummary = memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode);
+            mypageDto.addFollowSummary(followSummary);
+        }
 
         return mypageDto;
     }

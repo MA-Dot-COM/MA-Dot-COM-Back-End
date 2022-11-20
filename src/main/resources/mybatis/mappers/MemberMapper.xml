@@ -121,4 +121,14 @@
          where follower_id = #{memberCode}
            and follow_delete_yn = 'N'
     </select>
+
+    <select id="findByMemberCodeAndOwnMemberCode" resultMap="followResultMap">
+        select
+               follow_id
+             , following_id
+             , follower_id
+          from tbl_follows
+         where follower_id = #{ownMemberCode}
+           and following_id = #{memberCode}
+    </select>
 </mapper>
