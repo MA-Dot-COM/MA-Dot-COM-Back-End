@@ -111,10 +111,12 @@ public class MemberQueryController {
 
     /** 회원 상세 조회 */
     @GetMapping("member/{memberCode}")
-    public ResponseEntity<ResponseDto> selectMemberByMemberCode(@PathVariable Long memberCode) {
+    public ResponseEntity<ResponseDto> selectMemberByMemberCode(@RequestHeader String Authorization, @PathVariable Long memberCode) {
 
         log.info("[MemberQueryController] selectMemberByMemberCode Start =================");
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 상세 조회 성공", memberQueryService.selectMemberByMemberCode(memberCode)));
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 상세 조회 성공", memberQueryService.selectMemberByMemberCode(accessToken, memberCode)));
     }
 }

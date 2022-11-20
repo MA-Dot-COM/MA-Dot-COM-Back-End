@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.query.member;
 
+import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public interface MemberMapper {
 
     List<MemberSummary> findAllFollowerByMemberCode(Long memberCode, long offset);
 
-    MemberData findByMemberCode(Long roomId);
+    MemberData findByMemberCode(Long memberCode);
 
     List<MemberData> findAllFollowerByFollowerCode(Long roomId);
 
@@ -45,4 +46,5 @@ public interface MemberMapper {
     /* 해당 회원을 팔로잉 한 총 팔로잉 수 */
     int countFollowing(Long memberCode);
 
+    FollowSummary findByMemberCodeAndOwnMemberCode(Long memberCode, Long ownMemberCode);
 }
