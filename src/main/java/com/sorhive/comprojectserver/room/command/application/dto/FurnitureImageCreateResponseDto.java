@@ -21,12 +21,14 @@ import lombok.Getter;
 public class FurnitureImageCreateResponseDto {
 
     Long roomId;
+    Long furnitureImageId;
     String furniturePath;
     Integer imageNo;
 
-    public FurnitureImageCreateResponseDto(Long id, String path, Integer imageNo) {
+    public FurnitureImageCreateResponseDto(Long id, Long furnitureImageId, String path, Integer imageNo) {
 
         this.roomId = id;
+        this.furnitureImageId = furnitureImageId;
         this.furniturePath = path;
         this.imageNo = imageNo;
 
