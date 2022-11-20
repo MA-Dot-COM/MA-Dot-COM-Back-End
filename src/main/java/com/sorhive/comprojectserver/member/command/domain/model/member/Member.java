@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Random;
 
 /**
  * <pre>
@@ -25,6 +24,7 @@ import java.util.Random;
  * 2022-11-10       부시연           아바타 이미지 추가
  * 2022-11-12       부시연           라이핑 번호 추가
  * 2022-11-15       부시연           라이핑 번호 로직 수정
+ * 2022-11-20       부시연           비밀번호 재설정 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -223,9 +223,8 @@ public class Member implements UserDetails {
         return true;
     }
 
-    private String generateRandomPassword() {
-        Random random = new Random();
-        int number = random.nextInt();
-        return Integer.toHexString(number);
+    public void tempPassword(String tempPassword) {
+        this.password = tempPassword;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 }

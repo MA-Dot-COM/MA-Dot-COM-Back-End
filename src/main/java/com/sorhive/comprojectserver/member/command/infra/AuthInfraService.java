@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.member.command.infra;
 
 import com.sorhive.comprojectserver.member.command.application.dto.EmailRequestDto;
 import com.sorhive.comprojectserver.member.command.application.dto.FindIdRequestDto;
+import com.sorhive.comprojectserver.member.command.application.dto.ResetPasswordRequestDto;
 import com.sorhive.comprojectserver.member.command.application.exception.NoEmailException;
 import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -31,6 +33,7 @@ import java.util.Random;
  * 2022-11-17       부시연           이메일 인증
  * 2022-11-18       부시연           인증 코드 생성
  * 2022-11-20       부시연           회원 아이디 찾기 추가
+ * 2022-11-21       부시연           비밀번호 재설정 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -47,11 +50,13 @@ public class AuthInfraService {
     private final MemberRepository memberRepository;
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine springTemplateEngine;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthInfraService(MemberRepository memberRepository, JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine) {
+    public AuthInfraService(MemberRepository memberRepository, JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.javaMailSender = javaMailSender;
         this.springTemplateEngine = springTemplateEngine;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -79,7 +84,7 @@ public class AuthInfraService {
     /** 아이디 찾기 */
     public String findId(FindIdRequestDto findIdRequestDto) throws MessagingException {
 
-        log.info("[AuthInfraService] emailAuthentication Start ============================");
+        log.info("[AuthInfraService] findId Start ============================");
         log.info("[findIdRequestDto] " + findIdRequestDto);
 
         String email = findIdRequestDto.getEmail();
@@ -101,6 +106,39 @@ public class AuthInfraService {
 
         return emailSend(email,"SORHIVE 아이디 찾기", "findid", member.getMemberId().getId());
 
+    }
+
+    /** 비밀번호 재설정 */
+    public Object resetPassword(ResetPasswordRequestDto resetPasswordRequestDto) throws MessagingException {
+
+        log.info("[AuthInfraService] resetPassword Start ============================");
+        log.info("[resetPasswordRequestDto] " + resetPasswordRequestDto);
+
+        String email = resetPasswordRequestDto.getEmail();
+        String name = resetPasswordRequestDto.getName();
+
+        int countEmail = memberRepository.countByMemberEmail(resetPasswordRequestDto.getEmail());
+
+        if(countEmail == 0) {
+            log.warn("[AuthInfraService] NoEmailException ");
+            throw new NoEmailException("해당 이메일은 존재 하지 않습니다.");
+        }
+
+        if(memberRepository.findByMemberEmailAndMemberNameAndDeleteYnEquals(email, name, 'N') == null) {
+            log.warn("[AuthInfraService] NoEmailException ");
+            throw new NoMemberException("해당 회원은 존재하지 않습니다.");
+        }
+
+        Member member = memberRepository.findByMemberEmailAndMemberNameAndDeleteYnEquals(email, name, 'N');
+
+        String code = certCode();
+
+        String tempPassword = passwordEncoder.encode(code);
+
+        member.tempPassword(tempPassword);
+        memberRepository.save(member);
+
+        return emailSend(email,"SORHIVE 비밀번호 재설정", "resetpassword", code);
     }
 
     /** 인증번호 생성 */
