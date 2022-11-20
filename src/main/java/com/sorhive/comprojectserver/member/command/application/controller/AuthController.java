@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.member.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
 import com.sorhive.comprojectserver.member.command.application.dto.EmailRequestDto;
+import com.sorhive.comprojectserver.member.command.application.dto.FindIdRequestDto;
 import com.sorhive.comprojectserver.member.command.application.dto.LoginDto;
 import com.sorhive.comprojectserver.member.command.application.dto.SignUpDto;
 import com.sorhive.comprojectserver.member.command.application.service.AuthService;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
  * 2022-11-06       부시연           회원 가입
  * 2022-11-06       부시연           로그인
  * 2022-11-18       부시연           이메일 인증 추가
+ * 2022-11-20       부시연           아이디 찾기 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -70,9 +72,20 @@ public class AuthController {
     @PostMapping("email")
     public ResponseEntity<ResponseDto> emailAuthentication(@Valid @RequestBody EmailRequestDto emailRequestDto) throws MessagingException {
 
-        log.info("[AuthQueryController] emailAuthentication Start =================");
-        log.info("[AuthQueryController] emailRequestDto " + emailRequestDto);
+        log.info("[AuthController] emailAuthentication Start =================");
+        log.info("[AuthController] emailRequestDto " + emailRequestDto);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 이메일 중복 검사 및 인증", authInfraService.emailAuthentication(emailRequestDto)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 이메일 중복 검사 및 인증 성공", authInfraService.emailAuthentication(emailRequestDto)));
     }
+
+    /** 아이디 찾기 */
+    @PostMapping("find/id")
+    public ResponseEntity<ResponseDto> findId(@Valid @RequestBody FindIdRequestDto findIdRequestDto) throws MessagingException {
+
+        log.info("[AuthController] findId Start =================");
+        log.info("[AuthController] emailRequestDto " + findIdRequestDto);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "아이디 찾기 성공", authInfraService.findId(findIdRequestDto)));
+    }
+
 }
