@@ -196,9 +196,9 @@ public class MemberQueryService {
         }
 
         /* 자신의 아바타 정보 불러오기 */
-        if(avatarDataDao.findByAvatarId(memberCode) != null) {
+        if(avatarDataDao.findByMemberCode(memberCode) != null) {
 
-            AvatarData ownAvatarData = avatarDataDao.findByAvatarId(memberCode);
+            AvatarData ownAvatarData = avatarDataDao.findByMemberCode(memberCode);
             findRandomMemberResponseDto.setOwnAvatarData(ownAvatarData);
 
         }
@@ -296,9 +296,9 @@ public class MemberQueryService {
         }
         
         /* 자신의 아바타 정보 불러오기 */
-        if(avatarDataDao.findByAvatarId(memberCode) != null) {
+        if(avatarDataDao.findByMemberCode(memberCode) != null) {
 
-            AvatarData ownAvatarData = avatarDataDao.findByAvatarId(memberCode);
+            AvatarData ownAvatarData = avatarDataDao.findByMemberCode(memberCode);
             findRoomInMemberResponseDto.setOwnAvatarData(ownAvatarData);
 
         }

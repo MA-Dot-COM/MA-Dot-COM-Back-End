@@ -19,5 +19,5 @@ import org.springframework.data.repository.Repository;
  */
 public interface AvatarDataDao extends Repository<AvatarData, Long> {
 
-    AvatarData findByAvatarId(Long memberCode);
+    AvatarData findByMemberCode(Long memberCode);
 }
