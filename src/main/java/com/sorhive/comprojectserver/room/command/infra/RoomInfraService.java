@@ -178,6 +178,7 @@ public class RoomInfraService {
 
             furnitureImageCreateResponseDto = new FurnitureImageCreateResponseDto(
                     room.getId(),
+                    furnitureImage.getId(),
                     furnitureImage.getPath(),
                     furnitureImage.getImageNo()
             );
