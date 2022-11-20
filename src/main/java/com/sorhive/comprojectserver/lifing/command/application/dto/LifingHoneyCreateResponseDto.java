@@ -23,7 +23,7 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-public class ResponseLifingHoneyCreateDto {
+public class LifingHoneyCreateResponseDto {
 
     private Long lifingHoneyId;
     private Long memberCode;

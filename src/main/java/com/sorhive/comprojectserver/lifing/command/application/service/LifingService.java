@@ -82,7 +82,7 @@ public class LifingService {
 
 
     /** 라이핑 생성하기 */
-    public ResponseLifingDto createLifing(String accessToken, LifingCreateDto lifingCreateDto) {
+    public LifingResponseDto createLifing(String accessToken, LifingCreateDto lifingCreateDto) {
 
         log.info("[LifingService] createLifing Start =====================");
         log.info("[LifingService] lifingCreateDto " + lifingCreateDto);
@@ -132,22 +132,22 @@ public class LifingService {
         memberRepository.save(member);
 
         /* 라이핑 생성 반환 전송 객체 만들기 */
-        ResponseLifingDto responseLifingDto = new ResponseLifingDto();
+        LifingResponseDto lifingResponseDto = new LifingResponseDto();
 
-        responseLifingDto.setLifingId(lifing.getLifingId());
-        responseLifingDto.setLifingContent(lifing.getLifingConetent());
-        responseLifingDto.setLifingNo(lifing.getLifingNo());
-        responseLifingDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
-        responseLifingDto.setLifingCreateTime(lifing.getCreateTime());
-        responseLifingDto.setLifingWriter(lifing.getLifingWriter());
+        lifingResponseDto.setLifingId(lifing.getLifingId());
+        lifingResponseDto.setLifingContent(lifing.getLifingConetent());
+        lifingResponseDto.setLifingNo(lifing.getLifingNo());
+        lifingResponseDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
+        lifingResponseDto.setLifingCreateTime(lifing.getCreateTime());
+        lifingResponseDto.setLifingWriter(lifing.getLifingWriter());
 
-        return responseLifingDto;
+        return lifingResponseDto;
     }
 
 
     /** 허니 추가 */
     @Transactional
-    public ResponseLifingHoneyCreateDto createLifingHoney(String accessToken, Long lifingId) {
+    public LifingHoneyCreateResponseDto createLifingHoney(String accessToken, Long lifingId) {
 
         log.info("[LifingService] createLifingHoney Start =========================================================");
         log.info("[LifingService] lifingId : " + lifingId);
@@ -175,20 +175,20 @@ public class LifingService {
 
         lifingHoneyRepository.save(lifingHoney);
 
-        ResponseLifingHoneyCreateDto responseLifingHoneyCreateDto = new ResponseLifingHoneyCreateDto();
+        LifingHoneyCreateResponseDto lifingHoneyCreateResponseDto = new LifingHoneyCreateResponseDto();
 
-        responseLifingHoneyCreateDto.setLifingHoneyId(lifingHoney.getId());
-        responseLifingHoneyCreateDto.setLifingId(lifingHoney.getLifingId().getValue());
-        responseLifingHoneyCreateDto.setMemberCode(lifingHoney.getMemberCode().getValue());
-        responseLifingHoneyCreateDto.setCreateTime(lifingHoney.getCreateTime());
+        lifingHoneyCreateResponseDto.setLifingHoneyId(lifingHoney.getId());
+        lifingHoneyCreateResponseDto.setLifingId(lifingHoney.getLifingId().getValue());
+        lifingHoneyCreateResponseDto.setMemberCode(lifingHoney.getMemberCode().getValue());
+        lifingHoneyCreateResponseDto.setCreateTime(lifingHoney.getCreateTime());
 
-        return responseLifingHoneyCreateDto;
+        return lifingHoneyCreateResponseDto;
 
     }
 
     /** 허니 취소 */
     @Transactional
-    public ResponseLifingHoneyDeleteDto deleteLifingHoney(String accessToken, Long lifingId) {
+    public LifingHoneyDeleteResponseDto deleteLifingHoney(String accessToken, Long lifingId) {
 
         log.info("[LifingService] deleteLifingHoney Start =========================================================");
         log.info("[LifingService] lifingId : " + lifingId);
@@ -215,20 +215,20 @@ public class LifingService {
         lifingHoney.setDeleteYn('Y');
         lifingHoneyRepository.save(lifingHoney);
 
-        ResponseLifingHoneyDeleteDto responseLifingHoneyDeleteDto = new ResponseLifingHoneyDeleteDto();
+        LifingHoneyDeleteResponseDto lifingHoneyDeleteResponseDto = new LifingHoneyDeleteResponseDto();
 
-        responseLifingHoneyDeleteDto.setLifingHoneyId(lifingHoney.getId());
-        responseLifingHoneyDeleteDto.setLifingId(lifingHoney.getLifingId().getValue());
-        responseLifingHoneyDeleteDto.setMemberCode(lifingHoney.getMemberCode().getValue());
-        responseLifingHoneyDeleteDto.setDeleteTime(lifingHoney.getDeleteTime());
+        lifingHoneyDeleteResponseDto.setLifingHoneyId(lifingHoney.getId());
+        lifingHoneyDeleteResponseDto.setLifingId(lifingHoney.getLifingId().getValue());
+        lifingHoneyDeleteResponseDto.setMemberCode(lifingHoney.getMemberCode().getValue());
+        lifingHoneyDeleteResponseDto.setDeleteTime(lifingHoney.getDeleteTime());
 
-        return responseLifingHoneyDeleteDto;
+        return lifingHoneyDeleteResponseDto;
 
     }
 
     /** 라이핑 댓글 작성 */
     @Transactional
-    public ResponseLifingCommentDto createLifingComment(String accessToken, Long lifingId, LifingCommentCreateDto lifingCommentCreateDto) {
+    public LifingCommentResponseDto createLifingComment(String accessToken, Long lifingId, LifingCommentCreateDto lifingCommentCreateDto) {
 
         log.info("[LifingService] createLifingComment Start =========================================================");
         log.info("[LifingService] lifingCommentCreateDto : " + lifingCommentCreateDto);
@@ -253,13 +253,13 @@ public class LifingService {
 
         lifingCommentRepository.save(lifingComment);
 
-        ResponseLifingCommentDto responseLifingCommentDto = new ResponseLifingCommentDto();
+        LifingCommentResponseDto lifingCommentResponseDto = new LifingCommentResponseDto();
 
-        responseLifingCommentDto.setLifingCommentId(lifingComment.getLifingCommentId());
-        responseLifingCommentDto.setLifingCommentcontent(lifingComment.getLifingCommentContent());
-        responseLifingCommentDto.setLifingCommentCreateTime(lifingComment.getLifingCommentCreateTime());
+        lifingCommentResponseDto.setLifingCommentId(lifingComment.getLifingCommentId());
+        lifingCommentResponseDto.setLifingCommentcontent(lifingComment.getLifingCommentContent());
+        lifingCommentResponseDto.setLifingCommentCreateTime(lifingComment.getLifingCommentCreateTime());
 
-        return responseLifingCommentDto;
+        return lifingCommentResponseDto;
 
     }
 
