@@ -120,9 +120,9 @@ public class LifingInfraService {
                 lifingImageRepository.save(lifingImage);
                 
                 /* AI 라이핑 이미지 요청 전송 객체 생성 */
-                LifingImageAiRequestDto lifingImageAiRequestDto = new LifingImageAiRequestDto();
-
-                lifingImageAiRequestDto.setUrl(lifingImagePath);
+                LifingImageAiRequestDto lifingImageAiRequestDto = new LifingImageAiRequestDto(
+                        lifingImagePath
+                );
 
                 /* AI서버에 전송하기 위해 차셋 등 헤더 설정하기 */
                 HttpHeaders headers = new HttpHeaders();
@@ -197,7 +197,7 @@ public class LifingInfraService {
         }
 
         /* 라이핑 생성 반환 전송 객체 만들기 */
-        LifingResponseDto lifingResponseDto = new LifingResponseDto();
+        LifingResponseDto lifingResponseDto = null;
 
         try {
             /* 라이핑 이미지가 존재 한다면 */
@@ -243,13 +243,15 @@ public class LifingInfraService {
                 /* 멤버에 라이핑번호 정보 저장하기 */
                 memberRepository.save(member);
 
-                lifingResponseDto.setLifingId(lifing.getLifingId());
-                lifingResponseDto.setLifingContent(lifing.getLifingConetent());
-                lifingResponseDto.setLifingNo(lifing.getLifingNo());
-                lifingResponseDto.setLifingCategoryNo(lifing.getLifingCategoryNo());
-                lifingResponseDto.setLifingCreateTime(lifing.getCreateTime());
-                lifingResponseDto.setLifingWriter(lifing.getLifingWriter());
-                lifingResponseDto.setLifingImagePath(lifingImagePath);
+                lifingResponseDto = new LifingResponseDto(
+                        lifing.getLifingId(),
+                        lifing.getLifingConetent(),
+                        lifing.getLifingNo(),
+                        lifing.getLifingCategoryNo(),
+                        lifing.getCreateTime(),
+                        lifing.getLifingWriter(),
+                        lifingImagePath
+                );
 
                 return lifingResponseDto;
 

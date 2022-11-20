@@ -19,7 +19,6 @@ import lombok.Setter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class LifingCommentUpdateRequestDto {
 
     private Long lifingCommentId;
