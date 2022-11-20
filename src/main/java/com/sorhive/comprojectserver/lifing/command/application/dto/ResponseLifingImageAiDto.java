@@ -1,7 +1,10 @@
 package com.sorhive.comprojectserver.lifing.command.application.dto;
 
+import com.sorhive.comprojectserver.lifing.command.domain.model.lifing.LifingWriter;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Timestamp;
 
 /**
  * <pre>
@@ -21,11 +24,21 @@ import lombok.Setter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class ResponseLifingImageAiDto {
 
     private Long lifingId;
     private String lifingImagePath;
     private Long lifingCategoryNo;
+    private LifingWriter lifingWriter;
+    private Timestamp createTime;
 
+    public ResponseLifingImageAiDto(Long lifingId, Long analyzedLifingNo, LifingWriter lifingWriter, Timestamp createTime, String path) {
+
+        this.lifingId = lifingId;
+        this.lifingImagePath = path;
+        this.lifingCategoryNo = analyzedLifingNo;
+        this.lifingWriter = lifingWriter;
+        this.createTime = createTime;
+
+    }
 }

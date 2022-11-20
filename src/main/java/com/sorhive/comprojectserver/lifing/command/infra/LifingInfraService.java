@@ -92,9 +92,7 @@ public class LifingInfraService {
 
         lifingRepository.save(lifing);
 
-        ResponseLifingImageAiDto responseLifingImageAiDto = new ResponseLifingImageAiDto();
-
-        responseLifingImageAiDto.setLifingId(lifing.getLifingId());
+        ResponseLifingImageAiDto responseLifingImageAiDto = null;
 
         try {
 
@@ -153,7 +151,7 @@ public class LifingInfraService {
                 ResponseEntity<ResponseLifingImageAiDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, ResponseLifingImageAiDto.class);
 
                 /* 분석된 결과값 Long에 담기 */
-                Long analyzedLifingNo = res.getBody().getLifingCategoryNo();
+                Long analyzedLifingNo = Long.valueOf(res.getBody().getLifingCategoryNo());
 
                 /* 라이핑 이미지에 값 넣어주기 */
                 Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifing.getLifingId(), 'N');
@@ -164,6 +162,14 @@ public class LifingInfraService {
 
                 /* 라이핑 이미지 저장하기 */
                 lifingRepository.save(lifing);
+
+                responseLifingImageAiDto = new ResponseLifingImageAiDto(
+                        lifing.getLifingId(),
+                        lifing.getAnalyzedLifingNo(),
+                        lifing.getLifingWriter(),
+                        lifing.getCreateTime(),
+                        lifingImage.getPath()
+                );
 
                 log.info("[LifingImageService] insertImage End ===============");
 
