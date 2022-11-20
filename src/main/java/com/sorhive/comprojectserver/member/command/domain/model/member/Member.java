@@ -223,7 +223,7 @@ public class Member implements UserDetails {
         return true;
     }
 
-    public void tempPassword(String tempPassword) {
+    public void changePassword(String tempPassword) {
         this.password = tempPassword;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
