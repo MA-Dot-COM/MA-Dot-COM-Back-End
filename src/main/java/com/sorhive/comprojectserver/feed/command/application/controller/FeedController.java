@@ -1,10 +1,7 @@
 package com.sorhive.comprojectserver.feed.command.application.controller;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentCreateRequestDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCommentModifyRequestDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateRequestDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedModifyRequestDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.*;
 import com.sorhive.comprojectserver.feed.command.application.service.FeedService;
 import com.sorhive.comprojectserver.feed.command.infra.FeedInfraService;
 import org.slf4j.Logger;
@@ -30,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-19       부시연           피드 댓글 수정 기능 추가
  * 2022-11-19       부시연           피드 삭제 기능 추가
  * 2022-11-20       부시연           피드 수정 기능 추가
+ * 2022-11-20       부시연           피드 이미지 생성 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -85,6 +83,19 @@ public class FeedController {
         String accessToken = Authorization.substring(7);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.NO_CONTENT, "피드 삭제 성공", feedInfraService.deleteFeed(accessToken, feedId)));
+
+    }
+
+    /** 피드 이미지 작성 */
+    @PostMapping("feed/image")
+    public ResponseEntity<ResponseDto> createFeedImage(@RequestHeader String Authorization, @RequestBody FeedImageCreateRequestDto feedImageCreateRequestDto) {
+
+        log.info("[FeedController] createFeedImage Start ============================");
+        log.info("[feedImageCreateRequestDto] " + feedImageCreateRequestDto);
+
+        String accessToken = Authorization.substring(7);
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.CREATED, "피드 이미지 생성 성공", feedInfraService.createFeedImage(accessToken, feedImageCreateRequestDto)));
 
     }
 

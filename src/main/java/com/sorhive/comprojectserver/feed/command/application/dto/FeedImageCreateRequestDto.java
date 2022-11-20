@@ -4,8 +4,8 @@ import lombok.Getter;
 
 /**
  * <pre>
- * Class : FeedImageResponseDto
- * Comment: 피드 이미지 작성 응답 객체
+ * Class : FeedImageCreateDto
+ * Comment: 피드 이미지 생성 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -18,10 +18,10 @@ import lombok.Getter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-public class FeedImageResponseDto {
+public class FeedImageCreateRequestDto {
 
-    private String feedImagePath;
-    
-    public FeedImageResponseDto() {
-    }
+    private Long feedId;
+    private byte[] feedImage;
+    private String feedImageName;
+
 }

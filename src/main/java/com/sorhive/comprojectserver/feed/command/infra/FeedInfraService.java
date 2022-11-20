@@ -3,10 +3,7 @@ package com.sorhive.comprojectserver.feed.command.infra;
 import com.sorhive.comprojectserver.common.exception.AlreadyDeleteException;
 import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateRequestDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedCreateResponseDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedModifyRequestDto;
-import com.sorhive.comprojectserver.feed.command.application.dto.FeedModifyResponseDto;
+import com.sorhive.comprojectserver.feed.command.application.dto.*;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriter;
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.FeedWriterService;
@@ -39,9 +36,10 @@ import java.util.UUID;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-12       부시연           최초 생성
- * 2022-11-12       부시연           피드 생성
- * 2022-11-19       부시연           피드 삭제
- * 2022-11-20       부시연           피드 수정
+ * 2022-11-12       부시연           피드 생성 기능 추가
+ * 2022-11-19       부시연           피드 삭제 기능 추가
+ * 2022-11-20       부시연           피드 수정 기능 추가
+ * 2022-11-20       부시연           피드 이미지 생성 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -96,44 +94,6 @@ public class FeedInfraService {
                 feed.getFeedCreateTime(),
                 feed.getFeedContent()
         );
-
-        try {
-
-            /* 피드에 이미지가 있다면 */
-            if(feedCreateRequestDto.getFeedImage() != null) {
-
-                List<String> feedImagePathList = new ArrayList<>();
-
-                /* 이미지들을 하나씩 꺼내오기 */
-                for (int i = 0; i < feedCreateRequestDto.getFeedImage().size(); i++) {
-
-                    byte[] feedByteImage = feedCreateRequestDto.getFeedImage().get(i).getFeedImage();
-                    String originalName = feedCreateRequestDto.getFeedImage().get(i).getFeedImageName();
-                    String changeName = UUID.randomUUID() + "feed.png";
-                    String feedImagePath = s3FeedImageFile.upload(feedByteImage, changeName, "images");
-
-                    /* 피드 이미지 생성 */
-                    FeedImage feedImage = new FeedImage(
-                            feedImagePath,
-                            originalName,
-                            changeName,
-                            feed
-                    );
-
-                    /* 피드 이미지 경로 저장 */
-                    feedImagePathList.add(feedImagePath);
-
-                }
-
-                feedCreateResponseDto.setFeedImagePath(feedImagePathList);
-
-                return feedCreateResponseDto;
-
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
         return feedCreateResponseDto;
     }
@@ -286,4 +246,72 @@ public class FeedInfraService {
         return feed.getFeedId();
 
     }
+
+    /** 피드 이미지 생성 */
+    @Transactional
+    public FeedImageCreateResponseDto createFeedImage(String accessToken, FeedImageCreateRequestDto feedImageCreateRequestDto) {
+
+        log.info("[FeedInfraService] createFeedImage Start =========================================================");
+        log.info("[FeedInfraService] feedImageCreateRequestDto : " + feedImageCreateRequestDto);
+
+        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
+        Long feedId = feedImageCreateRequestDto.getFeedId();
+
+        if(feedRepository.findByFeedId(feedId) == null) {
+            log.warn("[FeedService] NoFeedException");
+            throw new NoFeedException("해당 피드는 존재하지 않습니다.");
+        }
+
+        if(feedRepository.findByFeedIdAndFeedDeleteYnEquals(feedId, 'N').isEmpty()) {
+            log.warn("[FeedService] NoFeedException");
+            throw new AlreadyDeleteException("해당 피드는 이미 삭제되었습니다.");
+        }
+
+        Feed feed = feedRepository.findByFeedId(feedId);
+
+        if(feed.getFeedWriter().getMemberCode().getValue() != memberCode) {
+            log.warn("[FeedService] NotSameWriterException");
+            throw new NotSameWriterException("해당 피드 작성자와 삭제 요청자가 다릅니다.");
+        }
+
+        FeedImageCreateResponseDto feedCreateResponseDto = null;
+
+        try {
+
+            /* 피드에 이미지가 있다면 */
+            if(feedImageCreateRequestDto.getFeedImage() != null) {
+
+                byte[] feedByteImage = feedImageCreateRequestDto.getFeedImage();
+                String originalName = feedImageCreateRequestDto.getFeedImageName();
+                String changeName = UUID.randomUUID() + "feed.png";
+                String feedImagePath = s3FeedImageFile.upload(feedByteImage, changeName, "images");
+
+                /* 피드 이미지 생성 */
+                FeedImage feedImage = new FeedImage(
+                        feedImagePath,
+                        originalName,
+                        changeName,
+                        feed
+                );
+
+                feedImageRepository.save(feedImage);
+
+                feedCreateResponseDto = new FeedImageCreateResponseDto(
+                        feedImage.getId(),
+                        feedImage.getUploadTime(),
+                        feedImage.getPath()
+                );
+
+                return feedCreateResponseDto;
+
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+
+    }
+
 }
