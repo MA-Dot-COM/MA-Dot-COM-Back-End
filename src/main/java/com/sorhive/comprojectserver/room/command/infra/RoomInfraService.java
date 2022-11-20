@@ -26,8 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -148,51 +146,48 @@ public class RoomInfraService {
             throw new NotSameWriterException("해당 사람은 방 주인이 아닙니다.");
         }
 
-        if(furnitureImageCreateRequestDto.getFurnitureImages().isEmpty()) {
+        if((furnitureImageCreateRequestDto.getFurnitureImage() == null)||(furnitureImageCreateRequestDto.getFurnitureImageNo() == null)||(furnitureImageCreateRequestDto.getFurnitureImageName() == null) ) {
             throw new NoContentException("이미지 정보값이 없습니다.");
         }
 
         /* 가구 이미지 생성 응답 전송 객체 생성 */
-        FurnitureImageCreateResponseDto furnitureImageCreateResponseDto = new FurnitureImageCreateResponseDto();
+        FurnitureImageCreateResponseDto furnitureImageCreateResponseDto = null;
 
         try {
 
             Room room = roomRepository.findById(furnitureImageCreateRequestDto.getRoomId());
-            List<String> furnitureImagePathList = new ArrayList<>();
 
-            for (int i = 0; i < furnitureImageCreateRequestDto.getFurnitureImages().size(); i++) {
+            byte[] furnitureByteImage = furnitureImageCreateRequestDto.getFurnitureImage();
+            String originalName = furnitureImageCreateRequestDto.getFurnitureImageName();
+            String changeName = UUID.randomUUID() + " - furniture_" + memberCode + ".png";
+            Integer imageNo = furnitureImageCreateRequestDto.getFurnitureImageNo();
 
-                byte[] furnitureByteImage = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImage();
-                String originalName = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImageName();
-                String changeName = UUID.randomUUID() + " - furniture_" + memberCode + ".png";
-                Integer imageNo = furnitureImageCreateRequestDto.getFurnitureImages().get(i).getFurnitureImageNo();
+            /* 가구 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
+            String furnitureImagePath = s3FurnitureImageFile.upload(furnitureByteImage, changeName, "furnitures");
 
-                /* 가구 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
-                String furnitureImagePath = s3FurnitureImageFile.upload(furnitureByteImage, changeName, "furnitures");
+            /* 가구 이미지 생성 */
+            FurnitureImage furnitureImage = new FurnitureImage(
+                    furnitureImagePath,
+                    originalName,
+                    changeName,
+                    imageNo,
+                    room
+            );
 
-                /* 가구 이미지 생성 */
-                FurnitureImage furnitureImage = new FurnitureImage(
+            furnitureImageRepository.save(furnitureImage);
 
-                        furnitureImagePath,
-                        originalName,
-                        changeName,
-                        imageNo,
-                        room
+            furnitureImageCreateResponseDto = new FurnitureImageCreateResponseDto(
+                    room.getId(),
+                    furnitureImage.getPath(),
+                    furnitureImage.getImageNo()
+            );
 
-                );
-
-                furnitureImageRepository.save(furnitureImage);
-                furnitureImagePathList.add(furnitureImagePath);
-
-            }
-
-            furnitureImageCreateResponseDto.setFurniturePath(furnitureImagePathList);
-            furnitureImageCreateResponseDto.setRoomId(room.getId());
+            return furnitureImageCreateResponseDto;
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return furnitureImageCreateResponseDto;
     }
+
 }

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-20       부시연           최초 생성
- * 2022-11-20       부시연           아바타 조회 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
