@@ -2,8 +2,6 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : FeedModifyRequestDto
@@ -24,8 +22,5 @@ public class FeedModifyRequestDto {
 
     private Long feedId;
     private String feedContent;
-    private List<Long> feedImageNos;
-    private byte[] feedImage;
-    private String feedImageName;
 
 }

@@ -79,7 +79,7 @@
                count(lifing_id)
           from tbl_lifing_honey
          where lifing_id = ${lifingId}
-           and a.lifing_delete_yn = 'N'
+           and lifing_delete_yn = 'N'
     </select>
 
     <select id="selectAllLifingComments" resultMap="lifingCommentResultMap">

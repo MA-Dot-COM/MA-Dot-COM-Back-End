@@ -50,7 +50,7 @@
          where b.follower_id = #{ memberCode }
            and a.member_delete_yn = 'N'
            and b.follow_delete_yn = 'N'
-         order by member_lifing_yn desc
+         order by a.member_lifing_yn desc
          limit 30 offset #{ offset }
     </select>
 

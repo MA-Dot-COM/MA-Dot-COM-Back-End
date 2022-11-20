@@ -2,8 +2,6 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : FeedCreateRequestDto
