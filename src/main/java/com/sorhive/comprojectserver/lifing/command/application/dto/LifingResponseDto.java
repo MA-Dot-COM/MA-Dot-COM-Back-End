@@ -24,7 +24,7 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-public class ResponseLifingDto {
+public class LifingResponseDto {
 
     private Long lifingId;
     private String lifingContent;

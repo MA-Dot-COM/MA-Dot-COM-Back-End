@@ -22,7 +22,7 @@ import java.sql.Timestamp;
  */
 @Getter
 @Setter
-public class ResponseLifingCommentDto {
+public class LifingCommentResponseDto {
 
     private Long lifingCommentId;
     private String lifingCommentcontent;

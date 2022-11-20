@@ -3,17 +3,18 @@ package com.sorhive.comprojectserver.lifing.command.application.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
 /**
  * <pre>
- * Class : RequestLifingImageAiDto
- * Comment: AI 서버에 보내는 라이핑 이미지 요청 전송 객체
+ * Class : ResponseHoneyDeleteDto
+ * Comment: 허니 제거 응답 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
- * 2022-11-11       부시연           최초 생성
- * 2022-11-16       부시연           라이핑 URL 리스트로 변경
- * 2022-11-19       부시연           라이핑 URL 문자열로 다시 변경
+ * 2022-11-12       부시연           최초 생성
+ * 2022-11-15       부시연           라이핑으로 이동
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -22,7 +23,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RequestLifingImageAiDto {
-    private String url;
+public class LifingHoneyDeleteResponseDto {
 
+    private Long lifingHoneyId;
+    private Long memberCode;
+    private Long lifingId;
+    private Timestamp deleteTime;
 }
