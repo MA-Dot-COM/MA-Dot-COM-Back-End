@@ -21,8 +21,12 @@ import lombok.Setter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class LifingImageAiRequestDto {
     private String url;
 
+    protected LifingImageAiRequestDto () {}
+
+    public LifingImageAiRequestDto(String lifingImagePath) {
+        this.url = lifingImagePath;
+    }
 }

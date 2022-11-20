@@ -22,7 +22,6 @@ import java.sql.Timestamp;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class LifingHoneyCreateResponseDto {
 
     private Long lifingHoneyId;
@@ -30,4 +29,12 @@ public class LifingHoneyCreateResponseDto {
     private Long lifingId;
     private Timestamp createTime;
 
+    protected LifingHoneyCreateResponseDto() {}
+
+    public LifingHoneyCreateResponseDto(Long id, Long memberCode, Long lifingId, Timestamp createTime) {
+        this.lifingHoneyId = id;
+        this.memberCode = memberCode;
+        this.lifingId = lifingId;
+        this.createTime = createTime;
+    }
 }

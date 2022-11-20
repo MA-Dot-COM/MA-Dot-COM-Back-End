@@ -23,7 +23,6 @@ import java.sql.Timestamp;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class LifingResponseDto {
 
     private Long lifingId;
@@ -34,4 +33,28 @@ public class LifingResponseDto {
     private LifingWriter lifingWriter;
     private String lifingImagePath;
 
+    protected LifingResponseDto() {}
+
+    public LifingResponseDto(Long lifingId, String lifingConetent, Long lifingNo, Long lifingCategoryNo, Timestamp createTime, LifingWriter lifingWriter, String lifingImagePath) {
+
+        this.lifingId = lifingId;
+        this.lifingContent = lifingConetent;
+        this.lifingNo = lifingNo;
+        this.lifingCategoryNo = lifingCategoryNo;
+        this.lifingCreateTime = createTime;
+        this.lifingWriter = lifingWriter;
+        this.lifingImagePath = lifingImagePath;
+
+    }
+
+    public LifingResponseDto(Long lifingId, String lifingConetent, Long lifingNo, Long lifingCategoryNo, Timestamp createTime, LifingWriter lifingWriter) {
+
+        this.lifingId = lifingId;
+        this.lifingContent = lifingConetent;
+        this.lifingNo = lifingNo;
+        this.lifingCategoryNo = lifingCategoryNo;
+        this.lifingCreateTime = createTime;
+        this.lifingWriter = lifingWriter;
+
+    }
 }
