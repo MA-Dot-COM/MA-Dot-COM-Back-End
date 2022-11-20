@@ -23,5 +23,5 @@ import java.util.List;
 public class FeedCreateRequestDto {
 
     private String feedContent;
-    private List<FeedImageCreateDto> feedImage;
+
 }

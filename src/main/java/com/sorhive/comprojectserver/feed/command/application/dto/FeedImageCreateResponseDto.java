@@ -2,10 +2,12 @@ package com.sorhive.comprojectserver.feed.command.application.dto;
 
 import lombok.Getter;
 
+import java.sql.Timestamp;
+
 /**
  * <pre>
- * Class : FeedImageCreateDto
- * Comment: 피드 이미지 생성 전송 객체
+ * Class : FeedImageResponseDto
+ * Comment: 피드 이미지 작성 응답 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -18,8 +20,17 @@ import lombok.Getter;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-public class FeedImageCreateDto {
+public class FeedImageCreateResponseDto {
 
-    private byte[] feedImage;
-    private String feedImageName;
+    private Long feedImageId;
+    private Timestamp uploadTime;
+    private String feedImagePath;
+
+    public FeedImageCreateResponseDto(Long id, Timestamp uploadTime, String path) {
+
+        this.feedImageId = id;
+        this.uploadTime = uploadTime;
+        this.feedImagePath = path;
+
+    }
 }

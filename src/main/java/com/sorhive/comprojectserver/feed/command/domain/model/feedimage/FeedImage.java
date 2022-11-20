@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.feed.command.domain.model.feedimage;
 
 import com.sorhive.comprojectserver.feed.command.domain.model.feed.Feed;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tbl_feed_images")
+@Getter
 public class FeedImage {
 
     @Id
