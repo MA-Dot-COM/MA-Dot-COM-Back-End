@@ -8,9 +8,13 @@ import com.sorhive.comprojectserver.chatting.command.domain.repository.ChattingR
 import com.sorhive.comprojectserver.chatting.command.domain.repository.MongoChattingRepository;
 import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
+import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * <pre>
@@ -23,6 +27,7 @@ import org.springframework.stereotype.Service;
  * 2022-11-14       부시연           최초 생성
  * 2022-11-14       부시연           채팅 생성 기능 추가
  * 2022-11-17       부시연           채팅 생성 기능 수정
+ * 2022-11-21       부시연           채팅 목록 조회 기능 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -33,11 +38,13 @@ import org.springframework.stereotype.Service;
 public class ChattingInfraService {
     private static final Logger log = LoggerFactory.getLogger(ChattingInfraService.class);
     private final MongoChattingRepository mongoChattingRepository;
+    private final MemberRepository memberRepository;
     private final ChattingRepository chattingRepository;
     private final TokenProvider tokenProvider;
 
-    public ChattingInfraService(MongoChattingRepository mongoChattingRepository, ChattingRepository chattingRepository, TokenProvider tokenProvider) {
+    public ChattingInfraService(MongoChattingRepository mongoChattingRepository, MemberRepository memberRepository, ChattingRepository chattingRepository, TokenProvider tokenProvider) {
         this.mongoChattingRepository = mongoChattingRepository;
+        this.memberRepository = memberRepository;
         this.chattingRepository = chattingRepository;
         this.tokenProvider = tokenProvider;
     }
@@ -54,6 +61,16 @@ public class ChattingInfraService {
 
         Long memberCode1 = chattingCreateRequestDto.getMemberCode1();
         Long memberCode2 = chattingCreateRequestDto.getMemberCode2();
+
+        Optional<Member> memberData1 = memberRepository.findByMemberCode(memberCode1);
+        Member member1 = memberData1.get();
+        String memberName1 = member1.getMemberName();
+        String memberRoomImage1 = member1.getRoomImagePath();
+
+        Optional<Member> memberData2 = memberRepository.findByMemberCode(memberCode2);
+        Member member2 = memberData2.get();
+        String memberName2 = member2.getMemberName();
+        String memberRoomImage2 = member1.getRoomImagePath();
 
         /* membercode1은 작은값 membercode 2는 큰값으로 맞춘다. */
         if(memberCode1 > memberCode2) {
@@ -79,7 +96,11 @@ public class ChattingInfraService {
 
             mongoChatting = new MongoChatting(
                     memberCode1,
+                    memberName1,
+                    memberRoomImage1,
                     memberCode2,
+                    memberName2,
+                    memberRoomImage2,
                     oldMongoChatting.getMessages()
             );
 
@@ -88,7 +109,11 @@ public class ChattingInfraService {
             /* 몽고 DB 채팅 생성 */
             mongoChatting = new MongoChatting(
                     memberCode1,
+                    memberName1,
+                    memberRoomImage1,
                     memberCode2,
+                    memberName2,
+                    memberRoomImage2,
                     chattingCreateRequestDto.getMessages()
             );
         }
@@ -100,7 +125,8 @@ public class ChattingInfraService {
         Chatting chatting = new Chatting(
                 memberCode1,
                 memberCode2,
-                mongoChatting.getId()
+                mongoChatting.getId(),
+                mongoChatting.getMessages().get(mongoChatting.getMessages().size() - 1)
         );
 
         /* 채팅에 몽고 DB의 아이디 포함하여 저장하기 */
@@ -111,6 +137,7 @@ public class ChattingInfraService {
                 chatting.getMemberCode1(),
                 chatting.getMemberCode2(),
                 chatting.getChattingId(),
+                chatting.getLastChatting(),
                 chatting.getUploadTime()
         );
 

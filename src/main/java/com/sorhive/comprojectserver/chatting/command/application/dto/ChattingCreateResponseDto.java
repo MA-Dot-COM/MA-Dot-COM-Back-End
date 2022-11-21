@@ -13,6 +13,7 @@ import java.sql.Timestamp;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-17       부시연           최초 생성
+ * 2022-11-21       부시연           마지막 채팅 건에 대한 응답 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -26,14 +27,16 @@ public class ChattingCreateResponseDto {
     private final Long memberCode1;
     private final Long memberCode2;
     private final String mongoId;
+    private final String lastChatting;
     private final Timestamp uploadTime;
 
 
-    public ChattingCreateResponseDto(Long chattingNo, Long memberCode1, Long memberCode2, String chattingId, Timestamp uploadTime) {
+    public ChattingCreateResponseDto(Long chattingNo, Long memberCode1, Long memberCode2, String chattingId, String lastChatting, Timestamp uploadTime) {
         this.chattingNo = chattingNo;
         this.memberCode1 = memberCode1;
         this.memberCode2 = memberCode2;
         this.mongoId = chattingId;
+        this.lastChatting = lastChatting;
         this.uploadTime = uploadTime;
     }
 }

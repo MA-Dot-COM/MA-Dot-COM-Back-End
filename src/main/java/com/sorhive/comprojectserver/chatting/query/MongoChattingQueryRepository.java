@@ -22,4 +22,6 @@ public interface MongoChattingQueryRepository extends MongoRepository<MongoChatt
     MongoChattingData findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(Long memberCode1, Long memberCode2);
 
     MongoChattingData findFirstByMemberCode1AndMemberCode2(Long memberCode, Long memberCode2);
+
+    MongoChattingData findByMemberCode1AndMemberCode2OrderByUploadTimeDesc(Long memberCode1, Long memberCode2);
 }
