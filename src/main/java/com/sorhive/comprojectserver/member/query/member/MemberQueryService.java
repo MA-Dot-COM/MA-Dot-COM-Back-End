@@ -107,7 +107,7 @@ public class MemberQueryService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 자신 조회하기 */
-        MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
+        MemberSummary memberSummary = memberMapper.findOneByMemberCode(memberCode);
 
         List<MemberSummary> memberSummaryList = new ArrayList<>();
 
@@ -338,7 +338,7 @@ public class MemberQueryService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 자기 자신 요약 정보 불러오기 */
-        MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
+        MemberSummary memberSummary = memberMapper.findOneByMemberCode(memberCode);
 
         /* 회원 상세 정보 응답 전송 객체 만들고 값 넣어주기 */
         MypageDto mypageDto = new MypageDto(
@@ -367,7 +367,7 @@ public class MemberQueryService {
             throw new NoMemberException("해당하는 회원이 없습니다.");
         }
 
-        if(memberMapper.findAllByMemberCode(memberCode) == null) {
+        if(memberMapper.findOneByMemberCode(memberCode) == null) {
 
             if(memberDataDao.findByMemberCode(memberCode) != null) {
 
@@ -389,7 +389,7 @@ public class MemberQueryService {
         }
 
         /* 회원 상세 정보 불러오기 */
-        MemberSummary memberSummary = memberMapper.findAllByMemberCode(memberCode);
+        MemberSummary memberSummary = memberMapper.findOneByMemberCode(memberCode);
 
         /* 회원 상세 정보 응답 전송 객체 만들고 값 넣어주기 */
         MypageDto mypageDto = new MypageDto(

@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Mapper
 public interface MemberMapper {
-    MemberSummary findAllByMemberCode(Long memberCode);
+    MemberSummary findOneByMemberCode(Long memberCode);
 
     int findMaxMemberCode();
 
