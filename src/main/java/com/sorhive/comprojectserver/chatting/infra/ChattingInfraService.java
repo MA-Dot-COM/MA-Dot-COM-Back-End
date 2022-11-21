@@ -13,6 +13,7 @@ import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepos
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class ChattingInfraService {
     }
 
     /** 채팅 생성 */
+    @Transactional
     public ChattingCreateResponseDto createChatting(String accessToken, ChattingCreateRequestDto chattingCreateRequestDto) {
 
         log.info("[ChattingInfraService] createChatting Start ===================");
@@ -119,7 +121,7 @@ public class ChattingInfraService {
         }
 
         /* 몽고 DB 채팅 저장하기 */
-        mongoChattingRepository.save(mongoChatting);
+        mongoChattingRepository.insert(mongoChatting);
 
         /* 채팅 생성하기 */
         Chatting chatting = new Chatting(
