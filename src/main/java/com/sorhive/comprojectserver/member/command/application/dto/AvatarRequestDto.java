@@ -24,7 +24,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AvatarCreateDto {
+public class AvatarRequestDto {
 
     @NotNull
     private Integer faceType;

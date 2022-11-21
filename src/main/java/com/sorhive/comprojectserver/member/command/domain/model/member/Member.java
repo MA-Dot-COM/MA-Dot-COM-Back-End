@@ -162,6 +162,12 @@ public class Member implements UserDetails {
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 
+    public void createAvatarImagePath(String avatarImagePath) {
+        this.avatarImagePath = avatarImagePath;
+        this.roomImagePath = "https://combucket.s3.ap-northeast-2.amazonaws.com/rooms/default_room.png";
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+    }
+
     public void setAvatarImagePath(String avatarImagePath) {
         this.avatarImagePath = avatarImagePath;
         this.uploadTime = new Timestamp(System.currentTimeMillis());

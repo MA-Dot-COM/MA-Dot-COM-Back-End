@@ -114,7 +114,7 @@ public class RoomInfraService {
 
         /* 기존 몽고 DB 방이 있으면 찾아서 삭제하기 */
         Room oldRoom = roomRepository.findById(memberCode);
-        if(oldRoom != null) {
+        if(oldRoom != null && oldRoom.getRoomNo() != "637befb055f63397c8692bb2") {
             mongoRoomRepository.deleteById(oldRoom.getRoomNo());
         }
 
