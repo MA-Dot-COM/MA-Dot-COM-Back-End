@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.chatting.query;
 
 import com.sorhive.comprojectserver.chatting.exception.NoMongoChattingException;
+import com.sorhive.comprojectserver.chatting.query.dto.ChattingDetailResponseDto;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import java.util.List;
  * 2022-11-18       부시연           최초 생성
  * 2022-11-18       부시연           자신의 채팅 목록 불러오기
  * 2022-11-19       부시연           자신과 채팅한 한 사람과의 내역 불러오기
+ * 2022-11-21       부시연           채팅 목록 조회 기능 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -44,14 +46,21 @@ public class ChattingQueryService {
 
 
     /** 자신의 채팅 목록 불러오기 */
-    public List<MongoChattingData> findChattingList(String accessToken) {
+    public Object findChattingList(String accessToken) {
 
         log.info("[ChattingQueryService] Start ==============================");
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /** 회원이 있는 채팅 내역들을 불러온다. */
-        List<ChattingData> chattingData = chattingMapper.findChattingList(memberCode, memberCode);
+        List<ChattingData> chattingData1 = chattingMapper.findChattingList(memberCode);
+        List<ChattingData> chattingData2 = chattingMapper.findChattingList2(memberCode);
+
+        List<ChattingData> chattingData = new ArrayList<>();
+
+        chattingData.addAll(chattingData1);
+        chattingData.addAll(chattingData2);
+
         List<MongoChattingData> mongoChattingData = new ArrayList<>();
 
         /** 채팅 데이터에 있는
@@ -63,11 +72,33 @@ public class ChattingQueryService {
          * */
         for (int i = 0; i < chattingData.size(); i++) {
 
-            mongoChattingData.add(mongoChattingQueryRepository.findByMemberCode1AndMemberCode2OrderByUploadTimeDesc(chattingData.get(i).getMemberCode1(), chattingData.get(i).getMemberCode2()));
+            mongoChattingData.add(mongoChattingQueryRepository.findFirstByMemberCode1AndMemberCode2OrderByUploadTimeDesc(chattingData.get(i).getMemberCode1(), chattingData.get(i).getMemberCode2()));
 
         }
 
-        return mongoChattingData;
+        ChattingDetailResponseDto chattingDetailResponseDto = null;
+
+        List<ChattingDetailResponseDto> chattingListResponseDtos = new ArrayList<>();
+
+        for (int i = 0; i < mongoChattingData.size(); i++) {
+
+            chattingDetailResponseDto = new ChattingDetailResponseDto(
+                    mongoChattingData.get(i).getMemberCode1(),
+                    mongoChattingData.get(i).getMemberName1(),
+                    mongoChattingData.get(i).getMemberRoomImage1(),
+                    mongoChattingData.get(i).getMemberCode2(),
+                    mongoChattingData.get(i).getMemberName2(),
+                    mongoChattingData.get(i).getMemberRoomImage2(),
+                    mongoChattingData.get(i).getMessages().get((mongoChattingData.get(i).getMessages().size()-1)),
+                    mongoChattingData.get(i).getUploadTime()
+
+            );
+
+            chattingListResponseDtos.add(chattingDetailResponseDto);
+
+        }
+
+        return chattingListResponseDtos;
     }
 
     /** 자신과 채팅한 한 사람과의 내역 불러오기 */

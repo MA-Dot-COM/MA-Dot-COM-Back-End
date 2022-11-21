@@ -13,6 +13,8 @@ import java.util.List;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-18       부시연           최초 생성
+ * 2022-11-21       부시연           회원 번호1로 채팅 목록 조회
+ * 2022-11-21       부시연           회원 번호2로 채팅 목록 조회
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -21,5 +23,6 @@ import java.util.List;
  */
 @Mapper
 public interface ChattingMapper {
-    List<ChattingData> findChattingList(Long memberCode1, Long memberCode2);
+    List<ChattingData> findChattingList(Long memberCode);
+    List<ChattingData> findChattingList2(Long memberCode);
 }
