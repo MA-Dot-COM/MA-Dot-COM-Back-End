@@ -127,8 +127,7 @@ public class ChattingInfraService {
         Chatting chatting = new Chatting(
                 memberCode1,
                 memberCode2,
-                mongoChatting.getId(),
-                mongoChatting.getMessages().get(mongoChatting.getMessages().size() - 1)
+                mongoChatting.getId()
         );
 
         /* 채팅에 몽고 DB의 아이디 포함하여 저장하기 */
@@ -139,7 +138,6 @@ public class ChattingInfraService {
                 chatting.getMemberCode1(),
                 chatting.getMemberCode2(),
                 chatting.getChattingId(),
-                chatting.getLastChatting(),
                 chatting.getUploadTime()
         );
 
