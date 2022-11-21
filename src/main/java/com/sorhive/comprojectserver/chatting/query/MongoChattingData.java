@@ -32,7 +32,7 @@ public class MongoChattingData {
     private Long counter;
     private Long memberCode1;
     private Long memberCode2;
-    private List<Map<String, Object>> messages;
+    private List<String> messages;
     private LocalDateTime uploadTime;
 
     protected MongoChattingData () {}

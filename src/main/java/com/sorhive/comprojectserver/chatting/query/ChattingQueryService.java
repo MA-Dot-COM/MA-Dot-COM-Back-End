@@ -2,7 +2,6 @@ package com.sorhive.comprojectserver.chatting.query;
 
 import com.sorhive.comprojectserver.chatting.exception.NoMongoChattingException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import org.apache.commons.math3.exception.NoDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

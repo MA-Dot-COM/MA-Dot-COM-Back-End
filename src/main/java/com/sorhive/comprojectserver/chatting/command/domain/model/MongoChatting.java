@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -33,12 +32,12 @@ public class MongoChatting {
     private Long counter;
     private Long memberCode1;
     private Long memberCode2;
-    private List<Map<String, Object>> messages;
+    private List<String> messages;
     private LocalDateTime uploadTime;
 
     protected MongoChatting() {}
 
-    public MongoChatting(Long memberCode1, Long memberCode2, List<Map<String, Object>> messages) {
+    public MongoChatting(Long memberCode1, Long memberCode2, List<String> messages) {
         if(counter == null) {
             counter = 0L;
         }
