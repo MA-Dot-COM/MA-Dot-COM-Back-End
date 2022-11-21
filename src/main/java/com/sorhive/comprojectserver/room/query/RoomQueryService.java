@@ -32,6 +32,7 @@ import java.util.Optional;
  * 2022-11-13       부시연           룸 조회수 기능 추가
  * 2022-11-13       부시연           방명록 조회 추가
  * 2022-11-20       부시연           가구 이미지 조회 추가
+ * 2022-11-22       부시연           방명록 변수명 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -97,10 +98,10 @@ public class RoomQueryService {
         );
 
         /* 만약 방에 삭제가 안된 방명록이 있다면 */
-        if(guestBookDataDao.findByRoomIdAndDeleteYnEquals(roomId, 'N') != null) {
+        if(guestBookDataDao.findByRoomIdAndGuestBookDeleteYnEquals(roomId, 'N') != null) {
 
             /* 방명록 리스트 가져오기 */
-            List<GuestBookData> guestBookData =  guestBookDataDao.findByRoomIdAndDeleteYnEquals(roomId, 'N');
+            List<GuestBookData> guestBookData =  guestBookDataDao.findByRoomIdAndGuestBookDeleteYnEquals(roomId, 'N');
 
             /* 응답 객체에 방명록 리스트 담기 */
             roomDetailResponseDto.setGuestBookDataList(guestBookData);
