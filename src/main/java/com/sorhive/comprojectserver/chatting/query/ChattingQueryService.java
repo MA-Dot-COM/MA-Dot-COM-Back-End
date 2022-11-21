@@ -42,6 +42,7 @@ public class ChattingQueryService {
         this.mongoChattingQueryRepository = mongoChattingQueryRepository;
     }
 
+
     /** 자신의 채팅 목록 불러오기 */
     public List<MongoChattingData> findChattingList(String accessToken) {
 
@@ -62,7 +63,7 @@ public class ChattingQueryService {
          * */
         for (int i = 0; i < chattingData.size(); i++) {
 
-            mongoChattingData.add(mongoChattingQueryRepository.findFirstByMemberCode1AndMemberCode2OrderByCounterDesc(chattingData.get(i).getMemberCode1(), chattingData.get(i).getMemberCode2()));
+            mongoChattingData.add(mongoChattingQueryRepository.findByMemberCode1AndMemberCode2OrderByUploadTimeDesc(chattingData.get(i).getMemberCode1(), chattingData.get(i).getMemberCode2()));
 
         }
 

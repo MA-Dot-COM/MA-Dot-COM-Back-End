@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <pre>
@@ -31,7 +30,11 @@ public class MongoChattingData {
     private String id;
     private Long counter;
     private Long memberCode1;
+    private String memberName1;
+    private String memberRoomImage1;
     private Long memberCode2;
+    private String memberName2;
+    private String memberRoomImage2;
     private List<String> messages;
     private LocalDateTime uploadTime;
 
