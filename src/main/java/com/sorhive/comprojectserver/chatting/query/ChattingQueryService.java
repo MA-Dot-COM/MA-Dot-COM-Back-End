@@ -53,13 +53,8 @@ public class ChattingQueryService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /** 회원이 있는 채팅 내역들을 불러온다. */
-        List<ChattingData> chattingData1 = chattingMapper.findChattingList(memberCode);
-        List<ChattingData> chattingData2 = chattingMapper.findChattingList2(memberCode);
+        List<ChattingData> chattingData = chattingMapper.findChattingList(memberCode);
 
-        List<ChattingData> chattingData = new ArrayList<>();
-
-        chattingData.addAll(chattingData1);
-        chattingData.addAll(chattingData2);
 
         List<MongoChattingData> mongoChattingData = new ArrayList<>();
 
@@ -76,13 +71,11 @@ public class ChattingQueryService {
 
         }
 
-        ChattingDetailResponseDto chattingDetailResponseDto = null;
-
         List<ChattingDetailResponseDto> chattingListResponseDtos = new ArrayList<>();
 
         for (int i = 0; i < mongoChattingData.size(); i++) {
 
-            chattingDetailResponseDto = new ChattingDetailResponseDto(
+            ChattingDetailResponseDto chattingDetailResponseDto = new ChattingDetailResponseDto(
                     mongoChattingData.get(i).getMemberCode1(),
                     mongoChattingData.get(i).getMemberName1(),
                     mongoChattingData.get(i).getMemberRoomImage1(),

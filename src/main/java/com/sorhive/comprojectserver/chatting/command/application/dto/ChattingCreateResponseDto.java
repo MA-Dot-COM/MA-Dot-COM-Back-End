@@ -27,16 +27,14 @@ public class ChattingCreateResponseDto {
     private final Long memberCode1;
     private final Long memberCode2;
     private final String mongoId;
-    private final String lastChatting;
     private final Timestamp uploadTime;
 
 
-    public ChattingCreateResponseDto(Long chattingNo, Long memberCode1, Long memberCode2, String chattingId, String lastChatting, Timestamp uploadTime) {
+    public ChattingCreateResponseDto(Long chattingNo, Long memberCode1, Long memberCode2, String chattingId, Timestamp uploadTime) {
         this.chattingNo = chattingNo;
         this.memberCode1 = memberCode1;
         this.memberCode2 = memberCode2;
         this.mongoId = chattingId;
-        this.lastChatting = lastChatting;
         this.uploadTime = uploadTime;
     }
 }

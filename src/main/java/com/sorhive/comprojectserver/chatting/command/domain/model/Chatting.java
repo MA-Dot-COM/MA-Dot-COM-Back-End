@@ -43,17 +43,13 @@ public class Chatting {
     @Column(name = "chatting_upload_time")
     private Timestamp uploadTime;
 
-    @Column(name = "last_chatting")
-    private String lastChatting;
-
     protected Chatting() { }
 
-    public Chatting(Long memberCode1, Long memberCode2, String chattingId, String lastChatting) {
+    public Chatting(Long memberCode1, Long memberCode2, String chattingId) {
 
         this.memberCode1 = memberCode1;
         this.memberCode2 = memberCode2;
         this.chattingId = chattingId;
-        this.lastChatting = lastChatting;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
 
     }
