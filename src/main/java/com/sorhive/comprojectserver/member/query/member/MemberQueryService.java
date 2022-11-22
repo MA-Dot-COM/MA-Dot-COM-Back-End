@@ -405,6 +405,9 @@ public class MemberQueryService {
         if(memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode) != null){
             FollowSummary followSummary = memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode);
             mypageDto.addFollowSummary(followSummary);
+        } else {
+            FollowSummary followSummary = new FollowSummary(-1L,-1L,-1L);
+            mypageDto.addFollowSummary(followSummary);
         }
 
         return mypageDto;
