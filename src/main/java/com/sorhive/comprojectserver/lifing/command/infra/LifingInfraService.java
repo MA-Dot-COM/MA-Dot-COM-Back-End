@@ -18,6 +18,8 @@ import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberCode;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +46,7 @@ import java.util.*;
  * 2022-11-16       부시연           라이핑 이미지 리스트로 변경
  * 2022-11-17       부시연           라이핑 삭제 기능 추가
  * 2022-11-19       부시연           라이핑 이미지 다시 1개로 변경
+ * 2022-11-22       부시연           라이핑 AI 분석 로직 변경 대응
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -105,19 +108,7 @@ public class LifingInfraService {
                 String changeName = UUID.randomUUID() + " - lifing_" + memberCode + ".png";
 
                 /* 라이핑 이미지를 S3에 저장하고 URL 값을 반환 받는다. */
-                String lifingImagePath = s3LifingImageFile.upload(lifingByteImage, changeName, "lifing/");
-
-                /* 라이핑 이미지 생성 */
-                LifingImage lifingImage = new LifingImage(
-
-                        lifingImagePath,
-                        originalName,
-                        changeName,
-                        lifing
-
-                );
-
-                lifingImageRepository.save(lifingImage);
+                String lifingImagePath = s3LifingImageFile.upload(lifingByteImage, changeName, "lifing");
                 
                 /* AI 라이핑 이미지 요청 전송 객체 생성 */
                 LifingImageAiRequestDto lifingImageAiRequestDto = new LifingImageAiRequestDto(
@@ -135,7 +126,6 @@ public class LifingInfraService {
                 Map<String, Object> map = new HashMap<>();
                 map.put("url", lifingImageAiRequestDto.getUrl());
 
-
                 /* JSON으로 파싱하기 */
                 JSONObject params = new JSONObject(map);
 
@@ -146,29 +136,68 @@ public class LifingInfraService {
 
                 /* 스프링 3.0부터 지원하는 Spring의 HTTP 통신 템플릿 */
                 RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<?> response = restTemplate.exchange(url,HttpMethod.PUT, requestEntity, String.class);
 
-                /* 응답받기 위한 값 설정하기  */
-                ResponseEntity<LifingImageAiResponseDto> res = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, LifingImageAiResponseDto.class);
+                log.info("[LifingInfraService]");
+                log.info("[insertLifingAiImage] response.getBody() " + response.getBody());
+
+                /* body의 값을 스트링으로 바꿔주기 */
+                String jsonData = (String) response.getBody();
+
+                /* JSON parser를 이용하여 방금 받은 응답값 파싱하기 */
+                JSONParser parser = new JSONParser();
+                Object object= null;
+                try {
+                    object = parser.parse(jsonData);
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                /* Json 객체를 만들고 파싱한 데이터를 넣어주기 */
+                JSONObject jsonObject = (JSONObject) object;
+                
+                /* list값을 각각 꺼내주기 */
+                List<JSONObject> lifingList = (List) jsonObject.get("lifing");
+                List<JSONObject> scoreList = (List) jsonObject.get("score");
+
+                log.info("[LifingInfraService]");
+                log.info("[insertLifingAiImage] lifingList " + lifingList);
+                log.info("[insertLifingAiImage] scoreList " + scoreList);
 
                 /* 분석된 결과값 Long에 담기 */
-                Long analyzedLifingNo = Long.valueOf(res.getBody().getSpace());
+                Long analyzedLifingNo1 = Long.valueOf(String.valueOf(lifingList.get(0)));
+                Long analyzedLifingNo2 = Long.valueOf(String.valueOf(lifingList.get(1)));
+                Long analyzedLifingNo3 = Long.valueOf(String.valueOf(lifingList.get(2)));
+                Double analyzedLifingScore1 = Double.valueOf(String.valueOf(scoreList.get(0)));
+                Double analyzedLifingScore2 = Double.valueOf(String.valueOf(scoreList.get(1)));
+                Double analyzedLifingScore3 = Double.valueOf(String.valueOf(scoreList.get(2)));
 
                 /* 라이핑 이미지에 값 넣어주기 */
                 Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifing.getLifingId(), 'N');
                 lifing = lifingData.get();
-                lifing.createAnalyzedLifingNo(analyzedLifingNo);
-
-                log.info("[LifingImageService] analyzedLifingNo : " + analyzedLifingNo);
 
                 /* 라이핑 이미지 저장하기 */
-                lifingRepository.save(lifing);
+                LifingImage lifingImage = new LifingImage(
+                        lifingImagePath,
+                        originalName,
+                        changeName,
+                        analyzedLifingNo1,
+                        analyzedLifingScore1,
+                        analyzedLifingNo2,
+                        analyzedLifingScore2,
+                        analyzedLifingNo3,
+                        analyzedLifingScore3,
+                        lifing
+                );
+
+                lifingImageRepository.save(lifingImage);
 
                 lifingImageCreateAiResponseDto = new LifingImageCreateAiResponseDto(
                         lifing.getLifingId(),
-                        lifing.getAnalyzedLifingNo(),
+                        lifingImage.getAnalyzedLifingNo1(),
                         lifing.getLifingWriter(),
                         lifing.getCreateTime(),
-                        lifingImage.getPath()
+                        lifingImage.getLifingImagePath()
                 );
 
                 log.info("[LifingImageService] insertImage End ===============");
@@ -230,6 +259,12 @@ public class LifingInfraService {
                         lifingImagePath,
                         originalName,
                         changeName,
+                        -1L,
+                        -1.0,
+                        -1L,
+                        -1.0,
+                        -1L,
+                        -1.0,
                         lifing
                 );
 

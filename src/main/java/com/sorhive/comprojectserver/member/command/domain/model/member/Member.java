@@ -185,7 +185,7 @@ public class Member implements UserDetails {
     public void changeLifingWithoutAI() {
         this.lifingNo = -1L;
         this.lifingCategoryNo = -1L;
-        this.lifingYn = 'N';
+        this.lifingYn = 'Y';
         this.uploadTime = new Timestamp(System.currentTimeMillis());
     }
 

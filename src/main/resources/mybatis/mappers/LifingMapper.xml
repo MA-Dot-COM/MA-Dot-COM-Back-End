@@ -15,7 +15,6 @@
         <result property="lifingConetent" column="lifing_content"/>
         <result property="lifingNo" column="lifing_no"/>
         <result property="lifingCategoryNo" column="lifing_category_no"/>
-        <result property="analyzedLifingNo" column="anaylzed_lifing_no"/>
         <result property="lifingWriterCode" column="lifing_writer_code"/>
         <result property="lifingWriterId" column="lifing_writer_id"/>
         <result property="lifingWriterName" column="lifing_writer_name"/>
