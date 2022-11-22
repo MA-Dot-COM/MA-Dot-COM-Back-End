@@ -36,7 +36,7 @@ public interface LifingMapper {
 
     List<LifingCommentData> selectAllLifingComments(Long lifingId);
 
-    List<LifingImagePath> selectAllLifingImages(Long lifingId);
+    LifingImagePath selectLifingImage(Long lifingId);
 
     LifingSummary findOneByCreateTime(Long writerCode);
 }
