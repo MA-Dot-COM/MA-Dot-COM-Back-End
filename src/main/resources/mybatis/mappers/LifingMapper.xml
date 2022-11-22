@@ -104,4 +104,25 @@
          where lifing_id = #{ lifingId }
            and lifing_delete_yn = 'N'
     </select>
+
+    <select id="findOneByCreateTime" resultMap="lifingResultMap">
+        select
+               lifing_id
+             , lifing_upload_time
+             , lifing_category_no
+             , lifing_no
+             , lifing_writer_code
+             , lifing_writer_name
+             , lifing_writer_id
+             , lifing_content
+          from tbl_lifings
+         where (lifing_writer_code
+             , lifing_create_time) in(
+               select
+                      lifing_writer_code
+                    , max(lifing_create_time)
+                 from tbl_lifings
+         group by lifing_writer_code
+        having lifing_writer_code = #{writerCode})
+    </select>
 </mapper>

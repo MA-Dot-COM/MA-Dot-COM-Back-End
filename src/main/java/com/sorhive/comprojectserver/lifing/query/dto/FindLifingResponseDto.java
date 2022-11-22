@@ -16,6 +16,7 @@ import java.util.List;
  * 2022-11-14       부시연           최초 생성
  * 2022-11-15       부시연           라이핑 댓글 목록 추가
  * 2022-11-16       부시연           라이핑 이미지 목록 추가
+ * 2022-11-23       부시연           회원 상세 조회 기능 변경으로 응답 타입 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -26,7 +27,7 @@ import java.util.List;
 @Setter
 public class FindLifingResponseDto {
 
-    private LifingData lifingData;
+    private LifingSummary lifingSummary;
 
     private List<LifingCommentData> lifingCommentDataList;
 

@@ -27,6 +27,7 @@ import java.util.List;
  * 2022-11-12       부시연           회원 번호로 회원의 모든 라이핑 조회 시 조회수 추가
  * 2022-11-15       부시연           라이핑 상세 조회 시 댓글 조회 기능 추가
  * 2022-11-16       부시연           라이핑 상세 조회 시 이미지 조회 기능 추가
+ * 2022-11-23       부시연           회원 상세 조회 기능 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -60,7 +61,7 @@ public class LifingQueryService {
     }
 
     /** 라이핑 번호로 라이핑 상세 조회 */
-    public FindLifingResponseDto findLifingByLifingId(String accessToken, Long lifingId) {
+    public FindLifingResponseDto findLifingByLifingId(String accessToken, Long writerCode) {
 
         log.info("[LifingQueryService] findLifingByLifingId Start ===================================");
 
@@ -70,12 +71,12 @@ public class LifingQueryService {
         /* 반환하기 위한 응답 전송 객체 만들기 */
         FindLifingResponseDto findLifingResponseDto = new FindLifingResponseDto();
 
-        LifingData lifingData = lifingDataDao.findLifingDataByLifingIdAndDeleteYnEquals(lifingId, 'N');
+        LifingSummary lifingSummary = lifingMapper.findOneByCreateTime(writerCode);
 
         /* 만약 조회하려는 라이핑 멤버 번호와 라이핑을 방문하는 멤버 번호가 다르다면  */
-        if(lifingData.getLifingWriterCode() != visitorCode) {
+        if(lifingSummary.getLifingWriterCode() != visitorCode) {
 
-            Lifing lifing = lifingRepository.findByLifingId(lifingId);
+            Lifing lifing = lifingRepository.findByLifingId(writerCode);
 
             /* 라이핑 조회 생성 */
             LifingVisit lifingVisit = new LifingVisit(
@@ -87,6 +88,8 @@ public class LifingQueryService {
             lifingVisitRepository.save(lifingVisit);
 
         }
+
+        Long lifingId = lifingSummary.getLifingId();
 
         /* 라이핑에 댓글 있는지 확인 */
         if(lifingMapper.selectAllLifingComments(lifingId) != null) {
@@ -105,7 +108,7 @@ public class LifingQueryService {
         }
 
 
-        findLifingResponseDto.setLifingData(lifingData);
+        findLifingResponseDto.setLifingSummary(lifingSummary);
 
         return findLifingResponseDto;
 
