@@ -96,7 +96,7 @@
          order by lifing_comment_id desc
     </select>
 
-    <select id="selectAllLifingImages" resultMap="lifingPathResultMap">
+    <select id="selectLifingImage" resultMap="lifingPathResultMap">
         select
                lifing_image_id
              , lifing_image_path

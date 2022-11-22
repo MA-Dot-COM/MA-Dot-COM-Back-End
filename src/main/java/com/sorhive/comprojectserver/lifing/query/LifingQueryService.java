@@ -28,6 +28,7 @@ import java.util.List;
  * 2022-11-15       부시연           라이핑 상세 조회 시 댓글 조회 기능 추가
  * 2022-11-16       부시연           라이핑 상세 조회 시 이미지 조회 기능 추가
  * 2022-11-23       부시연           회원 상세 조회 기능 변경
+ * 2022-11-23       부시연           라이핑 이미지 1장으로 변경
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -100,11 +101,11 @@ public class LifingQueryService {
         }
 
         /* 라이핑에 이미지가 있는지 확인 */
-        if(lifingMapper.selectAllLifingImages(lifingId) != null) {
+        if(lifingMapper.selectLifingImage(lifingId) != null) {
 
-            List<LifingImagePath> lifingImagePaths = lifingMapper.selectAllLifingImages(lifingId);
+            LifingImagePath lifingImagePath = lifingMapper.selectLifingImage(lifingId);
 
-            findLifingResponseDto.setLifingImagePathList(lifingImagePaths);
+            findLifingResponseDto.setLifingImagePath(lifingImagePath);
         }
 
 
