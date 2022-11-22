@@ -184,7 +184,9 @@ public class RoomService {
         Optional<GuestBook> guestBookData = guestBookRepository.findByIdAndDeleteYnEquals(guestBookId, 'N');
         GuestBook guestBook = guestBookData.get();
 
-        if(guestBook.getGuestBookWriter().getMemberCode().getValue() != memberCode) {
+        Long guestBookWriterCode = guestBook.getGuestBookWriter().getMemberCode().getValue();
+
+        if(!guestBookWriterCode.equals(memberCode)) {
             throw new NotSameWriterException("방명록 작성자와 요청자가 다릅니다");
         }
 
