@@ -100,7 +100,7 @@ public class AvatarInfraService {
 
         Room defaultRoom = new Room(
                 memberCode,
-                "637c67b716de470e1cecef25",
+                "637c67b716de470e1cecef26",
                 roomCreator
         );
 

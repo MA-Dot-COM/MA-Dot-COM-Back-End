@@ -122,4 +122,13 @@ public class Lifing {
         this.deleteTime = new Timestamp(System.currentTimeMillis());
         this.deleteYn = deleteYn;
     }
+
+    public void createNewAiLifing(LifingWriter lifingWriter, Long lifingNo, Long lifingCategoryNo, String lifingConetent) {
+        this.lifingWriter = lifingWriter;
+        this.lifingNo = lifingNo;
+        this.lifingCategoryNo = lifingCategoryNo;
+        this.lifingConetent = lifingConetent;
+        this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.deleteYn = 'N';
+    }
 }
