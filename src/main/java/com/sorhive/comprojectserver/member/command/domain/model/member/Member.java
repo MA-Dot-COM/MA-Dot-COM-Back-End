@@ -79,6 +79,10 @@ public class Member implements UserDetails {
     @ColumnDefault("''")
     private String avatarImagePath;
 
+    @Column(name = "member_avatar_yn")
+    @ColumnDefault("'N'")
+    private Character avatarYn;
+
     @Column(name = "member_lifing_no")
     @ColumnDefault("-1")
     private Long lifingNo;
@@ -157,6 +161,8 @@ public class Member implements UserDetails {
 
     public Character getLifingYn() { return lifingYn; }
 
+    public Character getAvatarYn() { return avatarYn; }
+
     public void setRoomImagePath(String roomImagePath) {
         this.roomImagePath = roomImagePath;
         this.uploadTime = new Timestamp(System.currentTimeMillis());
@@ -166,6 +172,7 @@ public class Member implements UserDetails {
         this.avatarImagePath = avatarImagePath;
         this.roomImagePath = "https://combucket.s3.ap-northeast-2.amazonaws.com/rooms/default_room.png";
         this.uploadTime = new Timestamp(System.currentTimeMillis());
+        this.avatarYn = 'Y';
     }
 
     public void setAvatarImagePath(String avatarImagePath) {
