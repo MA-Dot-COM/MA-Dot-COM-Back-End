@@ -99,6 +99,11 @@ public class LifingService {
         if(lifingCreateDto.getLifingNo() == null) {
             throw new NoLifingNoException("라이핑 번호가 없습니다.");
         }
+        
+        /* 라이핑 아이디가 없을 경우 예외처리 */
+        if(lifingCreateDto.getLifingId() == null) {
+            throw new NoLifingNoException("라이핑 아이디가 없습니다.");
+        }
 
         /* 라이핑 카테고리 번호가 없을 경우 예외처리 */
         if(lifingCreateDto.getLifingCategoryNo() == null) {
@@ -112,8 +117,12 @@ public class LifingService {
         Long lifingCategoryNo = lifingCreateDto.getLifingCategoryNo();
         String lifingConetent = lifingCreateDto.getLifingContent();
 
+        Optional<Lifing> lifingData = lifingRepository.findByLifingIdAndDeleteYnEquals(lifingCreateDto.getLifingId(), 'N');
+
+        Lifing lifing = lifingData.get();
+
         /* 라이핑 생성하기 */
-        Lifing lifing = new Lifing(
+        lifing.createNewAiLifing(
                 lifingWriter,
                 lifingNo,
                 lifingCategoryNo,

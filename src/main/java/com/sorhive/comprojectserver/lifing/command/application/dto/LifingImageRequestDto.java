@@ -21,8 +21,8 @@ import lombok.Getter;
 @Getter
 public class LifingImageRequestDto {
 
-    byte[] lifingImage;
-    String lifingImageName;
+    private byte[] lifingImage;
+    private String lifingImageName;
     private String lifingContent;
     
 }
