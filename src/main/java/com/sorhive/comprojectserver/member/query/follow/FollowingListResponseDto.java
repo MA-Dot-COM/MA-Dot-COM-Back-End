@@ -21,10 +21,13 @@ import java.util.List;
  * @see (참고할 class 또는 외부 url)
  */
 @Getter
-@Setter
 public class FollowingListResponseDto {
 
     private List<FollowData> followerData;
     private int followingCount;
 
+    public FollowingListResponseDto(List<FollowData> followData, int followingCount) {
+        this.followerData = followData;
+        this.followingCount = followingCount;
+    }
 }

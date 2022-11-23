@@ -59,6 +59,10 @@ public class MemberData {
     @ColumnDefault("'N'")
     private Character lifingYn;
 
+    @Column(name = "member_avatar_yn")
+    @ColumnDefault("'N'")
+    private Character avatarYn;
+
     protected MemberData() {
     }
 
