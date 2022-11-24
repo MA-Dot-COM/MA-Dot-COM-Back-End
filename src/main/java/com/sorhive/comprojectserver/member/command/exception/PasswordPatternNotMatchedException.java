@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
-@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "잘못된 비밀번호 요청입니다.")
+@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE, reason = "비밀번호는 숫자, 특수문자, 영대소문자 조합으로 8자리 이상 20자 이내로 작성이 필요합니다.")
 public class PasswordPatternNotMatchedException extends RuntimeException {
     public PasswordPatternNotMatchedException() { super(); }
 

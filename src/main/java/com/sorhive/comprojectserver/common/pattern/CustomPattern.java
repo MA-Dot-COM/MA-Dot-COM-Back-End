@@ -50,17 +50,4 @@ public class CustomPattern {
         return isMatching;
     }
 
-    /** 닉네임 패턴 값 분석 */
-    public boolean nicknamePattern(String nickname) {
-
-        boolean isMatching = true;
-
-        if(Pattern.matches("^(?=.*[0-9a-zA-Z가-힣])(?=.*[-.!@#$%]).{1,20}$", nickname)) {
-            isMatching = true;
-        } else {
-            isMatching = false;
-        }
-
-        return isMatching;
-    }
 }
