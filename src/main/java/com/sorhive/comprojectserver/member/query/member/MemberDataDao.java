@@ -30,6 +30,7 @@ public interface MemberDataDao extends Repository<MemberData, String> {
     List<MemberData> findByIdLikeAndMemberCodeIsNot(String memberId, Long memberCode);
 
     MemberData findByMemberCode(Long memberCode);
+    MemberData findFirstByMemberCode(Long memberCode);
 
     MemberData findByMemberCodeAndMemberCodeIsNot(Long memberCode, Long temp);
 }

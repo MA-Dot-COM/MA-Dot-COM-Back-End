@@ -129,5 +129,6 @@
           from tbl_follows
          where follower_id = #{ownMemberCode}
            and following_id = #{memberCode}
+        group by following_id
     </select>
 </mapper>
