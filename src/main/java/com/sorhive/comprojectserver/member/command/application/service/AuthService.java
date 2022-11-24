@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 2022-11-06       부시연           최초 생성
  * 2022-11-06       부시연           회원 가입
  * 2022-11-07       부시연           로그인
+ * 2022-11-24       부시연           아이디 중복검사 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -95,6 +96,23 @@ public class AuthService {
         log.info("[AuthService] Login End ===================================");
 
         return tokenDto;
+
+    }
+
+    public String idCheck(String newMemberId) {
+
+        log.info("[AuthQueryService] idCheck Start =================");
+        log.info("[AuthQueryService] newMemberId " + newMemberId);
+
+        String idCheck = "";
+
+        if(memberRepository.findByMemberId(MemberId.of(newMemberId)) == null) {
+            idCheck = "중복된 아이디가 없습니다";
+        } else {
+            idCheck = "중복된 아이디가 존재합니다 !";
+        }
+
+        return idCheck;
 
     }
 

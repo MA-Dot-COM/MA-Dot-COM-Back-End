@@ -1,7 +1,6 @@
 package com.sorhive.comprojectserver.member.query.follow;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 

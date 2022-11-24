@@ -27,6 +27,7 @@ import javax.validation.Valid;
  * 2022-11-18       부시연           이메일 인증 추가
  * 2022-11-20       부시연           아이디 찾기 추가
  * 2022-11-21       부시연           비밀번호 재설정 추가
+ * 2022-11-24       부시연           아이디 중복검사 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -74,6 +75,15 @@ public class AuthController {
         log.info("[AuthController] emailRequestDto " + emailRequestDto);
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 이메일 중복 검사 및 인증 성공", authInfraService.emailAuthentication(emailRequestDto)));
+    }
+
+    /** 아이디 검사 */
+    @PostMapping("id")
+    public ResponseEntity<ResponseDto> idCheck(@Valid @RequestBody IdRequestDto idRequestDto) {
+
+        log.info("[AuthQueryController] idCheck Start =================");
+
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 아이디 검사", authService.idCheck(idRequestDto.getMemberId())));
     }
 
     /** 아이디 찾기 */
