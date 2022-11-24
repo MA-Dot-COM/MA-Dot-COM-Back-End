@@ -1,14 +1,14 @@
 package com.sorhive.comprojectserver.member.command.application.service;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.exception.ExistFollowException;
-import com.sorhive.comprojectserver.member.command.application.exception.NoFollowException;
-import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
-import com.sorhive.comprojectserver.member.command.application.exception.SameMemberException;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.Follow;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowerId;
 import com.sorhive.comprojectserver.member.command.domain.model.follow.FollowingId;
 import com.sorhive.comprojectserver.member.command.domain.repository.FollowRepository;
+import com.sorhive.comprojectserver.member.command.exception.ExistFollowException;
+import com.sorhive.comprojectserver.member.command.exception.NoFollowException;
+import com.sorhive.comprojectserver.member.command.exception.NoMemberException;
+import com.sorhive.comprojectserver.member.command.exception.SameMemberException;
 import com.sorhive.comprojectserver.member.query.member.MemberDataDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

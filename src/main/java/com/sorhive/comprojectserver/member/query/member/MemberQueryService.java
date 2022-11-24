@@ -1,7 +1,7 @@
 package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
-import com.sorhive.comprojectserver.member.command.application.exception.NoMemberException;
+import com.sorhive.comprojectserver.member.command.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarDataDao;
 import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
