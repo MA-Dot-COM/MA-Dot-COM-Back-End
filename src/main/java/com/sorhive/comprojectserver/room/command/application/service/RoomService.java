@@ -74,7 +74,7 @@ public class RoomService {
         GuestBookWriter guestBookWriter = guestBookWriterService.createGuestBookWriter(new MemberCode(memberCode));
 
         /* 요청 객체에서 값 꺼내오기 */
-        String guestBookContent = guestBookCreateRequestDto.getContent();
+        String guestBookContent = guestBookCreateRequestDto.getGuestBookContent();
         Long roomId = guestBookCreateRequestDto.getRoomId();
 
         /* 방번호에 맞는 방 찾기 */
