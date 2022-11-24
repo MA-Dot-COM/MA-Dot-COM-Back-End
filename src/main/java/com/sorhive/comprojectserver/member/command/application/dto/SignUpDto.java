@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.member.command.application.dto;
 
 import lombok.Getter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -28,6 +29,7 @@ public class SignUpDto {
     private String memberId;
 
     @NotBlank
+    @Length(max = 15, message = "회원 닉네임 길이가 너무 깁니다.")
     private String memberName;
 
     @NotBlank
