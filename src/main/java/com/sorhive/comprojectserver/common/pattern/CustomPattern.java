@@ -27,7 +27,7 @@ public class CustomPattern {
 
         boolean isMatching = true;
 
-        if(Pattern.matches("^[_.a-zA-Z0-9]{1,20}$", memberId)) {
+        if(Pattern.matches("^[_.a-zA-Z0-9]{1,15}$", memberId)) {
             isMatching = true;
         } else {
             isMatching = false;
@@ -41,7 +41,7 @@ public class CustomPattern {
 
         boolean isMatching = true;
 
-        if(Pattern.matches("^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[!@#$%]).{8,20}$", password)) {
+        if(Pattern.matches("^(?=.*[a-zA-z0-9!@#$%]).{8,15}$", password)) {
             isMatching = true;
         } else {
             isMatching = false;
