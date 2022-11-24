@@ -36,20 +36,6 @@ public class CustomPattern {
         return isMatching;
     }
 
-    /** 이메일 패턴 값 분석 */
-    public boolean emailPattern(String email) {
-
-        boolean isMatching = true;
-
-        if(Pattern.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+$", email)) {
-            isMatching = true;
-        } else {
-            isMatching = false;
-        }
-
-        return isMatching;
-    }
-
     /** 비밀번호 패턴 값 분석 */
     public boolean passwordPattern(String password) {
 

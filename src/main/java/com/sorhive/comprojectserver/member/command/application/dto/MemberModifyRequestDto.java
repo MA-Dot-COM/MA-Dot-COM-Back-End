@@ -2,6 +2,8 @@ package com.sorhive.comprojectserver.member.command.application.dto;
 
 import lombok.Getter;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <pre>
  * Class : MemberModifyRequestDto
@@ -20,6 +22,7 @@ import lombok.Getter;
 @Getter
 public class MemberModifyRequestDto {
 
+    @NotNull
     private String name;
 
 }
