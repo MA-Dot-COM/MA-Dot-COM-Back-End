@@ -369,9 +369,9 @@ public class MemberQueryService {
 
         if(memberMapper.findOneByMemberCode(memberCode) == null) {
 
-            if(memberDataDao.findByMemberCode(memberCode) != null) {
+            if(memberMapper.findByMemberCode(memberCode) != null) {
 
-                MemberData memberSummary = memberDataDao.findByMemberCode(memberCode);
+                MemberData memberSummary = memberDataDao.findFirstByMemberCode(memberCode);
 
                 MypageDto mypageDto = new MypageDto(
                         memberSummary.getId(),
