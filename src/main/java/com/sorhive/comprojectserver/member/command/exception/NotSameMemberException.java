@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.command.application.exception;
+package com.sorhive.comprojectserver.member.command.exception;
 
 /**
  * <pre>
@@ -9,6 +9,7 @@ package com.sorhive.comprojectserver.member.command.application.exception;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-21       부시연           최초 생성
+ * 2022-11-24       부시연           HttpStatus 상태값 반환 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
