@@ -8,7 +8,10 @@ import com.sorhive.comprojectserver.member.command.application.dto.SignUpDto;
 import com.sorhive.comprojectserver.member.command.domain.model.member.Member;
 import com.sorhive.comprojectserver.member.command.domain.model.member.MemberId;
 import com.sorhive.comprojectserver.member.command.domain.repository.MemberRepository;
-import com.sorhive.comprojectserver.member.command.exception.*;
+import com.sorhive.comprojectserver.member.command.exception.IdPatternNotMatchedException;
+import com.sorhive.comprojectserver.member.command.exception.LoginFailedException;
+import com.sorhive.comprojectserver.member.command.exception.NickNamePatternNotMatchedException;
+import com.sorhive.comprojectserver.member.command.exception.PasswordPatternNotMatchedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +67,6 @@ public class AuthService {
 
         if(!customPattern.passwordPattern(signUpDto.getPassword())) {
             throw new PasswordPatternNotMatchedException();
-        }
-
-        if(!customPattern.emailPattern(signUpDto.getEmail())) {
-            throw new EmailPatternNotMatchedException();
         }
 
         if(!customPattern.nicknamePattern(signUpDto.getMemberName())) {

@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * <pre>
@@ -25,11 +26,15 @@ public class SignUpDto {
 
     @NotBlank
     private String memberId;
+
     @NotBlank
     private String memberName;
+
     @NotBlank
     private String password;
-    @NotBlank
+
+    @NotEmpty(message = "이메일이 없습니다.")
+    @Email
     private String email;
 
     protected SignUpDto() {}
