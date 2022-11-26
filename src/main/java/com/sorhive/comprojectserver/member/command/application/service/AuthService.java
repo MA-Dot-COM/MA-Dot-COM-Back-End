@@ -91,11 +91,11 @@ public class AuthService {
         Member member;
 
         /* 1. 아이디 조회 */
-        try{
-             member = memberRepository.findByMemberId(loginDto.getMemberId());
-        } catch (Exception e) {
+        if(memberRepository.findByMemberId(loginDto.getMemberId()) != null){
+            member = memberRepository.findByMemberId(loginDto.getMemberId());
+        } else {
             throw new LoginFailedException("잘못된 아이디 또는 비밀번호입니다");
-        };
+        }
 
         /* 2. 비밀번호 매칭 */
         if (!passwordEncoder.matches(loginDto.getPassword(), member.getPassword().toString())) {

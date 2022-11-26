@@ -34,6 +34,7 @@
            and b.following_id = #{memberCode}
            and not a.member_code = #{memberCode}
            and a.member_delete_yn = 'N'
+           and a.member_role = 'ROLE_MEMBER'
            and b.follow_delete_yn = 'N'
     </select>
 
@@ -52,6 +53,7 @@
            and b.follower_id = #{memberCode}
            and not a.member_code = #{memberCode}
            and a.member_delete_yn = 'N'
+           and a.member_role = 'ROLE_MEMBER'
            and b.follow_delete_yn = 'N'
     </select>
 </mapper>

@@ -1,10 +1,12 @@
 package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
+import com.sorhive.comprojectserver.member.command.domain.model.member.MemberRole;
 import com.sorhive.comprojectserver.member.command.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarDataDao;
 import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
+import com.sorhive.comprojectserver.member.query.mongorecommend.MongoRecommendQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -41,14 +43,16 @@ import java.util.Random;
 public class MemberQueryService {
 
     private static final Logger log = LoggerFactory.getLogger(MemberQueryService.class);
-    private MemberDataDao memberDataDao;
-    private MemberMapper memberMapper;
-    private AvatarDataDao avatarDataDao;
+    private final MemberDataDao memberDataDao;
+    private final MemberMapper memberMapper;
+    private final MongoRecommendQueryRepository mongoRecommendQueryRepository;
+    private final AvatarDataDao avatarDataDao;
     private final TokenProvider tokenProvider;
 
-    public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, AvatarDataDao avatarDataDao, TokenProvider tokenProvider) {
+    public MemberQueryService(MemberDataDao memberDataDao, MemberMapper memberMapper, MongoRecommendQueryRepository mongoRecommendQueryRepository, AvatarDataDao avatarDataDao, TokenProvider tokenProvider) {
         this.memberDataDao = memberDataDao;
         this.memberMapper = memberMapper;
+        this.mongoRecommendQueryRepository = mongoRecommendQueryRepository;
         this.avatarDataDao = avatarDataDao;
         this.tokenProvider = tokenProvider;
     }
@@ -59,7 +63,7 @@ public class MemberQueryService {
         log.info("[MemberQueryService] getMemberData Start ================");
         log.info("[MemberQueryService] memberId : " + memberId);
 
-        MemberData memberData = memberDataDao.findById(memberId);
+        MemberData memberData = memberDataDao.findByIdAndDeleteYnAndMemberRole(memberId, 'N', MemberRole.valueOf("ROLE_MEMBER"));
         if (memberData == null) {
             throw new NoMemberException();
         }
@@ -72,7 +76,7 @@ public class MemberQueryService {
         log.info("[MemberQueryService] getMemberData Start ================");
         log.info("[MemberQueryService] memberCode : " + memberCode);
 
-        MemberData memberData = memberDataDao.findByMemberCode(memberCode);
+        MemberData memberData = memberDataDao.findByMemberCodeAndMemberRole(memberCode, MemberRole.valueOf("ROLE_MEMBER"));
         if(memberData == null) {
             throw new NoMemberException();
         }
@@ -89,7 +93,7 @@ public class MemberQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<MemberData> memberData = memberDataDao.findByIdLikeAndMemberCodeIsNot("%" + memberId + "%", memberCode);
+        List<MemberData> memberData = memberDataDao.findByIdLikeAndMemberCodeIsNotAndMemberRole("%" + memberId + "%", memberCode, MemberRole.valueOf("ROLE_MEMBER"));
         if(memberData == null) {
             throw new NoMemberException();
         }
@@ -147,7 +151,7 @@ public class MemberQueryService {
 
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        List<MemberData> memberData = memberDataDao.findAllByMemberCodeIsNot(memberCode);
+        List<MemberData> memberData = memberDataDao.findAllByMemberCodeIsNotAndDeleteYnAndMemberRole(memberCode, 'N', MemberRole.valueOf("ROLE_MEMBER"));
 
         if(memberData == null) {
             throw new NoMemberException();
@@ -157,7 +161,7 @@ public class MemberQueryService {
 
         List<MemberData> memberDataList = new ArrayList<>();
 
-        MemberData ownMemberData = memberDataDao.findByMemberCode(memberCode);
+        MemberData ownMemberData = memberDataDao.findByMemberCodeAndMemberRole(memberCode, MemberRole.valueOf("ROLE_MEMBER"));
 
         memberDataList.add(ownMemberData);
 
@@ -184,7 +188,7 @@ public class MemberQueryService {
 
                 for (int k = 0; k < maxMemberCode; k++) {
 
-                    MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNot((long) memberSize[k], memberCode);
+                    MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNotAndMemberRole((long) memberSize[k], memberCode, MemberRole.valueOf("ROLE_MEMBER"));
 
                     if (tempMemberData != null) {
 
@@ -224,7 +228,7 @@ public class MemberQueryService {
         List<MemberData> memberDataList = new ArrayList<>();
 
         /* 회원번호로 조회하기 */
-        MemberData followerMemberData = memberDataDao.findByMemberCode(roomId);
+        MemberData followerMemberData = memberDataDao.findByMemberCodeAndMemberRole(roomId, MemberRole.valueOf("ROLE_MEMBER"));
 
         if(followerMemberData == null) {
             throw new NoMemberException("회원 정보가 없습니다");
@@ -279,7 +283,7 @@ public class MemberQueryService {
             for (int k = 0; k < maxMemberCode; k++) {
 
                 /* 해당 멤버코드를 제외한 회원들을 조회한다. */
-                MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNot((long) memberSize[k], memberCode);
+                MemberData tempMemberData = memberDataDao.findByMemberCodeAndMemberCodeIsNotAndMemberRole((long) memberSize[k], memberCode, MemberRole.valueOf("ROLE_MEMBER"));
 
                 if (tempMemberData != null) {
 
@@ -321,7 +325,7 @@ public class MemberQueryService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         /* 자신을 제외한 모든 회원 조회하기 */
-        List<MemberData> memberData = memberDataDao.findAllByMemberCodeIsNot(memberCode);
+        List<MemberData> memberData = memberDataDao.findAllByMemberCodeIsNotAndDeleteYnAndMemberRole(memberCode, 'N', MemberRole.valueOf("ROLE_MEMBER"));
 
         if (memberData == null) {
             throw new NoMemberException();
@@ -361,7 +365,7 @@ public class MemberQueryService {
 
         Long ownMemberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
-        if(memberDataDao.findByMemberCode(memberCode) == null) {
+        if(memberDataDao.findByMemberCodeAndMemberRole(memberCode, MemberRole.valueOf("ROLE_MEMBER")) == null) {
             log.warn("[selectMemberByMemberCode]");
             log.warn("[NoMemberException]");
             throw new NoMemberException("해당하는 회원이 없습니다.");
@@ -371,7 +375,7 @@ public class MemberQueryService {
 
             if(memberMapper.findByMemberCode(memberCode) != null) {
 
-                MemberData memberSummary = memberDataDao.findFirstByMemberCode(memberCode);
+                MemberData memberSummary = memberDataDao.findFirstByMemberCodeAndDeleteYnAndMemberRole(memberCode, 'N', MemberRole.valueOf("ROLE_MEMBER"));
 
                 MypageDto mypageDto = new MypageDto(
                         memberSummary.getId(),
