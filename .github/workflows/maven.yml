@@ -109,7 +109,7 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
         run: |
           mkdir -p deploy
           docker login
-          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:${{ steps.meta.outputs.tags }}
+          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:${{ steps.meta.outputs.tags }}-${{ steps.meta.outputs.labels }}
           cd deploy && zip -r deploy.zip .
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v14
