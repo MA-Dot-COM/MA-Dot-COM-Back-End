@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java CICD with Maven
 
 on: # 이벤트 감지, 워크플로우를 실행시키는 조건 설정
   push:
@@ -109,7 +109,7 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
         run: |
           mkdir -p deploy
           docker login
-          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:${{ steps.meta.outputs.tags }}-${{ steps.meta.outputs.labels }}
+          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:${{ steps.meta.outputs.labels }}-${{ steps.meta.outputs.tags }}
           cd deploy && zip -r deploy.zip .
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v14
