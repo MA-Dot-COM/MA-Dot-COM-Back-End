@@ -35,6 +35,8 @@ import java.util.stream.Collectors;
  * 2022-11-14       부시연           마이페이지 정보 조회 기능 추가
  * 2022-11-14       부시연           회원 상세 조회 기능 추가
  * 2022-11-20       부시연           회원 상세 조회 기능 수정
+ * 2022-11-26       부시연           룸인 기능 수정
+ * 2022-11-26       부시연           회원 상세 조회 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -416,12 +418,20 @@ public class MemberQueryService {
                 memberMapper.countFollowing(memberCode)
         );
 
-        if(memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode) != null){
-            FollowSummary followSummary = memberMapper.findByMemberCodeAndOwnMemberCode(memberCode, ownMemberCode);
-            mypageDto.addFollowSummary(followSummary);
+        if(memberMapper.findFolloingSummary(memberCode, ownMemberCode) != null){
+            FollowSummary followingSummary = memberMapper.findFolloingSummary(memberCode, ownMemberCode);
+            mypageDto.addFollowingSummary(followingSummary);
         } else {
-            FollowSummary followSummary = new FollowSummary(-1L,-1L,-1L);
-            mypageDto.addFollowSummary(followSummary);
+            FollowSummary followingSummary = new FollowSummary(-1L,-1L,-1L);
+            mypageDto.addFollowingSummary(followingSummary);
+        }
+
+        if(memberMapper.findFollowerSummary(memberCode, ownMemberCode) != null){
+            FollowSummary followerSummary = memberMapper.findFollowerSummary(memberCode, ownMemberCode);
+            mypageDto.addFollowerSummary(followerSummary);
+        } else {
+            FollowSummary followerSummary = new FollowSummary(-1L,-1L,-1L);
+            mypageDto.addFollowerSummary(followerSummary);
         }
 
         return mypageDto;

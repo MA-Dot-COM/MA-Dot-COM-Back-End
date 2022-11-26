@@ -12,6 +12,7 @@ import lombok.Getter;
  * DATE             AUTHOR           NOTE
  * ----------------------------------------------------------------
  * 2022-11-14       부시연           최초 생성
+ * 2022-11-26       부시연           회원 상세 조회 수정
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -25,7 +26,8 @@ public class MypageDto {
     private String memberName;
     private String memberId;
     private String memberRoomImage;
-    private FollowSummary followSummary;
+    private FollowSummary followingSummary;
+    private FollowSummary followerSummary;
     private int followingCount;
     private int followerCount;
     private int feedCount;
@@ -41,7 +43,11 @@ public class MypageDto {
 
     }
 
-    public void addFollowSummary(FollowSummary followSummary) {
-        this.followSummary = followSummary;
+    public void addFollowingSummary(FollowSummary followingSummary) {
+        this.followingSummary = followingSummary;
+    }
+
+    public void addFollowerSummary(FollowSummary followerSummary) {
+        this.followerSummary = followerSummary;
     }
 }
