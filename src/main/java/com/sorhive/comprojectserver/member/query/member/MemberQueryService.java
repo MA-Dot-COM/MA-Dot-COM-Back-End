@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -226,6 +227,8 @@ public class MemberQueryService {
         FindRoomInMemberResponseDto findRoomInMemberResponseDto = new FindRoomInMemberResponseDto();
 
         List<MemberData> memberDataList = new ArrayList<>();
+        List<MemberData> tempMemberDataList = new ArrayList<>();
+        List<MemberData> resultMemberDataList = new ArrayList<>();
 
         /* 회원번호로 조회하기 */
         MemberData followerMemberData = memberDataDao.findByMemberCodeAndMemberRole(roomId, MemberRole.valueOf("ROLE_MEMBER"));
@@ -233,8 +236,8 @@ public class MemberQueryService {
         if(followerMemberData == null) {
             throw new NoMemberException("회원 정보가 없습니다");
         }
-        
-        memberDataList.add(followerMemberData);
+
+        tempMemberDataList.add(followerMemberData);
 
         /* 팔로워의 팔로잉 조회 */
         List<MemberData> followerMemberDataList = memberMapper.findAllFollowerByFollowerCode(roomId);
@@ -242,12 +245,12 @@ public class MemberQueryService {
         int followerCount = 0;
         followerCount = followerMemberDataList.size();
 
-        /* 팔로워의 팔로잉 목록이 있다면 하나씩 꺼내서 memberDataList에 넣어준다. */
+        /* 팔로워의 팔로잉 목록이 있다면 하나씩 꺼내서 tempMemberDataList에 넣어준다. */
         if(followerMemberDataList != null ){
 
             for (int i = 0; i < followerMemberDataList.size(); i++) {
 
-                memberDataList.add(followerMemberDataList.get(i));
+                tempMemberDataList.add(followerMemberDataList.get(i));
 
             }
         }
@@ -291,11 +294,16 @@ public class MemberQueryService {
                     count++;
 
                     /* 6명이 되거나 최대회원수가 6명도 채 안되면 그 회원 수만큼만 조회하고 무한루프를 탈출한다. */
-                    if(count == (6 - followerCount) || count == maxMemberCode)  {
+                    if(count == (6) || count == maxMemberCode)  {
                         break;
                     }
                 }
 
+            }
+
+
+            for (int i = 0; i < memberDataList.size(); i++) {
+                tempMemberDataList.add(memberDataList.get(i));
             }
 
             break;
@@ -310,8 +318,10 @@ public class MemberQueryService {
 
         }
 
+        resultMemberDataList = tempMemberDataList.stream().distinct().collect(Collectors.toList());
+
         /* 조회했던 회원 정보를 전송객체에 담고 반환한다. */
-        findRoomInMemberResponseDto.setMemberDtoList(memberDataList);
+        findRoomInMemberResponseDto.setMemberDtoList(resultMemberDataList.subList(0,7));
 
         return findRoomInMemberResponseDto;
 
