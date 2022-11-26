@@ -73,10 +73,10 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build DockerImage
-      run: docker build -t ${{ secrets.DOCKER_HUB_NAME_CDH }}/backend:latest ./
+      run: docker build -t john782/springbootserver:latest ./
         
     - name: Push DockerImage
-      run: docker push ${{ secrets.DOCKER_HUB_NAME_CDH }}/backend:latest
+      run: docker push john782/springbootserver:latest
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
