@@ -72,19 +72,11 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      with:
-        images: john782/springbootserver
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-      with:
-        context: .
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+    - name: Build DockerImage
+      run: docker build -t ${{ secrets.DOCKER_HUB_NAME_CDH }}/backend:latest ./
+        
+    - name: Push DockerImage
+      run: docker push ${{ secrets.DOCKER_HUB_NAME_CDH }}/backend:latest
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
@@ -97,6 +89,13 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
       
       steps:
       - uses: actions/checkout@v3
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
+          region: ${{ secrets.AWS_REGION }}     
           
       - name: Get current time
         uses: 1466587594/get-current-time@v2
@@ -108,8 +107,7 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
       - name: Generate deployment directory
         run: |
           mkdir -p deploy
-          docker login
-          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:${{ steps.meta.outputs.labels }}-${{ steps.meta.outputs.tags }}
+          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
           cd deploy && zip -r deploy.zip .
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v14
