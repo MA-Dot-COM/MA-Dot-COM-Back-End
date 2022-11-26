@@ -95,7 +95,7 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}   
-          region: ${{ secrets.AWS_REGION }}     
+          aws-region: ${{ secrets.AWS_REGION }}  
           
       - name: Get current time
         uses: 1466587594/get-current-time@v2
