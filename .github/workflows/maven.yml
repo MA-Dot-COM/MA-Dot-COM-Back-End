@@ -107,8 +107,10 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
       - name: Generate deployment directory
         run: |
           mkdir -p deploy
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
           cd deploy && zip -r deploy.zip .
-          docker run -d -p 8080:8080 --name cicd --restart always john782/springbootserver:latest
+        
         
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v16
@@ -119,5 +121,5 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
           environment_name: ${{ secrets.AWS_EB_ENV_NAME }}
           application_name: ${{ secrets.AWS_EB_APP_NAME }}
           version_label: john782-cicd-${{steps.current-time.outputs.formattedTime}}
-          deployment_package: Dockerrun.aws.json
+          deployment_package: deploy/deploy.zip
           wait_for_environment_recovery: 200
