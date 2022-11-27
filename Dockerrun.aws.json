@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "john782/springbootserver",
+    "Name": "john782/springbootserver:latest",
     "Update": "true"
   },
   "Ports": [
