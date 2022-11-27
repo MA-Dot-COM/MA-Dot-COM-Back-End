@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.query.mongorecommend;
+package com.sorhive.comprojectserver.member.query.recommend;
 
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;

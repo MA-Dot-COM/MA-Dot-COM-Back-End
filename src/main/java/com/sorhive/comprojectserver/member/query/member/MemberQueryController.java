@@ -1,6 +1,7 @@
 package com.sorhive.comprojectserver.member.query.member;
 
 import com.sorhive.comprojectserver.common.ResponseDto;
+import com.sorhive.comprojectserver.member.query.recommend.MongoRecommendQueryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -35,9 +36,11 @@ public class MemberQueryController {
 
     private static final Logger log = LoggerFactory.getLogger(MemberQueryController.class);
     private final MemberQueryService memberQueryService;
+    private final MongoRecommendQueryService mongoRecommendQueryService;
 
-    public MemberQueryController(MemberQueryService memberQueryService) {
+    public MemberQueryController(MemberQueryService memberQueryService, MongoRecommendQueryService mongoRecommendQueryService) {
         this.memberQueryService = memberQueryService;
+        this.mongoRecommendQueryService = mongoRecommendQueryService;
     }
 
     /** 회원 아이디 검색 */
@@ -72,7 +75,7 @@ public class MemberQueryController {
 
         String accessToken = Authorization.substring(7);
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 목록 조회 성공", memberQueryService.findAllByMemberCode(accessToken, page)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 목록 조회 성공", mongoRecommendQueryService.findAllByMemberCode(accessToken, page)));
     }
     
     /** 룸인 할 때 회원 조회 */
@@ -119,4 +122,5 @@ public class MemberQueryController {
 
         return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "회원 상세 조회 성공", memberQueryService.selectMemberByMemberCode(accessToken, memberCode)));
     }
+
 }

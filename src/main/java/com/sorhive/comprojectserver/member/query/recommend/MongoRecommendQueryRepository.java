@@ -1,4 +1,4 @@
-package com.sorhive.comprojectserver.member.query.mongorecommend;
+package com.sorhive.comprojectserver.member.query.recommend;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -18,4 +18,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @see (참고할 class 또는 외부 url)
  */
 public interface MongoRecommendQueryRepository extends MongoRepository<MongoRecommendData, String> {
+    MongoRecommendData findOneByMemberCodesOrderByUploadTimeDesc(Long memberCode);
 }
