@@ -6,7 +6,7 @@ import com.sorhive.comprojectserver.member.command.exception.NoMemberException;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarData;
 import com.sorhive.comprojectserver.member.query.avatar.AvatarDataDao;
 import com.sorhive.comprojectserver.member.query.follow.FollowSummary;
-import com.sorhive.comprojectserver.member.query.mongorecommend.MongoRecommendQueryRepository;
+import com.sorhive.comprojectserver.member.query.recommend.MongoRecommendQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
  * 2022-11-20       부시연           회원 상세 조회 기능 수정
  * 2022-11-26       부시연           룸인 기능 수정
  * 2022-11-26       부시연           회원 상세 조회 수정
+ * 2022-11-27       부시연           회원 전체 조회 이동
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -103,48 +104,6 @@ public class MemberQueryService {
 
         return memberData;
 
-    }
-
-    /** 멤버코드로 팔로우 하고 있는 회원 조회 */
-    public FindAllMemberResponseDto findAllByMemberCode(String accessToken, Long offset) {
-
-        log.info("[MemberQueryService] findAllByMemberCode Start ================");
-        log.info("[MemberQueryService] offset : " + offset);
-
-        Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
-
-        /* 자신 조회하기 */
-        MemberSummary memberSummary = memberMapper.findOneByMemberCode(memberCode);
-
-        List<MemberSummary> memberSummaryList = new ArrayList<>();
-
-        /* 응답 전송 객체 만들기 */
-        FindAllMemberResponseDto findAllMemberResponseDto = new FindAllMemberResponseDto();
-
-        if (memberSummary == null) {
-            throw new NoMemberException("해당 회원은 존재 하지 않습니다.");
-        }
-
-        /* 응답 전송 객체에 담기 위해 리스트에 자신의 정보 넣기 */
-        memberSummaryList.add(memberSummary);
-
-        /* 자신이 팔로우 하고 있는 인원들의 목록 */
-        List<MemberSummary> tempMemberSummaryList = memberMapper.findAllFollowerByMemberCode(memberCode, offset * 30);
-
-        if(!tempMemberSummaryList.isEmpty()) {
-
-            for (int i = 0; i < tempMemberSummaryList.size(); i++) {
-
-                /* 응답 전송 객체에 담기 위해 리스트에 팔로우 하고 있는 인원들 정보 넣기 */
-                memberSummaryList.add(tempMemberSummaryList.get(i));
-
-            }
-
-        }
-
-        findAllMemberResponseDto.setMemberSummary(memberSummaryList);
-
-        return findAllMemberResponseDto;
     }
 
     /** 랜덤 회원 조회 */
