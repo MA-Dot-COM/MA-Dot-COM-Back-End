@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 /**
  * <pre>
  * Class : RecommendData
- * Comment: 클래스에 대한 간단 설명
+ * Comment: 추천 정렬 전송 객체
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
