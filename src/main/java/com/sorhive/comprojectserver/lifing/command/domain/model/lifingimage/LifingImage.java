@@ -85,6 +85,10 @@ public class LifingImage {
     @ColumnDefault("-1")
     private Double analyzedLifingScore3;
 
+    @Column(name = "lifing_learning_yn")
+    @ColumnDefault("'N'")
+    private Character lifingLearningYn;
+
     protected LifingImage() { }
 
     public LifingImage(String lifingImagePath, String originalName, String changeName, Long analyzedLifingNo1, Double analyzedLifingScore1, Long analyzedLifingNo2, Double analyzedLifingScore2, Long analyzedLifingNo3, Double analyzedLifingScore3, Lifing lifingId) {
@@ -104,5 +108,9 @@ public class LifingImage {
     public void deleteImage(char deleteYn) {
         this.lifingImageDeleteYn = deleteYn;
         this.lifingImageDeleteTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void learningYn(char lifingLearningYn) {
+        this.lifingLearningYn = lifingLearningYn;
     }
 }
