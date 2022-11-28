@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -114,6 +115,9 @@ public class AvatarImageInfraService {
                 return res.getBody();
             }
 
+        } catch (final HttpClientErrorException e) {
+            log.warn(String.valueOf(e.getStatusCode()));
+            log.warn(e.getResponseBodyAsString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
