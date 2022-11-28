@@ -62,6 +62,8 @@ public class RecommendInfraQueryService {
         MemberSummary memberSummary = memberMapper.findOneByMemberCode(memberCode);
 
         List<MemberSummary> memberSummaryList = new ArrayList<>();
+        List<MemberSummary> tempLifingMemberSummaryList = new ArrayList<>();
+        List<MemberSummary> tempLifingMemberSummaryList2 = new ArrayList<>();
 
         /* 응답 전송 객체 만들기 */
         FindAllMemberResponseDto findAllMemberResponseDto = new FindAllMemberResponseDto();
@@ -107,6 +109,13 @@ public class RecommendInfraQueryService {
                 tempList2.add(Integer.valueOf(recommendList.get(tempList.get(i))));
             }
 
+            /* 추천 정렬 시스템이 동작하기 전에 팔로우 추가 된 회원들 추가해주기 */
+            for (int i = 0; i < tempMemberSummaryList.size(); i++) {
+                if (!recommendList.contains(tempMemberSummaryList.get(i).getMemberCode().toString())) {
+                    tempList2.add(tempMemberSummaryList.get(i).getMemberCode().intValue());
+                }
+            }
+
             /* 임시 리스트2의 사이즈만큼 반복 */
             for (int i = 0; i < tempList2.size(); i++) {
 
@@ -116,13 +125,25 @@ public class RecommendInfraQueryService {
                     /* 만약 임시 리스트2의 값과 임시회원요약리스트의 회원코드가 같다면 */
                     if(tempList2.get(i) == tempMemberSummaryList.get(j).getMemberCode().intValue()) {
 
-                        /* 회원요약리스트에 임시회원요약리스트 추가해주기 */
-                        memberSummaryList.add(tempMemberSummaryList.get(j));
+                        /* 라이핑 YN의 여부에 따라서 따로 임시 저장하기 */
+                        if(tempMemberSummaryList.get(j).getLifingYn().equals("'Y'")) {
+                            tempLifingMemberSummaryList.add(tempMemberSummaryList.get(j));
+                        } else {
+                            tempLifingMemberSummaryList2.add(tempMemberSummaryList.get(j));
+                        }
                     }
                 }
-
             }
+        }
+        
+        /* 회원요약리스트에 임시회원라이핑여부리스트 추가해주기 */
+        for (int i = 0; i < tempLifingMemberSummaryList.size(); i++) {
+            memberSummaryList.add(tempLifingMemberSummaryList.get(i));
+        }
 
+        /* 회원요약리스트에 임시회원라이핑여부리스트 추가해주기 */
+        for (int i = 0; i < tempLifingMemberSummaryList2.size(); i++) {
+            memberSummaryList.add(tempLifingMemberSummaryList2.get(i));
         }
 
         /* 전송객체에 값을 담아서 반환하기 */
