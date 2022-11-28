@@ -16,5 +16,11 @@
 - [Spring Batch](https://spring.io/projects/spring-batch)
 
 # Issue 관리
-[진행중인 이슈](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/issues)
-[완료된 이슈](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/issues?q=is%3Aissue+is%3Aclosed)
+- [진행중인 이슈](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/issues)
+- [완료된 이슈](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/issues?q=is%3Aissue+is%3Aclosed)
+
+# Continuous Integration Builds
+깃허브 액션을 통해 프로젝트를 진행하면서 지속적인 CI를 진행했습니다.
+
+# Author
+- 부시연 - [Github](https://github.com/SybooSyboo782)
