@@ -85,7 +85,7 @@ cloud:
       instanceProfile: true
 
 url:
-  avatar: AI_AVATAR
+  avatar: "http://35.216.29.57/test"
   lifing: AI_LIFING
 
 mybatis:
