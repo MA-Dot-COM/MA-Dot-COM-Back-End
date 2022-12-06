@@ -56,4 +56,41 @@
            and a.member_role = 'ROLE_MEMBER'
            and b.follow_delete_yn = 'N'
     </select>
+
+    <select id ="searchFollowerById" resultMap="memberSummaryResultMap">
+        select
+               a.follow_id
+             , a.follower_id
+             , a.following_id
+             , b.member_id
+             , b.member_code
+             , b.member_name
+             , b.member_room_image
+          from tbl_follows a
+          join tbl_members b on a.follower_id = b.member_code
+         where a.follow_delete_yn = 'N'
+           and b.member_id like concat('%', #{memberId}, '%')
+           and b.member_role = 'ROLE_MEMBER'
+           and b.member_delete_yn = 'N'
+           and a.following_id = #{ followingId }
+    </select>
+
+    <select id ="searchFollowingById" resultMap="memberSummaryResultMap">
+        select
+               a.follow_id
+             , a.follower_id
+             , a.following_id
+             , b.member_id
+             , b.member_code
+             , b.member_name
+             , b.member_room_image
+          from tbl_follows a
+          join tbl_members b on a.following_id = b.member_code
+         where a.follow_delete_yn = 'N'
+           and b.member_id like concat('%', #{memberId}, '%')
+           and b.member_role = 'ROLE_MEMBER'
+           and b.member_delete_yn = 'N'
+           and a.follower_id = #{ followerId }
+    </select>
+
 </mapper>
