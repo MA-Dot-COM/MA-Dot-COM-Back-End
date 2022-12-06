@@ -9,8 +9,8 @@ import java.util.List;
 
 /**
  * <pre>
- * Class : IdPasswordNotMatchingException
- * Comment: 클래스에 대한 간단 설명
+ * Class : FollowQueryService
+ * Comment: 팔로우 조회 서비스
  * History
  * ================================================================
  * DATE             AUTHOR           NOTE
@@ -18,6 +18,8 @@ import java.util.List;
  * 2022-10-31       부시연           최초 생성
  * 2022-11-20       부시연           팔로우 목록 조회 수정
  * 2022-11-20       부시연           팔로잉 목록 조회 수정
+ * 2022-12-06       부시연           팔로워 검색
+ * 2022-12-06       부시연           팔로잉 검색
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -67,5 +69,42 @@ public class FollowQueryService {
         log.info("[FollowQueryService] findFollowerList End ================");
 
         return followingListResponseDto;
+    }
+
+    /** 팔로워 검색 */
+    public FindFollowerByIdResponseDto searchFollowerById(String memberId, String accessToken) {
+
+        log.info("[FollowQueryService] searchFollowerById Start ================");
+
+        Long followingId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        List<FollowData> followData = followMapper.searchFollowerById(memberId, followingId);
+
+        FindFollowerByIdResponseDto findFollowerByIdResponseDto = new FindFollowerByIdResponseDto(
+                followData
+        );
+
+        log.info("[FollowQueryService] searchFollowerById End ================");
+
+        return findFollowerByIdResponseDto;
+
+    }
+
+    /** 팔로잉 검색 */
+    public FindFollowingByIdResponseDto searchFollowingById(String memberId, String accessToken) {
+
+        log.info("[FollowQueryService] searchFollowingById Start ================");
+
+        Long followerId = Long.valueOf(tokenProvider.getUserCode(accessToken));
+
+        List<FollowData> followData = followMapper.searchFollowingById(memberId, followerId);
+
+        FindFollowingByIdResponseDto findFollowingByIdResponseDto = new FindFollowingByIdResponseDto(
+                followData
+        );
+
+        log.info("[FollowQueryService] searchFollowingById End ================");
+
+        return findFollowingByIdResponseDto;
     }
 }
