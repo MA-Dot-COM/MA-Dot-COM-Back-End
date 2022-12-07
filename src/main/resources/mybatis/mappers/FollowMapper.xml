@@ -36,6 +36,22 @@
            and a.member_delete_yn = 'N'
            and a.member_role = 'ROLE_MEMBER'
            and b.follow_delete_yn = 'N'
+        <if test="offset != null and offset != ''">
+         limit 15 offset #{ offset }
+        </if>
+    </select>
+
+    <select id="countFollower" resultType="int">
+        select
+               count(a.member_code)
+          from tbl_members a
+          left join tbl_follows b on b.follower_id = a.member_code
+         where a.member_code = b.follower_id
+           and b.following_id = #{memberCode}
+           and not a.member_code = #{memberCode}
+           and a.member_delete_yn = 'N'
+           and a.member_role = 'ROLE_MEMBER'
+           and b.follow_delete_yn = 'N'
     </select>
 
     <select id="findByFollowingId" resultMap="memberSummaryResultMap">
@@ -52,6 +68,22 @@
          where a.member_code = b.following_id
            and b.follower_id = #{memberCode}
            and not a.member_code = #{memberCode}
+           and a.member_delete_yn = 'N'
+           and a.member_role = 'ROLE_MEMBER'
+           and b.follow_delete_yn = 'N'
+        <if test="offset != null and offset != ''">
+         limit 15 offset #{ offset }
+        </if>
+    </select>
+
+    <select id="countFollowing" resultType="int">
+        select
+               count(a.member_code)
+          from tbl_members a
+          left join tbl_follows b on b.following_id = a.member_code
+         where a.member_code = b.following_id
+           and b.follower_id = 1
+           and not a.member_code = 1
            and a.member_delete_yn = 'N'
            and a.member_role = 'ROLE_MEMBER'
            and b.follow_delete_yn = 'N'
