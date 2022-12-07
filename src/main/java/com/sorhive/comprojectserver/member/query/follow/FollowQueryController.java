@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 /**
  * <pre>
  * Class : FollowQueryController
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
  * 2022-11-20       부시연           팔로잉 목록 조회 수정
  * 2022-12-06       부시연           팔로워 목록 검색 기능 추가
  * 2022-12-06       부시연           팔로잉 목록 검색 기능 추가
+ * 2022-12-07       부시연           팔로워 목록 페이징 기능 추가
+ * 2022-12-07       부시연           팔로잉 목록 페이징 기능 추가
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -39,20 +43,20 @@ public class FollowQueryController {
 
     /** 팔로워 목록 조회 */
     @GetMapping("follower/{memberCode}")
-    public ResponseEntity<ResponseDto> findFollowerList(@PathVariable Long memberCode) {
+    public ResponseEntity<ResponseDto> findFollowerList(@PathVariable Long memberCode, @RequestBody Optional<FollowerRequestDto> followerRequestDto) {
 
         log.info("[FollowQueryController] findFollowerList Start ==================");
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "팔로워 목록 조회 성공", followQueryService.findFollowerList(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "팔로워 목록 조회 성공", followQueryService.findFollowerList(memberCode, followerRequestDto)));
     }
 
     /** 팔로잉 목록 조회 */
     @GetMapping("following/{memberCode}")
-    public ResponseEntity<ResponseDto> findFollowingList(@PathVariable Long memberCode) {
+    public ResponseEntity<ResponseDto> findFollowingList(@PathVariable Long memberCode, @RequestBody Optional<FollowingRequestDto> followingRequestDto) {
 
         log.info("[FollowQueryController] findFollowingList Start ==================");
 
-        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "팔로잉 목록 조회 성공", followQueryService.findFollowingList(memberCode)));
+        return ResponseEntity.ok().body(new ResponseDto(HttpStatus.OK, "팔로잉 목록 조회 성공", followQueryService.findFollowingList(memberCode, followingRequestDto)));
     }
 
     /** 팔로워 검색 */
