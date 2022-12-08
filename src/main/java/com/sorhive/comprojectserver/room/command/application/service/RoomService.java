@@ -38,6 +38,7 @@ import java.util.Optional;
  * 2022-11-16       부시연           방명록 수정 추가
  * 2022-11-16       부시연           방명록 삭제 추가
  * 2022-11-20       부시연           가구 이미지 삭제 추가
+ * 2022-12-08       부시연           방명록 응답 객체 세터 제거
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -94,17 +95,16 @@ public class RoomService {
         /* 방명록 저장하기 */
         guestBookRepository.save(guestBook);
 
-        /* 방명록 응답 전송 객체 생성 */
-        GuestBookResponseDto guestBookResponseDto = new GuestBookResponseDto();
-
-        /* 응답 객체에 정보 넣기 */
-        guestBookResponseDto.setGuestBookId(guestBook.getId());
-        guestBookResponseDto.setGuestBookContent(guestBook.getContent());
-        guestBookResponseDto.setCreateTime(guestBook.getCreateTime());
-        guestBookResponseDto.setGuestBookWriterCode(guestBook.getGuestBookWriter().getMemberCode().getValue());
-        guestBookResponseDto.setGuestBookWriterName(guestBook.getGuestBookWriter().getName());
-        guestBookResponseDto.setGuestBookWriterId(guestBook.getGuestBookWriter().getId());
-        guestBookResponseDto.setRoomId(guestBook.getRoom().getId());
+        /* 방명록 응답 전송 객체 생성 및 정보 넣기*/
+        GuestBookResponseDto guestBookResponseDto = new GuestBookResponseDto(
+                  guestBook.getId()
+                , guestBook.getContent()
+                , guestBook.getCreateTime()
+                , guestBook.getGuestBookWriter().getMemberCode().getValue()
+                , guestBook.getGuestBookWriter().getName()
+                , guestBook.getGuestBookWriter().getId()
+                , guestBook.getRoom().getId()
+        );
 
         log.info("[RoomService] guestBookCreateResponseDto {}", guestBookResponseDto);
         log.info("[RoomService] createRoom End ===================================");
@@ -147,16 +147,15 @@ public class RoomService {
         guestBookRepository.save(guestBook);
 
         /* 방명록 응답 전송 객체 생성 */
-        GuestBookResponseDto guestBookResponseDto = new GuestBookResponseDto();
-
-        /* 응답 객체에 정보 넣기 */
-        guestBookResponseDto.setGuestBookId(guestBook.getId());
-        guestBookResponseDto.setGuestBookContent(guestBook.getContent());
-        guestBookResponseDto.setCreateTime(guestBook.getCreateTime());
-        guestBookResponseDto.setGuestBookWriterCode(guestBook.getGuestBookWriter().getMemberCode().getValue());
-        guestBookResponseDto.setGuestBookWriterName(guestBook.getGuestBookWriter().getName());
-        guestBookResponseDto.setGuestBookWriterId(guestBook.getGuestBookWriter().getId());
-        guestBookResponseDto.setRoomId(guestBook.getRoom().getId());
+        GuestBookResponseDto guestBookResponseDto = new GuestBookResponseDto(
+                  guestBook.getId()
+                , guestBook.getContent()
+                , guestBook.getCreateTime()
+                , guestBook.getGuestBookWriter().getMemberCode().getValue()
+                , guestBook.getGuestBookWriter().getName()
+                , guestBook.getGuestBookWriter().getId()
+                , guestBook.getRoom().getId()
+        );
 
         log.info("[RoomService] guestBookUpdateRequestDto {}", guestBookResponseDto);
         log.info("[RoomService] updateGuestBook End ===================================");
