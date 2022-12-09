@@ -1,6 +1,5 @@
 package com.sorhive.comprojectserver.room.command.infra;
 
-import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.file.S3FurnitureImageFile;
@@ -20,6 +19,8 @@ import com.sorhive.comprojectserver.room.command.domain.room.MongoRoom;
 import com.sorhive.comprojectserver.room.command.domain.room.Room;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomCreator;
 import com.sorhive.comprojectserver.room.command.domain.room.RoomCreatorService;
+import com.sorhive.comprojectserver.room.execption.NoFurnitureImageException;
+import com.sorhive.comprojectserver.room.execption.NoRoomImageException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,7 @@ public class RoomInfraService {
         Long memberCode = Long.valueOf(tokenProvider.getUserCode(accessToken));
 
         if(roomCreateDto.getRoomImage() == null) {
-            throw new NoContentException("방 이미지가 없습니다.");
+            throw new NoRoomImageException("방 이미지가 없습니다.");
         }
 
         /* 방이미지 바이트배열 꺼내기 */
@@ -147,7 +148,7 @@ public class RoomInfraService {
         }
 
         if((furnitureImageCreateRequestDto.getFurnitureImage() == null)||(furnitureImageCreateRequestDto.getFurnitureImageNo() == null)||(furnitureImageCreateRequestDto.getFurnitureImageName() == null) ) {
-            throw new NoContentException("이미지 정보값이 없습니다.");
+            throw new NoFurnitureImageException("이미지 정보값이 없습니다.");
         }
 
         /* 가구 이미지 생성 응답 전송 객체 생성 */

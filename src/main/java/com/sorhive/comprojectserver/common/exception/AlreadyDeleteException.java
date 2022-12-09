@@ -1,4 +1,8 @@
 package com.sorhive.comprojectserver.common.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * <pre>
  * Class : AlreadyDeleteException
@@ -14,6 +18,7 @@ package com.sorhive.comprojectserver.common.exception;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "해당 요청은 이미 삭제되었습니다.")
 public class AlreadyDeleteException extends RuntimeException {
     public AlreadyDeleteException() {
         super();
