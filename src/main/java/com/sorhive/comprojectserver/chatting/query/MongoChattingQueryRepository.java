@@ -22,7 +22,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface MongoChattingQueryRepository extends MongoRepository<MongoChattingData, String> {
 
     MongoChattingData findFirstByMemberCode1AndMemberCode2(Long memberCode, Long memberCode2);
-    MongoChattingData findFirstByMemberCode1AndMemberCode2OrderByUploadTimeAsc(Long memberCode1, Long memberCode2);
-
     MongoChattingData findFirstByMemberCode1AndMemberCode2OrderByUploadTimeDesc(Long memberCode1, Long memberCode2);
 }
