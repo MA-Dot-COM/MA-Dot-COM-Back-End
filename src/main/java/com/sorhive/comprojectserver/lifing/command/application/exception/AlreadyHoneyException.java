@@ -1,4 +1,8 @@
 package com.sorhive.comprojectserver.lifing.command.application.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * <pre>
  * Class : AlreadyHoneyException
@@ -15,6 +19,7 @@ package com.sorhive.comprojectserver.lifing.command.application.exception;
  * @version 1(클래스 버전)
  * @see (참고할 class 또는 외부 url)
  */
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "이미 허니를 했습니다.")
 public class AlreadyHoneyException extends RuntimeException {
     public AlreadyHoneyException() {
         super();

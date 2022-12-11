@@ -61,18 +61,16 @@ public class LifingService {
 
     private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
-    private final LifingMapper lifingMapper;
     private final MemberRepository memberRepository;
     private final LifingHoneyRepository lifingHoneyRepository;
     private final LifingCommentWriterService lifingCommentWriterService;
     private final LifingCommentRepository lifingCommentRepository;
 
-    public LifingService(LifingRepository lifingRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, LifingMapper lifingMapper, MemberRepository memberRepository, LifingHoneyRepository lifingHoneyRepository, LifingCommentWriterService lifingCommentWriterService, LifingCommentRepository lifingCommentRepository) {
+    public LifingService(LifingRepository lifingRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository, LifingHoneyRepository lifingHoneyRepository, LifingCommentWriterService lifingCommentWriterService, LifingCommentRepository lifingCommentRepository) {
 
         this.lifingRepository = lifingRepository;
         this.lifingWriterService = lifingWriterService;
         this.tokenProvider = tokenProvider;
-        this.lifingMapper = lifingMapper;
         this.memberRepository = memberRepository;
         this.lifingHoneyRepository = lifingHoneyRepository;
 
