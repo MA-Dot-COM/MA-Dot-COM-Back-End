@@ -1,5 +1,9 @@
 # SorHive 프로젝트
 
+# 융합 구조도
+![융합구조도](https://user-images.githubusercontent.com/111809392/205318829-a7071a0d-5c43-4265-b92b-1fedc3d0e5b2.png)
+- 라이핑 배치서버는 생략했습니다.
+
 # Contents
 - [Development-Record](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/wiki/Development-Record)
 - [참고자료](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/wiki/%EC%B0%B8%EA%B3%A0-%EC%9E%90%EB%A3%8C)
