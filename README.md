@@ -18,6 +18,7 @@
 - [JPA](https://spring.io/projects/spring-data-jpa)
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Spring Batch](https://spring.io/projects/spring-batch)
+- [MyBatis](https://mybatis.org/mybatis-3/)
 
 # Issue 관리
 - [진행중인 이슈](https://github.com/MA-Dot-COM/MA-Dot-COM-Back-End/issues)
