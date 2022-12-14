@@ -1,5 +1,6 @@
 package com.sorhive.comprojectserver.member.command.infra;
 
+import com.sorhive.comprojectserver.common.resttemplate.Header;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.file.S3AvatarImageFile;
 import com.sorhive.comprojectserver.member.command.application.dto.AvatarImageDto;
@@ -17,7 +18,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -32,6 +32,7 @@ import java.util.Optional;
  * ----------------------------------------------------------------
  * 2022-11-07       부시연           최초 생성
  * 2022-11-11       부시연           바이트배열로 대응
+ * 2022-12-14       부시연           Header 설정 일부 분리
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -44,13 +45,15 @@ public class AvatarImageInfraService {
     private final S3AvatarImageFile s3AvatarImageFile;
     private final AvatarImageRepository avatarImageRepository;
     private final TokenProvider tokenProvider;
+    private final Header header;
     @Value("${url.avatar}")
     private String avatarUrl;
 
-    public AvatarImageInfraService(S3AvatarImageFile s3AvatarImageFile, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider) {
+    public AvatarImageInfraService(S3AvatarImageFile s3AvatarImageFile, AvatarImageRepository avatarImageRepository, TokenProvider tokenProvider, Header header) {
         this.s3AvatarImageFile = s3AvatarImageFile;
         this.avatarImageRepository = avatarImageRepository;
         this.tokenProvider = tokenProvider;
+        this.header = header;
     }
 
     /** 아바타 이미지 생성 */
@@ -86,10 +89,7 @@ public class AvatarImageInfraService {
                 Optional<AvatarImage> imagePath = avatarImageRepository.findById(memberCode);
 
                 /* 헤더 설정하기 */
-                HttpHeaders headers = new HttpHeaders();
-                Charset utf8 = Charset.forName("UTF-8");
-                MediaType mediaType = new MediaType("application", "json", utf8);
-                headers.setContentType(mediaType);
+                HttpHeaders headers = header.restHeader();
 
                 /* 바디 설정하기 */
                 Map<String, Object> map = new HashMap<>();

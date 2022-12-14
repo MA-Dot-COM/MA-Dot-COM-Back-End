@@ -2,6 +2,7 @@ package com.sorhive.comprojectserver.lifing.command.infra;
 
 import com.sorhive.comprojectserver.common.exception.NoContentException;
 import com.sorhive.comprojectserver.common.exception.NotSameWriterException;
+import com.sorhive.comprojectserver.common.resttemplate.Header;
 import com.sorhive.comprojectserver.config.jwt.TokenProvider;
 import com.sorhive.comprojectserver.file.S3LifingImageFile;
 import com.sorhive.comprojectserver.lifing.command.application.dto.*;
@@ -29,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -47,6 +47,7 @@ import java.util.*;
  * 2022-11-17       부시연           라이핑 삭제 기능 추가
  * 2022-11-19       부시연           라이핑 이미지 다시 1개로 변경
  * 2022-11-22       부시연           라이핑 AI 분석 로직 변경 대응
+ * 2022-12-14       부시연           Header 설정 일부 분리
  * </pre>
  *
  * @author 부시연(최초 작성자)
@@ -64,9 +65,10 @@ public class LifingInfraService {
     private final LifingWriterService lifingWriterService;
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
+    private final Header header;
     @Value("${url.lifing}")
     private String lifingUrl;
-    public LifingInfraService(S3LifingImageFile s3LifingImageFile, LifingImageRepository lifingImageRepository, LifingRepository lifingRepository, LifingCommentRepository lifingCommentRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository) {
+    public LifingInfraService(S3LifingImageFile s3LifingImageFile, LifingImageRepository lifingImageRepository, LifingRepository lifingRepository, LifingCommentRepository lifingCommentRepository, LifingWriterService lifingWriterService, TokenProvider tokenProvider, MemberRepository memberRepository, Header header) {
         this.s3LifingImageFile = s3LifingImageFile;
         this.lifingImageRepository = lifingImageRepository;
         this.lifingRepository = lifingRepository;
@@ -74,6 +76,7 @@ public class LifingInfraService {
         this.lifingWriterService = lifingWriterService;
         this.tokenProvider = tokenProvider;
         this.memberRepository = memberRepository;
+        this.header = header;
     }
 
     /** 라이핑 AI 이미지 저장 */
@@ -97,6 +100,8 @@ public class LifingInfraService {
 
         LifingImageCreateAiResponseDto lifingImageCreateAiResponseDto = null;
 
+        final String url = lifingUrl;
+
         try {
 
             /* 라이핑 이미지가 존재 한다면 */
@@ -116,11 +121,7 @@ public class LifingInfraService {
                 );
 
                 /* AI서버에 전송하기 위해 차셋 등 헤더 설정하기 */
-                HttpHeaders headers = new HttpHeaders();
-                Charset utf8 = Charset.forName("UTF-8");
-                MediaType mediaType = new MediaType("application", "json", utf8);
-                headers.setContentType(mediaType);
-                final String url = lifingUrl;
+                HttpHeaders headers = header.restHeader();
 
                 /* 바디에 넣기 위한 값을 MAP에 넣어주기 */
                 Map<String, Object> map = new HashMap<>();
@@ -353,7 +354,6 @@ public class LifingInfraService {
             }
 
         }
-
 
         return lifing.getLifingId();
 
