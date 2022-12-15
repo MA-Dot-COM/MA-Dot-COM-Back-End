@@ -291,7 +291,7 @@ public class FeedInfraService {
 
         if (feedImageRepository.findById(feedImageId) == null) {
             log.warn("[FeedInfraService] NoFeedImageException");
-            throw new NoFeedImageException("해당 피드는 존재하지 않습니다.");
+            throw new NoFeedImageException("해당 피드 이미지는 존재하지 않습니다.");
         }
 
         if (feedImageRepository.findByIdAndDeleteYnEquals(feedImageId, 'N') == null) {
