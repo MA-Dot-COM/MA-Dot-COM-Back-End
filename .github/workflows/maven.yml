@@ -103,22 +103,22 @@ jobs: # job - 하나의 인스턴스에서 여러 Step을 그룹시켜 실행하
           format: YYYY-MM-DDTHH-mm-ss
           utcOffset: "+09:00"    
           
-      - name: Generate deployment directory
-        run: |
-          mkdir -p deploy
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          cp Dockerrun.aws.json deploy/Dockerrun.aws.json
-          cd deploy && zip -r deploy.zip .
+#       - name: Generate deployment directory
+#         run: |
+#           mkdir -p deploy
+#           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+#           cp Dockerrun.aws.json deploy/Dockerrun.aws.json
+#           cd deploy && zip -r deploy.zip .
         
         
-      - name: Beanstalk Deploy
-        uses: einaregilsson/beanstalk-deploy@v16
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: ${{ secrets.AWS_REGION }}
-          environment_name: ${{ secrets.AWS_EB_ENV_NAME }}
-          application_name: ${{ secrets.AWS_EB_APP_NAME }}
-          version_label: john782-cicd-${{steps.current-time.outputs.formattedTime}}
-          deployment_package: deploy/deploy.zip
-          wait_for_environment_recovery: 200
+#       - name: Beanstalk Deploy
+#         uses: einaregilsson/beanstalk-deploy@v16
+#         with:
+#           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           region: ${{ secrets.AWS_REGION }}
+#           environment_name: ${{ secrets.AWS_EB_ENV_NAME }}
+#           application_name: ${{ secrets.AWS_EB_APP_NAME }}
+#           version_label: john782-cicd-${{steps.current-time.outputs.formattedTime}}
+#           deployment_package: deploy/deploy.zip
+#           wait_for_environment_recovery: 200
